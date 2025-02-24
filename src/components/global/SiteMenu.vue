@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar :density="smAndDown ? 'compact' : 'comfortable'" >
+  <v-app-bar :density="smAndDown ? 'compact' : 'comfortable'">
     <!-- <v-btn flat icon="mdi-home" to="/" /> -->
     <v-app-bar-nav-icon @click.stop="toggleRail" />
     <v-toolbar-title>Hectic WOS</v-toolbar-title>
@@ -27,13 +27,17 @@
         @click="rail = true"
       />
       <v-divider />
-      <v-list-item
-        v-for="item in menuItems"
-        :key="item.key"
-        :to="item.to"
-        :title="item.title"
-        :prepend-icon="item.icon"
-      />
+      <template v-for="item in menuItems" :key="item.label">
+        <v-list-item
+          v-for="subItem in item.items"
+          :key="subItem.key"
+          :to="subItem.to"
+          :title="subItem.title"
+          :prepend-icon="subItem.icon"
+        />
+        <v-divider v-if="item.divider" />
+        <v-spacer />
+      </template>
       <!-- <v-list-item
         v-if="canViewPage(RouteHelper.TEST)"
         title="Test Page"
@@ -42,6 +46,19 @@
       />-->
     </v-list>
     <template #append>
+      <v-divider />
+      <template v-for="item in bottomMenuItems" :key="item.label">
+        <v-list-subheader v-if="!rail" :title="item.label"  />
+        <v-list-item
+            v-for="subItem in item.items"
+            :key="subItem.key"
+            :to="subItem.to"
+            :title="subItem.title"
+            :value="subItem.title"
+            :prepend-icon="subItem.icon"
+          />
+        <v-divider v-if="item.divider" />
+      </template>
       <!--
       <v-list-item
         @click="logout"
@@ -61,9 +78,9 @@
 </template>
 
 <script setup lang="ts">
-import { 
-    // useTheme, 
-    useDisplay 
+import {
+  // useTheme,
+  useDisplay,
 } from "vuetify";
 
 import RouteHelper from "@/router/route-helper";
@@ -92,22 +109,50 @@ const setupMenuRail = () => {
 
 const menuItems = ref([
   {
-    title: "Home",
-    icon: "mdi-home",
-    to: RouteHelper.HOME,
-    key: "home-menu-item",
+    label: "",
+    divider: false,
+    items: [
+      {
+        title: "Home",
+        icon: "mdi-home",
+        to: RouteHelper.HOME,
+        key: "home-menu-item",
+      },
+      {
+        title: "March Times",
+        icon: "mdi-rocket-launch",
+        to: RouteHelper.MARCH_TIME,
+        key: "march-time-new-menu-item",
+      },
+    ],
+  },
+]);
+
+const bottomMenuItems = ref([
+ 
+{
+    label: "Under Construction",
+    divider: true,
+    items: [
+      {
+        title: "Ministry Appointments",
+        icon: "mdi-account-multiple-check",
+        to: RouteHelper.MINISTRY_APPOINTMENTS,
+        key: "ministry-appointments-menu-item",
+      },
+    ],
   },
   {
-    title: "March Times",
-    icon: "mdi-rocket-launch",
-    to: RouteHelper.MARCH_TIME_NEW,
-    key: "march-time-new-menu-item",
-  },
-  {
-    title: "Ministry Appointments",
-    icon: "mdi-account-multiple-check",
-    to: RouteHelper.MINISTRY_APPOINTMENTS,
-    key: "ministry-appointments-menu-item",
+    label: "Legacy",
+    divider: false,
+    items: [
+      {
+        title: "March Times (v1)",
+        icon: "mdi-rocket-outline",
+        to: RouteHelper.MARCH_TIME_V1,
+        key: "march-time-menu-item",
+      },
+    ],
   },
 ]);
 
