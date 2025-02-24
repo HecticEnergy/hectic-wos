@@ -2,7 +2,7 @@
   <ParentCard>
     <v-row dense align="center" class="flex-0-0">
       <v-col cols="9">
-        <v-text-field v-model="member.name" label="Name" />
+        <v-text-field v-model="member.name" label="Name" clearable />
       </v-col>
       <v-col cols="3">
         <NumberTextField v-model="member.order" label="Order" />
@@ -15,16 +15,20 @@
           :items="groups"
           label="Group"
           hide-details
+          clearable
         />
       </v-col>
     </v-row>
-    <v-row dense class="flex-1-0">
-      <v-col cols="12">
-        <TargetEdit
-          v-model="member.targetTimes"
-          :member-id="member.id"
-          @remove="removeTarget"
-        />
+    <TargetEdit
+      v-model="member.targetTimes"
+      :member-id="member.id"
+      @remove="removeTarget"
+    />
+    <v-row dense class="flex-0-0">
+      <v-col cols="12" align="end">
+        <v-btn prepend-icon="mdi-plus" color="primary" @click="addTarget">
+          Add Target
+        </v-btn>
       </v-col>
     </v-row>
     <template #bottomContent>
@@ -38,11 +42,6 @@
               @click="() => emit('save', member)"
             >
               Save
-            </v-btn>
-          </v-col>
-          <v-col>
-            <v-btn width="100%" color="primary" @click="addTarget">
-              + target
             </v-btn>
           </v-col>
           <v-col>
@@ -83,6 +82,9 @@ const emit = defineEmits<{
 
 onMounted(() => {
   member.value = JSON.parse(JSON.stringify(model.value))! as Member;
+  if (member.value.targetTimes.length === 0) {
+    addTarget();
+  }
 });
 
 const confirmDelete = ref(false);
