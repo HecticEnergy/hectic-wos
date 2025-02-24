@@ -5,7 +5,11 @@
     dense
   >
     <v-col grow>
-      <v-text-field v-model="targets[idx].targetName" label="Target Name" />
+      <v-text-field
+        v-model="targets[idx].targetName"
+        label="Target Name"
+        clearable
+      />
     </v-col>
     <v-col cols="auto" align="center" class="d-flex flex-row">
       <TimeTextBoxes

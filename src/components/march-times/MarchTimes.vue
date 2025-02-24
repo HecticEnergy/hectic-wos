@@ -22,13 +22,17 @@
         <!-- Right: UTC Earliest March Time -->
       </v-col>
       <v-col cols="12">
-        <MarchOutputDisplay
-          v-if="canCalculate"
-          class="mt-2"
-          :launch-time-output="marchTimeOutput"
-          unique-id="march-times-march-landing-time-output"
-          @refresh-output="setOutput"
-        />
+        <v-row dense class="d-flex justify-center">
+          <v-col cols="auto" shrink>
+            <MarchOutputDisplay
+              v-if="canCalculate"
+              class="mt-2"
+              :launch-time-output="marchTimeOutput"
+              unique-id="march-times-march-landing-time-output"
+              @refresh-output="setOutput"
+            />
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <template #bottomContent>

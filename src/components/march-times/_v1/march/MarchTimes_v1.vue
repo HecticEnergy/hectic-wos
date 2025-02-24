@@ -1,6 +1,6 @@
 <template>
   <v-container
-    style="height: 95dvh; max-width: 100%"
+    style="height: 95dvh; max-width: 100%; overflow-y: auto"
     class="d-flex flex-column"
   >
     <v-tabs v-model="tabIndex" grow class="flex-0-0">

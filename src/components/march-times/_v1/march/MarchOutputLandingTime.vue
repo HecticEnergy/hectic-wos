@@ -18,7 +18,7 @@
     </v-col>
     <v-col cols="12">
       <!-- Targets -->
-      <TargetSelection
+      <TargetSelect
         v-model="selectedTarget"
         @update:model-value="savePageData"
       />
@@ -96,14 +96,28 @@
         color="error"
       />
     </v-col>
+    <v-col cols="12">
+      <v-btn
+        color="primary"
+        :disabled="selectedMembers.length === 0"
+        @click="dialogOpen = true"
+      >
+        show Output
+      </v-btn>
+    </v-col>
   </v-row>
-
-  <MarchOutputDisplay
-    v-if="selectedMembers.length > 0"
-    :launch-time-output="nameTimeDisplay"
-    unique-id="march-landing-time-output"
-    @refresh-output="setOutput"
-  />
+  <dialog-full-screen v-model="dialogOpen" title="Output">
+    <v-row dense class="d-flex justify-center">
+      <v-col cols="auto">
+        <MarchOutputDisplay
+          v-if="selectedMembers.length > 0"
+          :launch-time-output="nameTimeDisplay"
+          unique-id="march-launch-time-output"
+          @refresh-output="setOutput"
+        />
+      </v-col>
+    </v-row>
+  </dialog-full-screen>
 </template>
 <script setup lang="ts">
 import {
@@ -121,6 +135,8 @@ import { useMemberStore } from "@/stores/member-store";
 import type { MemberTarget, TargetProps, Time } from "@/models";
 const memberStore = useMemberStore();
 let interval: number | undefined | NodeJS.Timeout;
+
+const dialogOpen = ref<boolean>(false);
 
 const localStorageKey = "march-output-landing";
 type LocalStorageValue = {
