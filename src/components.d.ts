@@ -7,9 +7,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AlertTest: typeof import('./components/test/colors/AlertTest.vue')['default']
     ButtonContainer: typeof import('./components/global/ButtonContainer.vue')['default']
     BuyMeBeer: typeof import('./components/global/BuyMeBeer.vue')['default']
     CancelConfirmDialog: typeof import('./components/global/CancelConfirmDialog.vue')['default']
+    ColorPalette: typeof import('./components/test/ColorPalette.vue')['default']
+    ColorsList: typeof import('./components/test/colors/ColorsList.vue')['default']
+    ColorTemplate: typeof import('./components/test/colors/ColorTemplate.vue')['default']
     ComboboxChips: typeof import('./components/global/sub-components/ComboboxChips.vue')['default']
     DialogCloseable: typeof import('./components/global/sub-components/DialogCloseable.vue')['default']
     DialogFullScreen: typeof import('./components/global/sub-components/DialogFullScreen.vue')['default']
@@ -31,6 +35,8 @@ declare module 'vue' {
     MarchTimes: typeof import('./components/march-times/MarchTimes.vue')['default']
     MarchTimes_v1: typeof import('./components/march-times/_v1/march/MarchTimes_v1.vue')['default']
     MarchTypeToggle: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/MarchTypeToggle.vue')['default']
+    Md2Example: typeof import('./components/test/colors/Md2Example.vue')['default']
+    Md3Examples: typeof import('./components/test/colors/Md3Examples.vue')['default']
     MemberEdit: typeof import('./components/march-times/members/MemberEdit.vue')['default']
     MemberImport: typeof import('./components/march-times/import/MemberImport.vue')['default']
     MemberImportMultipleTarget: typeof import('./components/march-times/import/MemberImportMultipleTarget.vue')['default']
