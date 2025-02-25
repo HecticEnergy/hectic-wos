@@ -1,5 +1,40 @@
 <template>
-  <v-tour name="marchTimesTour" :steps="steps"></v-tour>
+  <v-tour name="marchTimesTour" :steps="steps">
+    <template #default="tour">
+      <transition name="fade">
+        <v-step
+          v-if="tour.steps[tour.currentStep]"
+          :key="tour.currentStep"
+          :step="tour.steps[tour.currentStep]"
+          :previous-step="tour.previousStep"
+          :next-step="tour.nextStep"
+          :stop="tour.stop"
+          :skip="tour.skip"
+          :is-first="tour.isFirst"
+          :is-last="tour.isLast"
+          :labels="tour.labels"
+          class="pa-3 bg-surface-variant text-surface"
+          style="z-index: 10000; pointer-events: auto"
+        >
+          <template #actions>
+            <v-row dense class="d-flex justify-space-between mt-2">
+              <v-col cols="auto">
+                <v-btn @click="tour.skip"> Skip Tour </v-btn>
+              </v-col>
+              <v-col cols="auto">
+                <v-btn v-if="tour.isLast" color="primary" @click="tour.stop">
+                  Finish!
+                </v-btn>
+                <v-btn v-else color="primary" @click="tour.nextStep">
+                  Next
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+        </v-step>
+      </transition>
+    </template>
+  </v-tour>
 </template>
 
 <script lang="ts"></script>
@@ -150,6 +185,12 @@ export default {
   name: "march-times-tour",
   data() {
     return {
+      labels: {
+        buttonSkip: "Skip tour",
+        buttonPrevious: undefined,
+        buttonNext: "Next",
+        buttonStop: "Finish",
+      },
       steps: [...openImportSteps, ...importSteps, ...marchOutputSteps],
     };
   },
