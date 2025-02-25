@@ -29,7 +29,7 @@
       <v-overlay
         v-model="showOverlay"
         :opacity="0.5"
-        scrim="surface"
+        :scrim="isCopy ? 'success' : 'surface'"
         contained
         persistent
       />
@@ -39,8 +39,6 @@
 
 <script setup lang="ts">
 import { copyHtmlContent } from "@/services/html-helpers";
-import { useAlertStore } from "@/stores/alert-store";
-const alertStore = useAlertStore();
 
 const props = defineProps<{
   launchTimeOutput: string;
@@ -54,15 +52,23 @@ const emit = defineEmits<{
   (e: "refreshOutput"): void;
 }>();
 
+const isCopy = ref(false);
 const copyText = () => {
+  isCopy.value = true;
   copyHtmlContent(props.uniqueId);
-  alertStore.success("Text Copied to Clipboard");
+  animateOverlay(() => {
+    isCopy.value = false;
+  });
 };
 
 const refresh = () => {
+  animateOverlay(() => emit("refreshOutput"));
+};
+
+const animateOverlay = (func: () => void) => {
   showOverlay.value = true;
   const overlayTimeout = setTimeout(() => {
-    emit("refreshOutput");
+    func();
     showOverlay.value = false;
     clearTimeout(overlayTimeout);
   }, 250);
