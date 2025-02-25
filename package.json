@@ -1,8 +1,8 @@
 {
   "name": "hectic_wos",
   "private": true,
-  "author": "HecticEnergy", 
-  "license" : "SEE LICENSE IN LICENSE.md",
+  "author": "HecticEnergy",
+  "license": "SEE LICENSE IN LICENSE.md",
   "description": "A set of WOS Tools",
   "type": "module",
   "version": "0.0.0",
@@ -25,6 +25,7 @@
     "core-js": "^3.37.1",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
+    "vue3-tour": "^1.0.3",
     "vuetify": "^3.6.14"
   },
   "devDependencies": {

@@ -32,6 +32,7 @@
             prepend-icon="mdi-upload-circle-outline"
             color="success"
             width="100%"
+            data-tour="members-import-btn"
             @click="showImportDialog = true"
           >
             import
@@ -43,6 +44,7 @@
             prepend-icon="mdi-close"
             color="error"
             width="100%"
+            data-tour="members-clear-btn"
             @click="confirmClear = true"
           >
             clear

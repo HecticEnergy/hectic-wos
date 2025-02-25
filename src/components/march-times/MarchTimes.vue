@@ -38,6 +38,7 @@
     <template #bottomContent>
       <!-- Error box (if error) -->
     </template>
+    <Tour />
   </ParentCard>
 </template>
 
