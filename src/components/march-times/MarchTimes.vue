@@ -71,7 +71,7 @@ const canCalculate = computed(() => {
   );
 });
 
-const openImport = computed(() => memberStore.members.length === 0);
+const openImport = ref(false);//computed(() => memberStore.members.length === 0);
 
 const savePageData = () => {
   //localStorage save
