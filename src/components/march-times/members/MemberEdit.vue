@@ -26,7 +26,7 @@
     />
     <v-row dense class="flex-0-0">
       <v-col cols="12" align="end">
-        <v-btn prepend-icon="mdi-plus" color="primary" @click="addTarget">
+        <v-btn prepend-icon="mdi-plus" color="secondary" @click="addTarget">
           Add Target
         </v-btn>
       </v-col>

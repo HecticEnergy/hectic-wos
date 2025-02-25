@@ -20,7 +20,7 @@
         <v-col cols="4" align="center">
           <v-btn
             prepend-icon="mdi-plus"
-            color="primary"
+            color="secondary"
             width="100%"
             @click="addNewMember"
           >
@@ -31,7 +31,7 @@
           <v-btn
             text="import"
             prepend-icon="mdi-upload-circle-outline"
-            color="success"
+            color="primary"
             width="100%"
             data-tour="members-import-btn"
             @click="showImportDialog = true"
