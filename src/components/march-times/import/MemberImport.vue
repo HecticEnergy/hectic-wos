@@ -2,6 +2,7 @@
   <ParentCard>
     <v-select
       v-model="importType"
+      data-tour="member-import-type-toggle"
       :items="allImportTypes"
       label="Import Type"
     />
