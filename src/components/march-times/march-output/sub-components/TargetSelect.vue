@@ -4,6 +4,7 @@
     v-model="selectedTargetName"
     :items="memberStore.allTargetNames"
     label="Select Target"
+    data-tour="march-output-target-select"
     dense
   />
   <v-alert

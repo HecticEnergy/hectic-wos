@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-2" rounded color="background">
+  <v-card class="pa-2" rounded color="background" data-tour="march-output-display">
     <v-row dense>
       <v-col cols="12">
         <pre :id="uniqueId">{{ launchTimeOutput }}</pre>
@@ -13,6 +13,7 @@
               icon="mdi-refresh"
               title="Refresh"
               class="hover-cursor"
+              data-tour="march-output-display-refresh"
               @click="refresh"
             />
           </v-col>
@@ -21,6 +22,7 @@
               icon="mdi-content-copy"
               title="Copy Text"
               class="hover-cursor"
+              data-tour="march-output-display-copy"
               @click="copyText"
             />
           </v-col>
