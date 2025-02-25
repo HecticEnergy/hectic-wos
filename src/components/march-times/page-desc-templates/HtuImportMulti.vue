@@ -5,28 +5,17 @@
   </p>
   <br />
   <p>Template for your members:</p>
-  <v-sheet color="background" rounded class="pa-2">
-    <pre :id="copyId">
-[Member Name]
+  <march-output-display
+    :hide-refresh="true"
+    unique-id="multi-target-import-template"
+    launch-time-output="[Member Name]
 North: 00:00
 West: 00:00
 South: 00:00
 East: 00:00
-SFC: 00:00
-</pre
-    >
-    <v-row>
-      <v-col cols="12" align="end">
-        <v-icon
-          icon="mdi-content-copy"
-          class="hover-pointer"
-          title="Copy"
-          z-index="999"
-          @click="copyTemplate"
-        />
-      </v-col>
-    </v-row>
-  </v-sheet>
+SFC: 00:00"
+  />
+
   <br />
   <p>Example:</p>
   <v-sheet color="background" rounded class="pa-2">
@@ -73,11 +62,5 @@ TargetName: [Minutes:]Seconds</pre
 </template>
 
 <script setup lang="ts">
-import { copyHtmlContent } from "@/services/html-helpers";
-
-const copyId = "multi-target-import-template";
-
-const copyTemplate = () => {
-  copyHtmlContent(copyId);
-};
+//
 </script>

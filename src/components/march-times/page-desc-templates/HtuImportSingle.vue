@@ -2,22 +2,12 @@
   <p>Paste in the march times and members will be parsed.</p>
   <br />
   <p>Template for your members:</p>
-  <v-sheet color="background" rounded class="pa-2">
-    <pre :id="copyId">
-[Member Name]: 00:00
-</pre
-    >
-    <v-row>
-      <v-col cols="12" align="end">
-        <v-icon
-          icon="mdi-content-copy"
-          class="hover-pointer"
-          title="Copy"
-          @click="copyTemplate"
-        />
-      </v-col>
-    </v-row>
-  </v-sheet>
+
+  <march-output-display
+    :hide-refresh="true"
+    unique-id="single-target-import-template"
+    launch-time-output="[Member Name]: 00:00"
+  />
   <br />
   <p>Example:</p>
   <v-sheet color="background" rounded class="pa-2">
@@ -53,11 +43,5 @@ L6F: 01:01</pre
 </template>
 
 <script setup lang="ts">
-import { copyHtmlContent } from "@/services/html-helpers";
-
-const copyId = "single-target-import-template";
-
-const copyTemplate = () => {
-  copyHtmlContent(copyId);
-};
+//
 </script>
