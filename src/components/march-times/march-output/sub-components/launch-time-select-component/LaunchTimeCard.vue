@@ -4,6 +4,7 @@
     prepend-icon="mdi-rocket-launch"
     :is-selected="marchSettingsType === 'launch'"
     :show-details="showDetails"
+    data-tour="march-launch-time-card"
     @click="marchSettingsType = 'launch'"
   >
     <div>

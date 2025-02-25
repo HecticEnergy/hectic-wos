@@ -9,16 +9,10 @@
       <v-toolbar density="compact">
         <v-toolbar-title>{{ title }}</v-toolbar-title>
         <v-btn
-          icon
-          @click="
-            () => {
-              showDialog = false;
-              $emit('close');
-            }
-          "
-        >
-          <v-icon data-tour="dialog-full-screen-close">mdi-close</v-icon>
-        </v-btn>
+          icon="mdi-close"
+          data-tour="dialog-full-screen-close"
+          @click="close"
+        />
       </v-toolbar>
       <slot />
     </v-card>
@@ -35,10 +29,15 @@ defineProps<{
   title: string;
   fullScreenMode?: "always" | "smAndDown";
 }>();
-defineEmits<{
+const emit = defineEmits<{
   (e: "close"): void;
 }>();
 defineSlots<{
   default: void;
 }>();
+
+const close = () => {
+  showDialog.value = false;
+  emit("close");
+};
 </script>
