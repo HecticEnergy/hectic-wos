@@ -41,13 +41,13 @@ const defaultMarchSettings: MarchSettings = {
   marchSettingsType: "launch" as MarchSettingsType,
   launchSettings: {
     ignoreSeconds: true,
-    separateSeconds: { seconds: 0 } as Time,
-    launchTimeOffset: { minutes: 0, seconds: 0 } as Time,
+    separateSeconds: { seconds: 2 } as Time,
+    launchTimeOffset: { minutes: 1, seconds: 0 } as Time,
   },
   landingSettings: {
     ignoreSeconds: true,
     rallyTimeMinutesIndex: 3,
-    separateSeconds: { seconds: 0 } as Time,
+    separateSeconds: { seconds: 2 } as Time,
     landingTime: { hours: 0, minutes: 0, seconds: 0 } as Time,
   },
 };

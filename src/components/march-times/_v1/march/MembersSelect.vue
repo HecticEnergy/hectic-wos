@@ -3,6 +3,7 @@
     <v-row dense class="d-flex flex-row">
       <v-col shrink cols="auto" align="right" class="mr-2">
         <v-icon
+          data-tour="groups-toggle"
           :icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           title="Toggle Groups"
           style="cursor: pointer"
@@ -13,6 +14,7 @@
       <v-spacer grow />
       <v-col shrink cols="auto" align="right" class="mr-2">
         <v-icon
+          data-tour="groups-add"
           icon="mdi-plus"
           title="Create Group"
           :style="{
@@ -25,6 +27,7 @@
       </v-col>
       <v-col shrink cols="auto" align="right">
         <v-icon
+          data-tour="member-edit"
           icon="mdi-pencil"
           title="Edit Members"
           style="cursor: pointer"
@@ -34,7 +37,7 @@
       </v-col>
     </v-row>
     <v-row dense align="center" class="d-flex" width="100%">
-      <v-col grow>
+      <v-col grow data-tour="member-group-select">
         <ComboboxChips
           v-if="!isGroups"
           v-model="selectedMembers"
