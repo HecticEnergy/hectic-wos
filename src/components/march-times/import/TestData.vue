@@ -2,7 +2,7 @@
   <v-btn
     v-if="!memberStore.members.length"
     v-bind="$attrs"
-    color="primary"
+    color="secondary"
     @click="addTestData()"
   >
     load test
