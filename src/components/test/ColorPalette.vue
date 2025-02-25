@@ -16,16 +16,14 @@
     <div  style="margin-top: 3em; margin-bottom: 3em;">
       <ColorsList />
       <Md2Example />
+      <!-- Md3Examples needs work -->
+      <!-- <Md3Examples /> -->
       <AlertTest />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import ColorsList from './colors/ColorsList.vue';
-import Md2Example from './colors/Md2Example.vue';
-import AlertTest from './colors/AlertTest.vue';
-
 import { useTheme } from 'vuetify';
 const theme = useTheme();
 
