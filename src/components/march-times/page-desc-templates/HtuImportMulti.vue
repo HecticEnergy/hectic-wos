@@ -21,6 +21,7 @@ SFC: 00:00
           icon="mdi-content-copy"
           class="hover-pointer"
           title="Copy"
+          z-index="999"
           @click="copyTemplate"
         />
       </v-col>
