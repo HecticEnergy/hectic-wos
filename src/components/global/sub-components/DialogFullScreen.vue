@@ -17,7 +17,7 @@
             }
           "
         >
-          <v-icon>mdi-close</v-icon>
+          <v-icon data-tour="dialog-full-screen-close">mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
       <slot />
