@@ -63,11 +63,55 @@
 
     <v-card rounded class="ma-5 pa-5">
       <v-card-title>
-        <v-icon color="secondary" icon="mdi-hand-heart" class="mr-5" />Thank
-        you!!</v-card-title
-      >
+        <v-row class="d-flex">
+          <v-col cols="auto" shrink>
+            <v-img
+              src="../assets/greg.png"
+              width="30"
+              height="30"
+              rounded
+              class="mr-5"
+            />
+          </v-col>
+          <v-col grow> WOS Nerds </v-col>
+        </v-row>
+      </v-card-title>
+      <v-card-text class="pt-5">
+        <p>Come visit our friends on WOS Nerds!</p>
+        <br />
+        <p>
+          "WOS Nerds is all about digging into data, running tests, and figuring
+          out the best strategies. We'd like to minimize any guides/advice
+          that's not based on some solid/decent proof."
+        </p>
+        <br />
+        <p>They have a lot of great tools and resources for the game!</p>
+        <br />
+        <v-row class="d-flex justify-space-between" align="end">
+          <v-col>
+            <v-img
+              src="../assets/discord.webp"
+              width="30"
+              height="30"
+              href="https://discord.gg/dMYY8bcPXp"
+              target="_blank"
+            />
+          </v-col>
+          <v-col>
+            <a href="https://wosnerds.com" target="_blank">wosnerds.com</a>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    <v-card rounded class="ma-5 pa-5">
+      <v-card-title>
+        <v-icon color="secondary" icon="mdi-hand-heart" class="mr-5" />
+        Thank You!
+      </v-card-title>
       <v-card-text class="pt-5">
         <p>Many thanks to those who have contributed!</p>
+        <br />
+        <p>L6F - for helping me refine the original idea!</p>
         <br />
         <p>
           Snowdrops - for help with cleaning up the "How to use" pages, and
@@ -111,6 +155,4 @@
   </ParentCard>
 </template>
 
-<script lang="ts" setup>
-//
-</script>
+<script lang="ts" setup></script>
