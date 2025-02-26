@@ -34,6 +34,7 @@
           :to="subItem.to"
           :title="subItem.title"
           :prepend-icon="subItem.icon"
+          :data-tour="subItem.dataTour"
         />
         <v-divider v-if="item.divider" />
         <v-spacer />
@@ -117,12 +118,14 @@ const menuItems = ref([
         icon: "mdi-home",
         to: RouteHelper.HOME,
         key: "home-menu-item",
+        dataTour: "home-navbar-link",
       },
       {
         title: "March Times",
         icon: "mdi-rocket-launch",
         to: RouteHelper.MARCH_TIME,
         key: "march-time-new-menu-item",
+        dataTour: "march-times-navbar-link",
       },
     ],
   },
@@ -139,6 +142,7 @@ const bottomMenuItems = ref([
         icon: "mdi-account-multiple-check",
         to: RouteHelper.MINISTRY_APPOINTMENTS,
         key: "ministry-appointments-menu-item",
+        dataTour: "ministry-appointments-navbar-link",
       },
     ],
   },
@@ -151,6 +155,7 @@ const bottomMenuItems = ref([
         icon: "mdi-rocket-outline",
         to: RouteHelper.MARCH_TIME_V1,
         key: "march-time-menu-item",
+        dataTour: "march-times-v1-navbar-link",
       },
     ],
   },

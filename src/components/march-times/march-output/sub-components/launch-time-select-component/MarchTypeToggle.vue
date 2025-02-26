@@ -1,5 +1,5 @@
 <template>
-  <v-row dense class="d-flex" width="100%">
+  <v-row dense class="d-flex" width="100%" data-tour="march-type-toggle-all">
     <v-col
       :cols="marchSettingsType !== 'launch' ? 'auto' : ''"
       class="ma-0 pa-0"
@@ -31,7 +31,11 @@
       cols="auto"
       class="d-flex flex-column justify-space-around"
     >
-      <v-icon icon="mdi-cog" @click="showMarchEditDialog = true" />
+      <v-icon
+        icon="mdi-cog"
+        data-tour="march-type-toggle-settings"
+        @click="showMarchEditDialog = true"
+      />
     </v-col>
   </v-row>
 

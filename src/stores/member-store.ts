@@ -53,9 +53,12 @@ export const useMemberStore = defineStore("member-store", {
         this.members = loadedMembers.members;
         this.updateGroups();
 
-        if (this.allTargetNames.length === 1) {
-          this.selectedTargetName = this.allTargetNames[0];
-        }
+        this.setDefaultTarget();
+      }
+    },
+    setDefaultTarget() {
+      if (this.allTargetNames.length === 1 || this.selectedTargetName === "") {
+        this.selectedTargetName = this.allTargetNames[0];
       }
     },
     updateGroups() {
@@ -89,6 +92,7 @@ export const useMemberStore = defineStore("member-store", {
         this.selectedTargetName = this.allTargetNames[0];
       }
 
+      this.setDefaultTarget();
       //TODO Remove this - clearing out old local storage data
       localStorage.removeItem("members");
     },

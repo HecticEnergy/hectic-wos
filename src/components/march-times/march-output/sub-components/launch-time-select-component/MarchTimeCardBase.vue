@@ -1,7 +1,7 @@
 <template>
   <v-hover v-slot="{ isHovering, props }">
     <v-card
-      v-bind="props"
+      v-bind="{...props, ...$attrs}"
       rel="noopener noreferrer"
       rounded="lg"
       variant="text"

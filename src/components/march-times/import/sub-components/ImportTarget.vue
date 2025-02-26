@@ -8,6 +8,7 @@
         rows="7"
         clearable
         focused
+        data-tour="member-import-textarea"
       />
     </v-col>
     <v-col cols="12">
@@ -20,6 +21,7 @@
         hide-selected
         single
         hide-details="auto"
+        data-tour="member-import-group-select"
       />
     </v-col>
   </v-row>
@@ -31,6 +33,7 @@
           :disabled="!model.memberData.trim().length"
           width="100%"
           prepend-icon="mdi-upload-circle-outline"
+          data-tour="member-import-import-btn"
           @click="() => $emit('parseText')"
         >
           Import
@@ -60,4 +63,5 @@ defineProps<{
 defineEmits<{
   (e: "parseText"): void;
 }>();
+
 </script>

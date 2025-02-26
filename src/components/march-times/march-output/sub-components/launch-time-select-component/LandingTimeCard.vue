@@ -4,6 +4,7 @@
     prepend-icon="mdi-map-marker"
     :is-selected="marchSettingsType === 'landing'"
     :show-details="showDetails"
+    data-tour="march-landing-time-card"
     @click="marchSettingsType = 'landing'"
   >
     <div>
