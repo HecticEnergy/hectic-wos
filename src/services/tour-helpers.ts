@@ -59,13 +59,18 @@ export const flashElement = async (
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
+      const elements = document.querySelectorAll(`.tour-flash`);
+      elements.forEach((element) => {
+        element.classList.remove("tour-flash");
+      });
+
       const selector = `[data-tour="${tourConst}"]`;
       const element = getHtmlElement(selector, elementIndex);
       element.classList.add("tour-flash");
-      const interval = window.setInterval(() => {
-        clearInterval(interval);
-        element.classList.remove("tour-flash");
-      }, 3000);
+      // const interval = window.setInterval(() => {
+      //   clearInterval(interval);
+      //   element.classList.remove("tour-flash");
+      // }, 3000);
       resolve();
     } catch (error) {
       reject(error);

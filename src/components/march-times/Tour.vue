@@ -246,20 +246,18 @@ const steps = ref([
 
 <style>
 .tour-flash {
-  /* animation: wiggle .25s infinite ease-out; */
-  animation-name: wiggle;
-  animation-duration: 0.75s;
-  animation-timing-function: ease-out;
-  animation-iteration-count: infinite;
+  animation: pulse 1s ease infinite;
 }
 
-@keyframes wiggle {
-  0%,
-  100% {
-    transform: scale3d(1.25, 1.25, 1.25);
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
   50% {
-    transform: scale3d(0.8, 0.8, 0.8);
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
