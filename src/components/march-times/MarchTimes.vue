@@ -1,9 +1,14 @@
 <template>
   <ParentCard>
     <template #topContent>
-      <div align="right">
-        <UtcClock label="Current UTC Time" />
-      </div>
+      <v-row dense>
+        <v-col cols="auto">
+          <Tour />
+        </v-col>
+        <v-col align="end">
+          <UtcClock label="Current UTC Time" />
+        </v-col>
+      </v-row>
     </template>
     <v-row dense>
       <v-col cols="12">
@@ -38,7 +43,6 @@
     <template #bottomContent>
       <!-- Error box (if error) -->
     </template>
-    <Tour />
   </ParentCard>
 </template>
 
@@ -71,7 +75,7 @@ const canCalculate = computed(() => {
   );
 });
 
-const openImport = ref(false);//computed(() => memberStore.members.length === 0);
+const openImport = ref(false); //computed(() => memberStore.members.length === 0);
 
 const savePageData = () => {
   //localStorage save
