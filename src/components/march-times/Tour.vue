@@ -32,7 +32,7 @@
             :is-last="tour.isLast"
             :labels="tour.labels"
             class="pa-3 bg-surface-variant text-surface"
-            style="z-index: 10000; pointer-events: auto; min-width: 350px"
+            style="z-index: 10000; pointer-events: auto; min-width: 300px"
           >
             <template #actions>
               <v-row dense class="d-flex justify-space-between mt-2">
@@ -112,9 +112,9 @@ welcomeSteps.push({
       "Welcome to the March Settings Page! <br />" +
       "We will guide you through the page to help you get started."
   ),
-  params: {
-    placement: "right",
-  },
+  // params: {
+  //   placement: "right",
+  // },
 });
 
 const openImportSteps = [
