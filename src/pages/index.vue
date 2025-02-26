@@ -1,14 +1,114 @@
 <template>
-  <v-card rounded class="ma-10 pa-5">
-    <v-card-title>Hectic WOS!</v-card-title>
-    <v-card-text class="pt-5">
-      <v-row>
-        <v-col>
-          Welcome! Please make a selection from the menu.
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+  <ParentCard color="background">
+    <v-card rounded class="ma-5 pa-5">
+      <v-card-title>
+        <v-icon color="secondary" icon="mdi-hand-wave" class="mr-5" />
+        Hectic WOS!
+      </v-card-title>
+      <v-card-text class="pt-5">
+        <p>Welcome!</p>
+        <br />
+        <p>
+          We have designed a few tools that should make managing your alliance
+          <i>a bit</i> easier.
+        </p>
+        <br />
+      </v-card-text>
+    </v-card>
+
+    <v-card rounded class="ma-5 pa-5">
+      <v-card-title>
+        <v-icon color="secondary" icon="mdi-rocket-launch" class="mr-5" />
+        March Times
+      </v-card-title>
+      <v-card-text class="pt-5">
+        <p>
+          Have you ever been batch healing, and trying to run rallies, but no
+          one has the time to calculate the march times?
+        </p>
+        <br />
+        <p>Well, this tool is for you!</p>
+        <br />
+        <p>
+          Simply collect and import your rally callers' march times, select your
+          launch settings, and you can keep dropping launch times into chat!
+        </p>
+      </v-card-text>
+    </v-card>
+    <v-card rounded class="ma-5 pa-5">
+      <v-card-title>
+        <v-icon
+          color="secondary"
+          icon="mdi-account-multiple-check"
+          class="mr-5"
+        />
+        Ministry Appointments
+      </v-card-title>
+      <v-card-text class="pt-5">
+        <p><i class="opacity-40">This page is still under construction</i></p>
+        <br />
+        <p>Organizing buffs can be such a pain!</p>
+        <br />
+        <p>
+          Have your members DM you their speedups and FCs in the specified
+          format, and you can sort an organize them easily!
+        </p>
+        <br />
+        <p>
+          You can copy the selected members, and their preferred times, and send
+          it to whoever is managing the ministry appointments!
+        </p>
+      </v-card-text>
+    </v-card>
+
+    <v-card rounded class="ma-5 pa-5">
+      <v-card-title>
+        <v-icon color="secondary" icon="mdi-hand-heart" class="mr-5" />Thank
+        you!!</v-card-title
+      >
+      <v-card-text class="pt-5">
+        <p>Many thanks to those who have contributed!</p>
+        <br />
+        <p>
+          Snowdrops - for help with cleaning up the "How to use" pages, and
+          accumulated hours of early pre-release testing!! Bugs were found and
+          decisions were made!
+        </p>
+        <br />
+        <p>
+          Waco - for the many enhancement suggestions made early on! The tool
+          became more complicated than my original vision, but now it's more
+          robust!
+        </p>
+        <br />
+        <p>
+          Mystic - more enhancement suggestions! and for helping me find my
+          blind spots in usability!
+        </p>
+        <br />
+        <p>
+          Mofarch - very early UI review and helping make many suggestions for
+          improvement! (...and potentially for some future dev help too!)
+        </p>
+        <br />
+        <p>
+          Ironman - mostly for the jokes and entertainment, but also for early
+          feedback!
+        </p>
+        <br />
+        <p>
+          ...and to all the other's I have been pestering for feedback who
+          responded!
+        </p>
+        <br />
+        <h3>Thank You!</h3>
+        <p>
+          This site wouldn't be what is is without your help! I hope many find
+          it useful!
+        </p>
+      </v-card-text>
+    </v-card>
+  </ParentCard>
 </template>
 
 <script lang="ts" setup>
