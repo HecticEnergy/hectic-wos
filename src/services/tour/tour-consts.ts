@@ -1,3 +1,4 @@
+const MARCH_TIMES_NAVBAR_LINK = "march-times-navbar-link";
 const MEMBER_EDIT = "member-edit";
 const MEMBERS_IMPORT_BTN = "members-import-btn";
 const MEMBER_IMPORT_TYPE_TOGGLE = "member-import-type-toggle";
@@ -17,6 +18,7 @@ const MARCH_OUTPUT_DISPLAY_REFRESH = "march-output-display-refresh";
 const MARCH_OUTPUT_DISPLAY_COPY = "march-output-display-copy";
 
 export {
+  MARCH_TIMES_NAVBAR_LINK,
   MEMBER_EDIT,
   MEMBERS_IMPORT_BTN,
   MEMBER_IMPORT_TYPE_TOGGLE,
