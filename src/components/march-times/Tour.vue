@@ -1,52 +1,119 @@
 <template>
-  <v-tour name="marchTimesTour" :steps="steps">
+  <!-- <p class="tour-flash">Test</p> -->
+  <v-chip
+    class="cursor-pointer secondary"
+    prepend-icon="mdi-compass"
+    title="Start Tour!"
+    data-tour="tour-icon"
+    color="secondary"
+    @click="startTour"
+  >
+    Start Tour!
+  </v-chip>
+  <v-tour v-show="!tourStopped" name="marchTimesTour" :steps="steps">
     <template #default="tour">
-      <transition name="fade">
-        <v-step
-          v-if="tour.steps[tour.currentStep]"
-          :key="tour.currentStep"
-          :step="tour.steps[tour.currentStep]"
-          :previous-step="tour.previousStep"
-          :next-step="tour.nextStep"
-          :stop="tour.stop"
-          :skip="tour.skip"
-          :is-first="tour.isFirst"
-          :is-last="tour.isLast"
-          :labels="tour.labels"
-          class="pa-3 bg-surface-variant text-surface"
-          style="z-index: 10000; pointer-events: auto"
-        >
-          <template #actions>
-            <v-row dense class="d-flex justify-space-between mt-2">
-              <v-col cols="auto">
-                <v-btn @click="tour.skip"> Skip Tour </v-btn>
-              </v-col>
-              <v-col cols="auto">
-                <v-btn v-if="tour.isLast" color="primary" @click="tour.stop">
-                  Finish!
-                </v-btn>
-                <v-btn v-else color="primary" @click="tour.nextStep">
-                  Next
-                </v-btn>
-              </v-col>
-            </v-row>
-          </template>
-        </v-step>
-      </transition>
+      <v-overlay
+        :model-value="!tourStopped"
+        opacity=".2"
+        scrim="surface-variant"
+        persistent
+        style="z-index: 9999"
+      >
+        <transition name="fade">
+          <v-step
+            v-if="tour.steps[tour.currentStep]"
+            :key="tour.currentStep"
+            :step="tour.steps[tour.currentStep]"
+            :previous-step="tour.previousStep"
+            :next-step="() => nextStep(tour)"
+            :stop="() => stopTour(tour)"
+            :skip="() => skipTour(tour)"
+            :is-first="tour.isFirst"
+            :is-last="tour.isLast"
+            :labels="tour.labels"
+            class="pa-3 bg-surface-variant text-surface"
+            style="z-index: 10000; pointer-events: auto; min-width: 350px"
+          >
+            <template #actions>
+              <v-row dense class="d-flex justify-space-between mt-2">
+                <v-col cols="auto">
+                  <v-btn @click="skipTour(tour)"> Skip Tour </v-btn>
+                </v-col>
+                <v-col cols="auto">
+                  <v-btn
+                    v-if="tour.isLast"
+                    color="primary"
+                    @click="stopTour(tour)"
+                  >
+                    Finish!
+                  </v-btn>
+                  <v-btn v-else color="primary" @click="nextStep(tour)">
+                    Next
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </template>
+          </v-step>
+        </transition>
+      </v-overlay>
     </template>
   </v-tour>
 </template>
 
-<script lang="ts"></script>
-
-<script lang="ts">
-import {
-  flashElement,
-  click,
-  setInputValue,
-  buildStep,
-} from "@/services/tour-helpers";
+<script setup lang="ts">
+import { click, setInputValue, buildStep } from "@/services/tour-helpers";
 import * as tourConsts from "@/services/tour/tour-consts";
+
+const tourStopped = ref(false);
+const app = getCurrentInstance();
+onMounted(() => {
+  tourStopped.value = JSON.parse(
+    localStorage.getItem("marchTimesTour") || "false"
+  );
+  if (tourStopped.value) return;
+  setTimeout(() => {
+    startTour();
+  }, 250);
+});
+
+const startTour = () => {
+  tourStopped.value = false;
+  app?.proxy?.$tours["marchTimesTour"].start();
+};
+
+const nextStep = (tour: any) => {
+  if (tour.isLast) {
+    stopTour(tour);
+    return;
+  }
+  tour.nextStep();
+};
+
+const stopTour = (tour: any) => {
+  tour.stop();
+  tourStopped.value = true;
+  localStorage.setItem("marchTimesTour", "true");
+};
+
+const skipTour = (tour: any) => {
+  tour.skip();
+  tourStopped.value = true;
+  localStorage.setItem("marchTimesTour", "true");
+};
+
+const welcomeSteps: any[] = [];
+
+welcomeSteps.push({
+  ...buildStep(
+    "tour-icon",
+    "This is the Tour Icon. If you ever want to run it again, click here! <br />" +
+      "Welcome to the March Settings Page! <br />" +
+      "We will guide you through the page to help you get started."
+  ),
+  params: {
+    placement: "right",
+  },
+});
 
 const openImportSteps = [
   buildStep(
@@ -159,93 +226,40 @@ const marchOutputSteps = [
       " can paste it into the game chat."
   ),
   {
-    target: "body",
-    content: "This concludes your orientation. Good luck on the battle!",
+    ...buildStep(
+      tourConsts.MARCH_TIMES_NAVBAR_LINK,
+      "This concludes your orientation.<br /> Good luck on the battle!"
+    ),
     params: {
-      placement: "none",
-      modifiers: {
-        computeStyle: {
-          enabled: true,
-          fn(data) {
-            data.styles = Object.assign({}, data.styles, {
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            });
-
-            return data;
-          },
-        },
-      },
+      placement: "right",
     },
   },
 ];
 
-export default {
-  name: "march-times-tour",
-  data() {
-    return {
-      labels: {
-        buttonSkip: "Skip tour",
-        buttonPrevious: undefined,
-        buttonNext: "Next",
-        buttonStop: "Finish",
-      },
-      steps: [...openImportSteps, ...importSteps, ...marchOutputSteps],
-    };
-  },
-  mounted: function () {
-    this.$tours["marchTimesTour"].start();
-  },
-};
+const steps = ref([
+  ...welcomeSteps,
+  ...openImportSteps,
+  ...importSteps,
+  ...marchOutputSteps,
+]);
 </script>
+
 <style>
 .tour-flash {
-  border-radius: 15px;
-  padding: 10px;
-  transition: background-color 1s ease;
-  transition: boarder-color 1s ease;
-  background-color: yellow;
-  border: yellow solid 2px;
-  animation: tour-flash-anm 1s infinite;
+  /* animation: wiggle .25s infinite ease-out; */
+  animation-name: wiggle;
+  animation-duration: 0.75s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
 }
-@keyframes tour-flash-anm {
-  0% {
-    background-color: yellow;
-    border-color: yellow;
-  }
+
+@keyframes wiggle {
+  0%,
   100% {
-    background-color: transparent;
-    border-color: transparent;
+    transform: scale3d(1.25, 1.25, 1.25);
+  }
+  50% {
+    transform: scale3d(0.8, 0.8, 0.8);
   }
 }
 </style>
-<!-- <script setup lang="ts">
-
-const $tours = inject("$tours");
-
-const steps = ref([
-  {
-    target: '[data-tour="march-times"]',
-    content:
-      "Welcome to the March Times page! Here you can view the launch times for the upcoming missions.",
-    params: {
-      placement: "bottom",
-    },
-  },
-  {
-    target: '[data-tour="march-times"]',
-    content:
-      "You can click on a launch time to view more details about the mission.",
-    params: {
-      placement: "bottom",
-    },
-  },
-]);
-
-onMounted(() => {
-  // Start the tour
-  console.log("Starting tour", $tours);
-  ($tours as any)["marchTimesTour"].start();
-});
-</script> -->
