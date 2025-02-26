@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { click, setInputValue, buildStep } from "@/services/tour-helpers";
+import { click, setInputValue, buildStep, clearElementFlash } from "@/services/tour-helpers";
 import * as tourConsts from "@/services/tour/tour-consts";
 
 const tourStopped = ref(false);
@@ -92,12 +92,14 @@ const nextStep = (tour: any) => {
 const stopTour = (tour: any) => {
   tour.stop();
   tourStopped.value = true;
+  clearElementFlash();
   localStorage.setItem("marchTimesTour", "true");
 };
 
 const skipTour = (tour: any) => {
   tour.skip();
   tourStopped.value = true;
+  clearElementFlash();
   localStorage.setItem("marchTimesTour", "true");
 };
 

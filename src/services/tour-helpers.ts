@@ -53,17 +53,20 @@ export const setInputValue = async (
   });
 };
 
+export const clearElementFlash = async () => {
+  const elements = document.querySelectorAll(`.tour-flash`);
+  elements.forEach((element) => {
+    element.classList.remove("tour-flash");
+  });
+};
+
 export const flashElement = async (
   tourConst: string,
   elementIndex: number = 0
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
-      const elements = document.querySelectorAll(`.tour-flash`);
-      elements.forEach((element) => {
-        element.classList.remove("tour-flash");
-      });
-
+      clearElementFlash();
       const selector = `[data-tour="${tourConst}"]`;
       const element = getHtmlElement(selector, elementIndex);
       element.classList.add("tour-flash");
