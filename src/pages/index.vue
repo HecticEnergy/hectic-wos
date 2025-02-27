@@ -13,6 +13,15 @@
           <i>a bit</i> easier.
         </p>
         <br />
+        <p>
+          I'd like to expand the functionality of this site by putting a
+          database behind this, but that costs money.
+        </p>
+        <br />
+        <p>
+          <v-icon icon="mdi-glass-mug-variant" class="mr-1" />
+          Check out the beer link at the top to support this project!
+        </p>
       </v-card-text>
     </v-card>
 
@@ -97,7 +106,7 @@
               target="_blank"
             />
           </v-col>
-          <v-col>
+          <v-col align="end">
             <a href="https://wosnerds.com" target="_blank">wosnerds.com</a>
           </v-col>
         </v-row>
@@ -141,13 +150,18 @@
         </p>
         <br />
         <p>
+          Ragnar - for pointing out some serious bugs I missed before a major
+          release!
+        </p>
+        <br />
+        <p>
           ...and to all the other's I have been pestering for feedback who
           responded!
         </p>
         <br />
         <h3>Thank You!</h3>
         <p>
-          This site wouldn't be what is is without your help! I hope many find
+          This site wouldn't be what it is without your help! I hope many find
           it useful!
         </p>
       </v-card-text>

@@ -11,30 +11,6 @@
           support this tool, you can buy me a beer!
         </p>
         <br />
-        <p>
-          Though this is not the most professional thing I have ever made, I
-          hope you find it useful!
-        </p>
-        <p>
-          <i class="opacity-80">
-            (I polished off a 12 pack birthing this thing.)
-          </i>
-        </p>
-        <p>
-          <i class="opacity-80"> (...then another making improvements...) </i>
-        </p>
-        <br />
-        <p>
-          I refuse to put ads on things I create, though this is not free to
-          run.
-        </p>
-        <p>
-          <i class="opacity-80">
-            (Not all the money goes to beer, but hopefully some of it!)
-          </i>
-        </p>
-
-        <br />
         <v-row>
           <template v-for="item in items" :key="item.title">
             <v-col cols="12">
@@ -69,12 +45,36 @@
         </v-row>
         <br />
         <p>
+          Though this is not the most professional thing I have ever made, I
+          hope you find it useful!
+        </p>
+        <p>
+          <i class="opacity-80">
+            (I polished off a 12 pack birthing this thing.)
+          </i>
+        </p>
+        <p>
+          <i class="opacity-80"> (...then another making improvements...) </i>
+        </p>
+        <br />
+        <p>
+          I refuse to put ads on things I create, though this is not free to
+          run.
+        </p>
+        <p>
+          <i class="opacity-80">
+            (Not all the money goes to beer, but hopefully some of it!)
+          </i>
+        </p>
+
+        <br />
+        <p>
           There are several other things I want to add to make these features
           more collaborative.
         </p>
         <i class="opacity-80">
           (More beer is more fuel. <br />
-          Oh, and paying for serverless compute...)
+          Oh, and paying for serverless compute and a database resources...)
         </i>
       </v-container>
     </ParentCard>
