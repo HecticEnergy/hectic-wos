@@ -21,6 +21,7 @@ export const useMemberStore = defineStore("member-store", {
   state: () => ({
     // state
     members: [] as Member[],
+    editMember: undefined as Member | undefined,
     groups: [] as string[],
     selectedGroups: [] as string[],
     selectedTargetName: "",
@@ -68,26 +69,34 @@ export const useMemberStore = defineStore("member-store", {
     },
     add(member: Member) {
       this.members.unshift(member);
+      if (this.editMember?.id === member.id) {
+        this.editMember = undefined;
+      }
       this.cleanData();
     },
     remove(id: number) {
       this.members = this.members.filter((member) => member.id !== id);
+      if (this.editMember?.id === id) {
+        this.editMember = undefined;
+      }
       this.saveAll();
     },
     save(member: Member) {
+      this.validateMember(member);
       const index = this.members.findIndex((m) => m.id === member.id);
       if (index === -1) {
         this.add(member);
       } else {
         this.members[index] = member;
       }
+      this.editMember = undefined;
       this.saveAll();
     },
     saveAll() {
       this.cleanData();
       this.updateGroups();
       getLocalStorageInstance().save(this.$state);
-      
+
       if (this.allTargetNames.length === 1) {
         this.selectedTargetName = this.allTargetNames[0];
       }
@@ -99,6 +108,25 @@ export const useMemberStore = defineStore("member-store", {
     clearAllData() {
       this.members = [];
       this.saveAll();
+    },
+    validateMember(member: Member) {
+      if (!member.name) {
+        throw new Error("Name is required");
+      }
+      if (member.targetTimes.length === 0) {
+        throw new Error("At least one target time is required");
+      }
+      if (member.targetTimes.some((tt) => !tt.targetName)) {
+        throw new Error("Target name is required");
+      }
+      if (member.targetTimes.some((tt) => tt.minutes < 0 || tt.seconds < 0)) {
+        throw new Error("Invalid target time");
+      }
+      //no duplicate target names
+      const targetNames = member.targetTimes.map((tt) => tt.targetName);
+      if (new Set(targetNames).size !== targetNames.length) {
+        throw new Error("Duplicate target names are not allowed");
+      }
     },
     cleanData() {
       //TODO: Don't replace values inplace, create new [] and assign at the end

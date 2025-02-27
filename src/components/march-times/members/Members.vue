@@ -6,14 +6,25 @@
       </HowToUse>
     </template>
     <MemberItemView
+      v-if="memberStore.editMember"
+      v-model="memberStore.editMember!"
+      :groups="memberStore.groups"
+      :show-selected="false"
+      :edit-open="isEditing"
+      @save="saveMember"
+      @remove="removeMember"
+      @close-edit="closeEdit"
+    />
+    <MemberItemView
       v-for="(member, idx) in memberStore.members"
       :key="member.id"
       v-model="memberStore.members[idx]"
       :groups="memberStore.groups"
       :show-selected="false"
-      :edit-open="editingMemberId === member.id"
+      :edit-open="false"
       @save="saveMember"
-      @remove="(item:Member) => memberStore.remove(item.id)"
+      @remove="removeMember"
+      @close-edit="closeEdit"
     />
     <template #bottomContent>
       <v-row dense>
@@ -77,7 +88,7 @@ const { openImport = false } = defineProps<{
   openImport?: boolean;
 }>();
 
-const editingMemberId = ref<number | null>(null);
+const isEditing = ref(!!memberStore.editMember);
 const addNewMember = () => {
   const member = {
     id: memberStore.nextMemberId,
@@ -88,13 +99,25 @@ const addNewMember = () => {
     group: "",
   };
 
-  memberStore.add(member);
-  editingMemberId.value = member.id;
+  memberStore.editMember = member;
+  isEditing.value = true;
 };
 
 const saveMember = (member: Member) => {
   memberStore.save(member);
-  editingMemberId.value = null;
+  memberStore.editMember = undefined;
+  isEditing.value = false;
+};
+
+const removeMember = (member: Member) => {
+  memberStore.remove(member.id);
+  memberStore.editMember = undefined;
+  isEditing.value = false;
+};
+
+const closeEdit = () => {
+  memberStore.editMember = undefined;
+  isEditing.value = false;
 };
 
 const showImportDialog = ref<boolean>(openImport);

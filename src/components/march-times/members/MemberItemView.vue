@@ -28,7 +28,12 @@
         </v-col>
       </v-row>
     </v-container>
-    <DialogFullScreen v-model="isEdit" contained title="Edit Member">
+    <DialogFullScreen
+      v-model="isEdit"
+      contained
+      title="Edit Member"
+      @close="$emit('closeEdit')"
+    >
       <MemberEdit
         v-if="isEdit"
         v-model="model"
@@ -53,6 +58,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (event: "remove", member: Member): void;
   (event: "save", member: Member): void;
+  (event: "closeEdit"): void;
 }>();
 
 const isEdit = ref<boolean>(props.editOpen ?? false);
