@@ -7,7 +7,7 @@
           :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           title="Toggle Groups"
           color=""
-          size="x-small"
+          size="small"
           :text="isGroups ? 'Toggle Members' : 'Toggle Groups'"
           style="cursor: pointer"
           @click="toggleGroupsChanged"
@@ -19,7 +19,7 @@
           prepend-icon="mdi-plus"
           title="Create Group"
           color="secondary"
-          size="x-small"
+          size="small"
           text="Create Group"
           @click="showGroupDialog = true"
         />
@@ -31,7 +31,7 @@
           title="Edit Members"
           style="cursor: pointer"
           color="secondary"
-          size="x-small"
+          size="small"
           text="Edit Members"
           @click="() => (isEditing = true)"
         />
