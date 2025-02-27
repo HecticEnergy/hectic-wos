@@ -2,19 +2,19 @@
   <div class="my-4">
     <v-row dense class="d-flex flex-row">
       <v-col shrink grow align="start">
-        <v-chip
+        <!-- <v-chip
           data-tour="groups-toggle"
           :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           title="Toggle Groups"
-          color=""
+          color="secondary"
           size="small"
           :text="isGroups ? 'Toggle Members' : 'Toggle Groups'"
           style="cursor: pointer"
           @click="toggleGroupsChanged"
-        />
+        /> -->
       </v-col>
       <v-col v-if="!isGroups" shrink cols="auto" align="end">
-        <v-chip
+        <v-btn
           data-tour="groups-add"
           prepend-icon="mdi-plus"
           title="Create Group"
@@ -25,12 +25,12 @@
         />
       </v-col>
       <v-col shrink cols="auto" align="end">
-        <v-chip
+        <v-btn
           data-tour="member-edit"
           prepend-icon="mdi-pencil"
           title="Edit Members"
           style="cursor: pointer"
-          color="secondary"
+          color="primary"
           size="small"
           text="Edit Members"
           @click="() => (isEditing = true)"
@@ -45,8 +45,10 @@
           :all-items="allMembers"
           label="Select Members"
           disallow-new-items
+          :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           multiple
           dense
+          @click:prepend="toggleGroupsChanged"
           @update:model-value="$emit('change')"
         />
         <ComboboxChips
@@ -55,8 +57,10 @@
           :all-items="memberStore.groups"
           label="Selected Groups"
           disallow-new-items
+          :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           multiple
           dense
+          @click:prepend="toggleGroupsChanged"
           @update:model-value="$emit('change')"
         />
       </v-col>
