@@ -13,7 +13,7 @@
           @click="toggleGroupsChanged"
         />
         </v-col>
-        <v-col>
+        <v-col grow>
         <!-- <v-chip
           data-tour="groups-toggle"
           :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
@@ -29,10 +29,10 @@
         <v-btn
           data-tour="groups-add"
           prepend-icon="mdi-plus"
-          title="Create Group"
+          title="Add Group"
           color="secondary"
           size="small"
-          text="Create Group"
+          text="Group"
           @click="showGroupDialog = true"
         />
       </v-col>
@@ -44,7 +44,7 @@
           style="cursor: pointer"
           color="primary"
           size="small"
-          text="Edit Members"
+          text="Members"
           @click="() => (isEditing = true)"
         />
       </v-col>
