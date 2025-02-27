@@ -1,7 +1,19 @@
 <template>
   <div class="my-4">
-    <v-row dense class="d-flex flex-row">
-      <v-col shrink grow align="start">
+    <v-row dense class="d-flex flex-row" align="center">
+      <v-col shrink cols="auto" align="start">
+        <v-switch
+          v-model="isGroups"
+          data-tour="groups-toggle"
+          title="Toggle Groups"
+          density="compact"
+          hide-details
+          append-icon="mdi-account-group"
+          prepend-icon="mdi-account"
+          @click="toggleGroupsChanged"
+        />
+        </v-col>
+        <v-col>
         <!-- <v-chip
           data-tour="groups-toggle"
           :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
@@ -45,10 +57,8 @@
           :all-items="allMembers"
           label="Select Members"
           disallow-new-items
-          :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           multiple
           dense
-          @click:prepend="toggleGroupsChanged"
           @update:model-value="$emit('change')"
         />
         <ComboboxChips
@@ -57,10 +67,8 @@
           :all-items="memberStore.groups"
           label="Selected Groups"
           disallow-new-items
-          :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           multiple
           dense
-          @click:prepend="toggleGroupsChanged"
           @update:model-value="$emit('change')"
         />
       </v-col>
