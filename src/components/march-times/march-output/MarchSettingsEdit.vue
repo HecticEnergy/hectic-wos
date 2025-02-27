@@ -104,6 +104,18 @@
         @change="savePageData"
       />
     </div>
+    <template #bottomContent>
+      <ButtonContainer>
+        <v-btn
+          prepend-icon="mdi-check"
+          color="success"
+          width="100%"
+          @click="done"
+        >
+          Done
+        </v-btn>
+      </ButtonContainer>
+    </template>
   </ParentCard>
 </template>
 
@@ -125,6 +137,10 @@ onMounted(() => {
   // console.log("maxMarchTime", maxSeconds, time, maxMarchTime.value);
 });
 
+const emit = defineEmits<{
+  (e: "close"): void;
+}>();
+
 const marchSettingsType = ref<MarchSettingsType>(
   marchSettingStore.marchSettingsType
 );
@@ -144,6 +160,11 @@ const refreshLandingTime = () => {
   const maxMarchSeconds = marchSettingStore.getMaxMarchSeconds(targets);
   marchSettingStore.refreshLandingTime(maxMarchSeconds);
   marchSettingStore.saveData();
+};
+
+const done = () => {
+  savePageData();
+  emit("close");
 };
 
 const savePageData = () => {

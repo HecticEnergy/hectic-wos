@@ -44,7 +44,7 @@
     contained
     title="Edit March Settings"
   >
-    <MarchSettingsEdit />
+    <MarchSettingsEdit @close="showMarchEditDialog = false" />
   </DialogFullScreen>
 </template>
 
