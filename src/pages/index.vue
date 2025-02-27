@@ -101,14 +101,10 @@
           <p>They have a lot of great tools and resources for the game!</p>
           <br />
           <v-row class="d-flex justify-space-between" align="end">
-            <v-col>
-              <v-img
-                src="../assets/discord.webp"
-                width="30"
-                height="30"
-                href="https://discord.gg/dMYY8bcPXp"
-                target="_blank"
-              />
+            <v-col style="max-height: 46px;">
+              <a href="https://discord.gg/dMYY8bcPXp" target="_blank">
+                <v-img src="../assets/discord.webp" style="position: abosolute; top: -12px; left: -12px; width: 60px; height: 60px;" />
+              </a>
             </v-col>
             <v-col align="end">
               <a href="https://wosnerds.com" target="_blank">wosnerds.com</a>
