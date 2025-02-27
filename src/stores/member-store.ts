@@ -58,6 +58,10 @@ export const useMemberStore = defineStore("member-store", {
       }
     },
     setDefaultTarget() {
+      if (!this.allTargetNames.length) {
+        this.selectedTargetName = "";
+        return;
+      }
       if (this.allTargetNames.length === 1 || this.selectedTargetName === "") {
         this.selectedTargetName = this.allTargetNames[0];
       }
@@ -66,6 +70,9 @@ export const useMemberStore = defineStore("member-store", {
       this.groups = [
         ...new Set(this.members.map((m) => m.group).filter((g) => !!g)),
       ];
+      this.selectedGroups = this.selectedGroups.filter((g) =>
+        this.groups.includes(g)
+      );
     },
     add(member: Member) {
       this.members.unshift(member);
@@ -96,12 +103,8 @@ export const useMemberStore = defineStore("member-store", {
       this.cleanData();
       this.updateGroups();
       getLocalStorageInstance().save(this.$state);
-
-      if (this.allTargetNames.length === 1) {
-        this.selectedTargetName = this.allTargetNames[0];
-      }
-
       this.setDefaultTarget();
+
       //TODO Remove this - clearing out old local storage data
       localStorage.removeItem("members");
     },
@@ -113,7 +116,7 @@ export const useMemberStore = defineStore("member-store", {
       if (!member.name) {
         throw new Error("Name is required");
       }
-      if (member.targetTimes.length === 0) {
+      if (!member.targetTimes?.length) {
         throw new Error("At least one target time is required");
       }
       if (member.targetTimes.some((tt) => !tt.targetName)) {
