@@ -61,8 +61,16 @@
 </template>
 
 <script setup lang="ts">
-import { click, setInputValue, buildStep, clearElementFlash } from "@/services/tour-helpers";
+import {
+  click,
+  setInputValue,
+  buildStep,
+  clearElementFlash,
+} from "@/services/tour-helpers";
 import * as tourConsts from "@/services/tour/tour-consts";
+import { useMemberStore } from "@/stores/member-store";
+
+const memberStore = useMemberStore();
 
 const tourStopped = ref(false);
 const app = getCurrentInstance();
@@ -121,7 +129,15 @@ const openImportSteps = [
   buildStep(
     tourConsts.MEMBER_EDIT,
     `Welcome to the March Times page!<br />Click here to edit your members!` +
-      `<br />(click "next", we got it this time.)`
+      `<br />(click "next", we got it this time.)`,
+    () =>
+      new Promise<void>((resolve) => {
+        const tourMember = memberStore.members.find(
+          (m) => m.name.toLocaleLowerCase() === "mystic"
+        );
+        if (tourMember) memberStore.remove(tourMember.id);
+        resolve();
+      })
   ),
   buildStep(
     tourConsts.MEMBERS_IMPORT_BTN,

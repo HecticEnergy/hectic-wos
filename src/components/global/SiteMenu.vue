@@ -93,7 +93,7 @@ const { smAndDown } = useDisplay();
 
 const rail = defineModel<boolean>("rail", { required: true });
 
-const drawer = ref(true);
+const drawer = ref(false);
 
 const toggleRail = () => {
   rail.value = !rail.value;

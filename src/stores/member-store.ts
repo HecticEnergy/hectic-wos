@@ -27,8 +27,8 @@ export const useMemberStore = defineStore("member-store", {
     selectedTargetName: "",
   }),
   getters: {
-    nextMemberId: (state) => state.members.length + 1,
-    nextOrder: (state) => state.members.length * 10 + 10,
+    nextMemberId: (state) => Math.max(...state.members.map(m => m.id)) + 1,
+    nextOrder: (state) => Math.max(...state.members.map(m => m.order), 0) + 10,
     memberNames: (state) => state.members.map((m) => m.name),
     groupNames: (state) => state.groups,
     nextTargetId: (state) => {
@@ -89,13 +89,17 @@ export const useMemberStore = defineStore("member-store", {
       this.saveAll();
     },
     save(member: Member) {
+      console.log("save: Members", this.members);
       this.validateMember(member);
+      console.log("save: Validated", member);
+      
       const index = this.members.findIndex((m) => m.id === member.id);
       if (index === -1) {
         this.add(member);
       } else {
         this.members[index] = member;
       }
+      console.log("save: remove duplicates", this.members);
       this.editMember = undefined;
       this.saveAll();
     },
