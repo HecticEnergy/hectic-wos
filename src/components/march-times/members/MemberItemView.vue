@@ -37,6 +37,7 @@
         v-if="isEdit"
         v-model="model"
         :groups="groups"
+        :all-target-names="allTargetNames"
         @save="save"
         @cancel="() => (isEdit = false)"
         @delete="() => emit('remove', model)"
@@ -53,6 +54,7 @@ const props = defineProps<{
   groups: string[];
   showSelected?: boolean;
   editOpen?: boolean;
+  allTargetNames: string[];
 }>();
 const emit = defineEmits<{
   (event: "remove", member: Member): void;

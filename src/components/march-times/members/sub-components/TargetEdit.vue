@@ -5,10 +5,15 @@
     dense
   >
     <v-col grow>
-      <v-text-field
+      <v-combobox
         v-model="targets[idx].targetName"
+        v-model:search="targetSearch"
+        :items="allTargetNames"
         label="Target Name"
         clearable
+        dense
+        hide-details
+        @update:model-value="(value:string) => updateModel(value, idx)"
       />
     </v-col>
     <v-col cols="auto" align="center" class="d-flex flex-row">
@@ -37,14 +42,25 @@
 import type { MemberTargetTimes } from "@/models";
 
 const targets = defineModel<MemberTargetTimes[]>({ required: true });
-defineProps({
+const props = defineProps({
   memberId: { type: Number, required: true },
+  allTargetNames: { type: Array<string>, required: true },
 });
 
 defineEmits<{
   (e: "remove", id: number): void;
 }>();
 
+const targetSearch = ref("");
+const getValue = (item: string) => item?.toLocaleLowerCase()?.trim();
+
+const updateModel = (value: string, index: number) => {
+  const itemUpdated = props.allTargetNames.find(
+    (v) => getValue(value) === getValue(v)
+  );
+
+  targets.value[index].targetName = itemUpdated ?? value;
+};
 const updateTarget = (
   target: MemberTargetTimes,
   newTarget: { minutes?: number; seconds?: number }
