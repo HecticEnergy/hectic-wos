@@ -62,7 +62,10 @@ export const deductFromUtcTimeLanding = (
   landingSettings: LandingSettings,
   rallyTimeMinutes: number
 ): TargetOutputItem[] => {
-  const sortedTargets = sortAndPrepTargets(memberTargets);
+  const sortedTargets = sortAndPrepTargets(
+    memberTargets,
+    landingSettings.separateSeconds.seconds
+  );
   return getLandingTime(sortedTargets, landingSettings, rallyTimeMinutes);
 };
 
