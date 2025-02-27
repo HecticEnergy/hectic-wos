@@ -74,7 +74,7 @@
         </p>
         <i class="opacity-80">
           (More beer is more fuel. <br />
-          Oh, and paying for serverless compute and a database resources...)
+          Oh, and paying for serverless compute and database resources...)
         </i>
       </v-container>
     </ParentCard>
