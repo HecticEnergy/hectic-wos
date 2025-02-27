@@ -117,7 +117,7 @@ const { defaultOpenEdit = false } = defineProps<{
 const showGroupDialog = ref(false);
 const createGroupEdit = ref("");
 
-const allMembers = ref<string[]>(memberStore.members.map((m) => m.name));
+const allMembers = computed(() => memberStore.members.map((m) => m.name));
 const selectedMembers = computed({
   get: () => memberStore.getSelectedMembers().map((m) => m.name),
   set: (value: string[]) => {
@@ -128,7 +128,6 @@ const selectedMembers = computed({
   },
 });
 
-//TODO: add a button to the left to toggle groups vs members
 const isGroups = ref<boolean>(!!memberStore.selectedGroups.length);
 const selectedGroups = computed({
   get: () => memberStore.selectedGroups,
