@@ -86,6 +86,8 @@
       icon="mdi-glass-mug-variant"
       class="hover-pointer"
       size="large"
+      color="secondary"
+      title="Donate!"
       @click="showDialog = true"
     />
   </div>
