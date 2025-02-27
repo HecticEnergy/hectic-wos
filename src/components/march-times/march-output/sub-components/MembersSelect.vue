@@ -7,10 +7,10 @@
           :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           title="Toggle Groups"
           color=""
-          size="small"
+          size="x-small"
           :text="isGroups ? 'Toggle Members' : 'Toggle Groups'"
           style="cursor: pointer"
-          @click="isGroupsChanged"
+          @click="toggleGroupsChanged"
         />
       </v-col>
       <v-col v-if="!isGroups" shrink cols="auto" align="end">
@@ -19,7 +19,7 @@
           prepend-icon="mdi-plus"
           title="Create Group"
           color="secondary"
-          size="small"
+          size="x-small"
           text="Create Group"
           @click="showGroupDialog = true"
         />
@@ -31,7 +31,7 @@
           title="Edit Members"
           style="cursor: pointer"
           color="secondary"
-          size="small"
+          size="x-small"
           text="Edit Members"
           @click="() => (isEditing = true)"
         />
@@ -47,6 +47,7 @@
           disallow-new-items
           multiple
           dense
+          @update:model-value="$emit('change')"
         />
         <ComboboxChips
           v-else-if="!!isGroups"
@@ -56,6 +57,7 @@
           disallow-new-items
           multiple
           dense
+          @update:model-value="$emit('change')"
         />
       </v-col>
       <v-col cols="auto" shrink />
@@ -115,6 +117,10 @@ const { defaultOpenEdit = false } = defineProps<{
   defaultOpenEdit?: boolean;
 }>();
 
+const emit = defineEmits<{
+  (event: "change"): void;
+}>();
+
 const showGroupDialog = ref(false);
 const createGroupEdit = ref("");
 
@@ -147,8 +153,9 @@ const selectedGroups = computed({
   },
 });
 
-const isGroupsChanged = () => {
+const toggleGroupsChanged = () => {
   isGroups.value = !isGroups.value;
+  emit("change");
 };
 
 const createGroup = () => {
@@ -158,6 +165,7 @@ const createGroup = () => {
   memberStore.saveAll();
   showGroupDialog.value = false;
   createGroupEdit.value = "";
+  emit("change");
 };
 
 const closeGroupDialog = () => {
