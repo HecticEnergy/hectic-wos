@@ -1,37 +1,38 @@
 <template>
   <div class="my-4">
     <v-row dense class="d-flex flex-row">
-      <v-col shrink cols="auto" align="right" class="mr-2">
-        <v-icon
+      <v-col shrink grow align="start">
+        <v-chip
           data-tour="groups-toggle"
-          :icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
+          :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           title="Toggle Groups"
+          color=""
+          size="small"
+          :text="isGroups ? 'Toggle Members' : 'Toggle Groups'"
           style="cursor: pointer"
-          flat
           @click="isGroupsChanged"
         />
       </v-col>
-      <v-spacer grow />
-      <v-col shrink cols="auto" align="right" class="mr-2">
-        <v-icon
+      <v-col v-if="!isGroups" shrink cols="auto" align="end">
+        <v-chip
           data-tour="groups-add"
-          icon="mdi-plus"
+          prepend-icon="mdi-plus"
           title="Create Group"
-          :style="{
-            cursor: 'pointer',
-            visibility: !isGroups ? 'visible' : 'hidden',
-          }"
-          flat
+          color="secondary"
+          size="small"
+          text="Create Group"
           @click="showGroupDialog = true"
         />
       </v-col>
-      <v-col shrink cols="auto" align="right">
-        <v-icon
+      <v-col shrink cols="auto" align="end">
+        <v-chip
           data-tour="member-edit"
-          icon="mdi-pencil"
+          prepend-icon="mdi-pencil"
           title="Edit Members"
           style="cursor: pointer"
-          flat
+          color="secondary"
+          size="small"
+          text="Edit Members"
           @click="() => (isEditing = true)"
         />
       </v-col>
