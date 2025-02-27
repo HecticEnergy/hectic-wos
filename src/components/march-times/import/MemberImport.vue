@@ -7,11 +7,11 @@
       label="Import Type"
     />
     <MemberImportMultipleTarget
-      v-if="importType === 'Multiple'"
+      v-if="importType === 'Multiple Target'"
       @parse-text="multipleTargetsParser"
     />
     <MemberImportSingleTarget
-      v-if="importType === 'Single'"
+      v-if="importType === 'Single Target'"
       @parse-text="singleTargetParser"
     />
 
@@ -42,9 +42,9 @@ import {
 const memberStore = useMemberStore();
 const alertStore = useAlertStore();
 
-const allImportTypes = ["Single", "Multiple"] as const;
+const allImportTypes = ["Single Target", "Multiple Target"] as const;
 type ImportType = (typeof allImportTypes)[number];
-const importType = ref<ImportType>("Multiple");
+const importType = ref<ImportType>("Multiple Target");
 
 const confirmEdits = ref<Member[]>([]);
 const showConfirm = ref(false);

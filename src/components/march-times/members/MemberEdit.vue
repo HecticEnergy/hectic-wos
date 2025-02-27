@@ -81,11 +81,19 @@ const emit = defineEmits<{
 }>();
 
 onMounted(() => {
+  initializeMember();
+});
+
+onUpdated(() => {
+  initializeMember();
+});
+
+const initializeMember = () => {
   member.value = JSON.parse(JSON.stringify(model.value))! as Member;
   if (member.value.targetTimes.length === 0) {
     addTarget();
   }
-});
+};
 
 const confirmDelete = ref(false);
 

@@ -1,37 +1,50 @@
 <template>
   <div class="my-4">
-    <v-row dense class="d-flex flex-row">
-      <v-col shrink cols="auto" align="right" class="mr-2">
-        <v-icon
+    <v-row dense class="d-flex flex-row" align="center">
+      <v-col shrink cols="auto" align="start">
+        <v-switch
+          v-model="isGroups"
           data-tour="groups-toggle"
-          :icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
           title="Toggle Groups"
-          style="cursor: pointer"
-          flat
-          @click="isGroupsChanged"
+          density="compact"
+          hide-details
+          append-icon="mdi-account-group"
+          prepend-icon="mdi-account"
+          @click="toggleGroupsChanged"
         />
+        </v-col>
+        <v-col grow>
+        <!-- <v-chip
+          data-tour="groups-toggle"
+          :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
+          title="Toggle Groups"
+          color="secondary"
+          size="small"
+          :text="isGroups ? 'Toggle Members' : 'Toggle Groups'"
+          style="cursor: pointer"
+          @click="toggleGroupsChanged"
+        /> -->
       </v-col>
-      <v-spacer grow />
-      <v-col shrink cols="auto" align="right" class="mr-2">
-        <v-icon
+      <v-col v-if="!isGroups" shrink cols="auto" align="end">
+        <v-btn
           data-tour="groups-add"
-          icon="mdi-plus"
-          title="Create Group"
-          :style="{
-            cursor: 'pointer',
-            visibility: !isGroups ? 'visible' : 'hidden',
-          }"
-          flat
+          prepend-icon="mdi-plus"
+          title="Add Group"
+          color="secondary"
+          size="small"
+          text="Group"
           @click="showGroupDialog = true"
         />
       </v-col>
-      <v-col shrink cols="auto" align="right">
-        <v-icon
+      <v-col shrink cols="auto" align="end">
+        <v-btn
           data-tour="member-edit"
-          icon="mdi-pencil"
+          prepend-icon="mdi-pencil"
           title="Edit Members"
           style="cursor: pointer"
-          flat
+          color="primary"
+          size="small"
+          text="Members"
           @click="() => (isEditing = true)"
         />
       </v-col>
@@ -46,6 +59,7 @@
           disallow-new-items
           multiple
           dense
+          @update:model-value="$emit('change')"
         />
         <ComboboxChips
           v-else-if="!!isGroups"
@@ -55,6 +69,7 @@
           disallow-new-items
           multiple
           dense
+          @update:model-value="$emit('change')"
         />
       </v-col>
       <v-col cols="auto" shrink />
@@ -114,10 +129,14 @@ const { defaultOpenEdit = false } = defineProps<{
   defaultOpenEdit?: boolean;
 }>();
 
+const emit = defineEmits<{
+  (event: "change"): void;
+}>();
+
 const showGroupDialog = ref(false);
 const createGroupEdit = ref("");
 
-const allMembers = ref<string[]>(memberStore.members.map((m) => m.name));
+const allMembers = computed(() => memberStore.members.map((m) => m.name));
 const selectedMembers = computed({
   get: () => memberStore.getSelectedMembers().map((m) => m.name),
   set: (value: string[]) => {
@@ -128,7 +147,6 @@ const selectedMembers = computed({
   },
 });
 
-//TODO: add a button to the left to toggle groups vs members
 const isGroups = ref<boolean>(!!memberStore.selectedGroups.length);
 const selectedGroups = computed({
   get: () => memberStore.selectedGroups,
@@ -147,8 +165,9 @@ const selectedGroups = computed({
   },
 });
 
-const isGroupsChanged = () => {
+const toggleGroupsChanged = () => {
   isGroups.value = !isGroups.value;
+  emit("change");
 };
 
 const createGroup = () => {
@@ -158,6 +177,7 @@ const createGroup = () => {
   memberStore.saveAll();
   showGroupDialog.value = false;
   createGroupEdit.value = "";
+  emit("change");
 };
 
 const closeGroupDialog = () => {

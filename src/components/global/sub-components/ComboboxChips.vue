@@ -27,10 +27,21 @@
       <v-list-item>
         <v-list-item-title>
           <span v-if="search.length > 0">
-            No results matching "<strong>{{ search }}</strong>".
+            <i class="opacity-60">
+              No results matching "<strong>{{ search }}</strong
+              >"
+            </i>
           </span>
           <span v-if="!disallowNewItems">
-            Press <kbd>enter</kbd> to create a new one.
+            <i class="opacity-60">
+              Press <kbd>enter</kbd> to create a new one
+            </i>
+          </span>
+          <span v-if="allItems.length === 0">
+            <i class="opacity-60">No data available</i>
+          </span>
+          <span v-else-if="allItems.length === model.length">
+            <i class="opacity-60">All items selected</i>
           </span>
         </v-list-item-title>
       </v-list-item>
@@ -43,7 +54,7 @@ const model = defineModel<any[]>({ required: true });
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps<{
   label: string;
-  
+
   allItems: any[];
   disallowNewItems?: boolean;
 }>();
