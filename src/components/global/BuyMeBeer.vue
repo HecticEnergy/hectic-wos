@@ -81,16 +81,25 @@
   </dialog-full-screen>
 
   <!-- <v-layout-item model-value position="bottom" class="text-end" size="88"> -->
-  <div class="ma-4">
-    <v-icon
-      icon="mdi-glass-mug-variant"
-      class="hover-pointer"
-      size="large"
-      color="secondary"
+  <v-hover v-slot="{ isHovering, props }">
+    <div
+      v-bind="props"
+      class="ma-4 d-flex flex-column align-center"
+      style="cursor: pointer"
       title="Donate!"
       @click="showDialog = true"
-    />
-  </div>
+    >
+      <v-icon
+        icon="mdi-glass-mug-variant"
+        size="large"
+        color="secondary"
+        class="ma-0 pa-0"
+      />
+      <span :style="{ fontSize: 'x-small', opacity: isHovering ? '.8' : '.4' }">
+        Donate
+      </span>
+    </div>
+  </v-hover>
   <!-- </v-layout-item> -->
 </template>
 
