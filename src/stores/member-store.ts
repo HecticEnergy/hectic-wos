@@ -105,10 +105,10 @@ export const useMemberStore = defineStore("member-store", {
       const invalidTargetIds = this.members.filter((m) =>
         m.targetTimes.filter((tt) => tt.id < 0)
       );
-
+      let targetId = this.nextTargetId;
       for (const invalidTargetId of invalidTargetIds) {
         for (const targetTime of invalidTargetId.targetTimes) {
-          targetTime.id = this.nextTargetId;
+          targetTime.id = targetId++;
         }
       }
 
