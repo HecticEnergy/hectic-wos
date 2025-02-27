@@ -24,7 +24,6 @@
             flat
             @click="toggleEdit"
           />
-          <!-- buttons -->
         </v-col>
       </v-row>
     </v-container>

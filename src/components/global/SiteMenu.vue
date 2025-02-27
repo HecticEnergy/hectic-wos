@@ -135,7 +135,7 @@ const bottomMenuItems = ref([
  
 {
     label: "Under Construction",
-    divider: true,
+    divider: false,
     items: [
       {
         title: "Ministry Appointments",

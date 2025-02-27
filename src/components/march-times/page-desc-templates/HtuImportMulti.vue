@@ -38,26 +38,37 @@ TargetName: [Minutes:]Seconds</pre
   </v-sheet>
   <br />
   <p>The first line will be used as the username</p>
+  <br />
   <p>
     The target name <b>MUST</b> be consistent across all users added through
     "Import Member", or they will not be added to the rallies for that Target.
   </p>
+  <br />
   <p>
     The system uses the colon after the Target Name to identify the end of the
     targets name.
   </p>
+  <br />
   <p>
     Minutes are optional, but if you include them, they must be followed by a
     colon. Letters in this section may break the parser.
   </p>
+  <br />
   <p>The seconds are required. Otherwise, why are you adding the member?</p>
+  <br />
   <p>
-    <b><i>REMEMBER</i></b> WOS (at the time of this writing) has a limit of 7
-    lines in the chat. So you can do 6 members at the same time.
+    <b><i>REMEMBER</i></b> WOS (at the time of this writing) has a limit of 11
+    lines in the chat. So you can do 10 members at the same time.
   </p>
+  <br />
   <p>
     I also recommend you use a short version of the members name, so that things
     display nicely in chat.
+  </p>
+  <br />
+  <p>
+    <b>Select Group</b> allows you to attach a group to the member being
+    imported. You can add a new one simply by typing in the box.
   </p>
 </template>
 

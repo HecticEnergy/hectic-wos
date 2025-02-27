@@ -1,10 +1,5 @@
 <template>
   <ParentCard>
-    <template #topContent>
-      <HowToUse>
-        <HtuMembers />
-      </HowToUse>
-    </template>
     <MemberItemView
       v-if="memberStore.editMember"
       v-model="memberStore.editMember!"
