@@ -128,7 +128,7 @@ welcomeSteps.push({
 const openImportSteps = [
   buildStep(
     tourConsts.MEMBER_EDIT,
-    `Welcome to the March Times page!<br />Click here to edit your members!` +
+    `Click here to edit your members!` +
       `<br />(click "next", we got it this time.)`,
     () =>
       new Promise<void>((resolve) => {
@@ -142,7 +142,7 @@ const openImportSteps = [
   buildStep(
     tourConsts.MEMBERS_IMPORT_BTN,
     "On this page you add or edit your members, but let's import some members!" +
-      "<br />(click 'next', we will handle the button click.",
+      "<br />(click 'next', we will handle the button click)",
     () => click(tourConsts.MEMBER_EDIT),
     0
   ),
