@@ -5,7 +5,7 @@
       :key="memberId + target.id + idx"
       class="d-flex flex-row justify-between"
       align="center"
-      style="height: 60px;"
+      style="min-height: 60px;"
     >
     <v-divider />
       <template v-if="isEditing !== idx">
@@ -23,27 +23,9 @@
           <v-label>{{ formatTimeMS(target.minutes, target.seconds) }}</v-label>
         </v-col>
 
-        <v-col cols="auto" shrink>
-          <v-icon
-            color="error"
-            icon="mdi-trash-can"
-            title="delete"
-            class="ml-1 cursor-pointer"
-            @click="() => $emit('remove', target.id)"
-          />
-        </v-col>
       </template>
       <template v-else>
-        <v-col cols="auto" shrink class="ma-0 pa-0">
-          <v-icon
-            color="success"
-            icon="mdi-check"
-            title="close"
-            class="ml-1 cursor-pointer"
-            @click="isEditing = -1"
-          />
-        </v-col>
-        <v-col grow>
+        <v-col cols="12">
           <v-combobox
             v-model="targets[idx].targetName"
             v-model:search="targetSearch"
@@ -55,13 +37,33 @@
             @update:model-value="(value:string) => updateModel(value, idx)"
           />
         </v-col>
-        <v-col cols="auto">
+        
+        <v-col cols="auto" shrink class="ma-0 pa-0">
+          <v-icon
+            color="success"
+            icon="mdi-check"
+            title="close"
+            class="ml-1 cursor-pointer"
+            @click="isEditing = -1"
+          />
+        </v-col>
+        <v-col grow></v-col>
+        <v-col cols="auto" shrink>
           <TimeTextBoxes
             v-model="targets[idx] as MemberTargetTimes"
             @update:model-value="
               (v) =>
                 updateTarget(target, { minutes: v.minutes, seconds: v.seconds })
             "
+          />
+        </v-col>
+        <v-col cols="auto" shrink>
+          <v-icon
+            color="error"
+            icon="mdi-trash-can"
+            title="delete"
+            class="ml-1 cursor-pointer"
+            @click="() => $emit('remove', target.id)"
           />
         </v-col>
       </template>
