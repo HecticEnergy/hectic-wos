@@ -25,10 +25,10 @@
       :member-id="member.id"
       @remove="removeTarget"
     />
-    <v-row dense class="flex-0-0">
+    <v-row dense class="flex-0-0 mt-2">
       <v-col cols="12" align="end">
         <v-btn prepend-icon="mdi-plus" color="secondary" @click="addTarget">
-          Add Target
+          Target
         </v-btn>
       </v-col>
     </v-row>
