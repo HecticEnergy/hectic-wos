@@ -2,14 +2,12 @@ import type { Router } from 'vue-router';
 
 enum Routes {
   HOME = '/',
-  MARCH_TIME_V1 = '/MarchTimes_v1Page',
   MARCH_TIME = '/MarchTimesPage',
   MINISTRY_APPOINTMENTS = '/MinistryAppointments',
 }
 
 const HOME = Routes.HOME;
 const MARCH_TIME = Routes.MARCH_TIME;
-const MARCH_TIME_V1 = Routes.MARCH_TIME_V1;
 const MINISTRY_APPOINTMENTS = Routes.MINISTRY_APPOINTMENTS;
 
 // const formatPrintPuppyCertificateUrl = (pupIds: string[]) => {
@@ -51,7 +49,6 @@ const openInNewTab = (router: Router, to: string): boolean => {
 export default {
   HOME,
   MARCH_TIME,
-  MARCH_TIME_V1,
   MINISTRY_APPOINTMENTS,
   // formatPrintPuppyCertificateUrl,
   // unformatPrintPuppyCertificateUrl,

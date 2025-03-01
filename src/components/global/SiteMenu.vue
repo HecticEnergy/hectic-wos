@@ -145,20 +145,7 @@ const bottomMenuItems = ref([
         dataTour: "ministry-appointments-navbar-link",
       },
     ],
-  },
-  {
-    label: "Legacy",
-    divider: false,
-    items: [
-      {
-        title: "March Times (v1)",
-        icon: "mdi-rocket-outline",
-        to: RouteHelper.MARCH_TIME_V1,
-        key: "march-time-menu-item",
-        dataTour: "march-times-v1-navbar-link",
-      },
-    ],
-  },
+  }
 ]);
 
 watch(route, (to, from) => {
