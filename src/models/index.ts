@@ -12,6 +12,7 @@ export type Member = {
   targetTimes: MemberTargetTimes[];
   isSelected: boolean;
   group: string;
+  //separateSeconds: Time;
 };
 
 export type MemberTarget = {
