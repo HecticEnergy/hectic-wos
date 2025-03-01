@@ -65,6 +65,13 @@ onBeforeMount(() => {
   // openImport.value = memberStore.members.length === 0;
 });
 
+onMounted(() => {
+  setOutput();
+});
+onUpdated(() => {
+  setOutput();
+});
+
 const marchTimeOutput = ref<string>("");
 
 const canCalculate = computed(() => {
