@@ -31,7 +31,7 @@ export const getLaunchTime = (
 
   // Find max march time
   const maxMemberTime = Math.max(
-    ...sortedTargetsExtraProps.map((target) => target.totalSeconds)
+    ...sortedTargetsExtraProps.map((target) => target.totalSeconds + target.addedSecondsOffset)
   );
 
   // Calculate the landing time for each member

@@ -22,7 +22,7 @@
         v-if="field.value !== undefined"
         v-model="field.value"
         :label="field.label"
-        width="100"
+        width="80"
         @change="updateModel"
       />
     </v-col>
