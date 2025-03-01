@@ -65,6 +65,7 @@
    1. Turrets
       1. a button for each, and a count down for each
       2. the button resets the timer and counts down from 1 minute
+      3. coordinate landing time by turret
 5. Import
    1. Assume 130 is 1:30 (game shows minutes/seconds, assume that's what user is doing)
 6. Edit Member
@@ -73,6 +74,6 @@
 8. Member select
    1. show a screen to touch member names to select them (not dropdown)
       1. touch again to deselect
-9. Member specific march offsets
+9.  Member specific march offsets
    1.  each member should have a customizable offset that will apply based on their order
 10. Translation!?
