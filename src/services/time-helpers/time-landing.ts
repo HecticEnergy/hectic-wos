@@ -30,7 +30,7 @@ export const getLandingTime = (
     return {
       memberName: target.target.memberName,
       time: launchTime,
-      totalSeconds: target.totalSeconds,
+      totalSeconds:  getSecondsFromTime(launchTime),
     };
   });
   return memberLandingTimes;
