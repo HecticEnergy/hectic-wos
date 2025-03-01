@@ -49,7 +49,8 @@
         <v-col cols="4" align="center">
           <v-btn
             text="clear"
-            prepend-icon="mdi-close"
+            title="delete all user info"
+            prepend-icon="mdi-trash-can"
             color="error"
             width="100%"
             data-tour="members-clear-btn"
@@ -68,7 +69,7 @@
   <CancelConfirmDialog
     v-model="confirmClear"
     title="Clear Data"
-    text="Are you sure you want to clear all data?"
+    text="Are you sure you want to clear all member data?"
     @confirm="clearData"
   />
   <DialogFullScreen v-model="showImportDialog" contained title="Import Members">
