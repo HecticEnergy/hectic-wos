@@ -31,6 +31,7 @@ export type TargetProps = {
 export type TargetOutputItem = {
   memberName: string;
   time: Time;
+  totalSeconds: number;
 };
 
 export type LaunchSettings = {

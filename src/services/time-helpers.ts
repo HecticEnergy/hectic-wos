@@ -66,7 +66,9 @@ export const deductFromUtcTimeLanding = (
     memberTargets,
     landingSettings.separateSeconds.seconds
   );
-  return getLandingTime(sortedTargets, landingSettings, rallyTimeMinutes);
+  const landingTimes = getLandingTime(sortedTargets, landingSettings, rallyTimeMinutes);
+
+  return landingTimes.sort((a, b) => a.totalSeconds - b.totalSeconds);
 };
 
 export const getUpdatedLandingTimeFromLaunch = (
@@ -94,14 +96,15 @@ export const addUtcTimeLaunch = (
     launchSettings.separateSeconds.seconds
   );
 
-  return getLaunchTime(sortedTargetsExtraProps, date, launchSettings);
+  const launchTimes = getLaunchTime(sortedTargetsExtraProps, date, launchSettings);
+  return launchTimes.sort((a, b) => a.totalSeconds - b.totalSeconds);
 };
 
 export const sortAndPrepTargets = (
   memberTargets: MemberTarget[],
   addedSeconds?: number
 ): TargetProps[] => {
-  const sortedTargets = memberTargets.sort((a, b) => a.order - b.order);
+  const sortedTargets = memberTargets.sort((a, b) => b.order - a.order);
 
   const sortedTargetsExtraProps = sortedTargets.map(
     (target, idx): TargetProps => {

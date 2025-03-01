@@ -47,6 +47,7 @@ export const getLaunchTime = (
     return {
       memberName: target.target.memberName,
       time: launchTime,
+      totalSeconds: target.totalSeconds,
     };
   });
 
