@@ -23,6 +23,7 @@
       v-model="member.targetTimes"
       :all-target-names="allTargetNames"
       :member-id="member.id"
+      :target-edit-id="targetEditId"
       @remove="removeTarget"
     />
     <v-row dense class="flex-0-0 mt-2">
@@ -97,14 +98,16 @@ const initializeMember = () => {
 };
 
 const confirmDelete = ref(false);
-
+const targetEditId = ref(-1);
 const addTarget = () => {
-  member.value.targetTimes.push({
+  const newTarget = {
     id: -1 * member.value.targetTimes.length,
     targetName: "",
     minutes: 0,
     seconds: 0,
-  });
+  };
+  member.value.targetTimes.push(newTarget);
+  targetEditId.value = newTarget.id;
 };
 
 const removeTarget = (id: number) => {

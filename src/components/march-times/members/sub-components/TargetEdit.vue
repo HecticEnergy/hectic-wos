@@ -8,12 +8,12 @@
       style="min-height: 60px;"
     >
     <v-divider />
-      <template v-if="isEditing !== idx">
+      <template v-if="editId !== target.id">
         <v-col cols="auto" shrink>
           <v-icon
             icon="mdi-pencil"
             class="cursor-pointer opacity-80"
-            @click="isEditing = idx"
+            @click="editId = target.id"
           />
         </v-col>
         <v-col grow>
@@ -44,7 +44,7 @@
             icon="mdi-check"
             title="close"
             class="ml-1 cursor-pointer"
-            @click="isEditing = -1"
+            @click="editId = -1"
           />
         </v-col>
         <v-col grow></v-col>
@@ -80,13 +80,14 @@ const targets = defineModel<MemberTargetTimes[]>({ required: true });
 const props = defineProps({
   memberId: { type: Number, required: true },
   allTargetNames: { type: Array<string>, required: true },
+  targetEditId: { type: Number, required: false, default: -1 },
 });
 
-const _isEditing = ref(-1);
-const isEditing = computed({
-  get: () => _isEditing.value,
-  set: (v) => (_isEditing.value = v),
-});
+const editId = ref(props.targetEditId);
+
+watch(props,
+  () => editId.value = props.targetEditId
+);
 
 defineEmits<{
   (e: "remove", id: number): void;
@@ -116,10 +117,6 @@ const updateTarget = (
     throw new Error("seconds is required");
   }
 };
-
-onMounted(() => {
-  console.log("target edit" + targets.value);
-});
 
 //
 </script>
