@@ -8,12 +8,14 @@
   <march-output-display
     :hide-refresh="true"
     unique-id="multi-target-import-template"
-    launch-time-output="[Member Name]
-North: 00:00
-West: 00:00
-South: 00:00
-East: 00:00
-SFC: 00:00"
+    :launch-time-output-lines="[
+      '[Member Name]',
+      'North: 00:00',
+      'West: 00:00',
+      'South: 00:00',
+      'East: 00:00',
+      'SFC: 00:00',
+    ]"
   />
 
   <br />

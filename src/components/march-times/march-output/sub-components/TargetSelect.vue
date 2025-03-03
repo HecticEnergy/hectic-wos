@@ -12,7 +12,7 @@
     color="warning"
     align="center"
   >
-    No Targets Found. <br>
+    No Targets Found. <br />
     Please add members with targets.
   </v-alert>
 </template>
@@ -21,5 +21,7 @@
 import { useMemberStore } from "@/stores/member-store";
 const memberStore = useMemberStore();
 
-const selectedTargetName = defineModel<string>();
+const selectedTargetName = defineModel<string>({
+  required: true,
+});
 </script>

@@ -10,25 +10,13 @@
       class="my-4"
     />
 
-    <v-table
-      v-if="ministryMemberStore.members.length > 0"
-      fixed-header
-    >
+    <v-table v-if="ministryMemberStore.members.length > 0" fixed-header>
       <thead>
         <tr>
-          <th @click="sort('name')">
-            Name
-          </th>
-          <th @click="sort('speedups')">
-            {{ selectedSpeedupType }} Speedups
-          </th>
-          <th @click="sort('fc')">
-            FC
-          </th>
-          <th
-            class="text-right d-none d-sm-block"
-            @click="sort('time')"
-          >
+          <th @click="sort('name')">Name</th>
+          <th @click="sort('speedups')">{{ selectedSpeedupType }} Speedups</th>
+          <th @click="sort('fc')">FC</th>
+          <th class="text-right d-none d-sm-block" @click="sort('time')">
             Time Ranges
           </th>
           <th />
@@ -72,7 +60,7 @@
     </v-table>
     <div v-if="!!ministryMemberStore.hasSelectedMembers">
       <MarchOutputDisplay
-        :launch-time-output="ministryMemberOutput"
+        :launch-time-output-lines="ministryMemberOutput"
         unique-id="ministry-member-output"
         :hide-refresh="true"
       />
@@ -151,8 +139,7 @@ const formatTime = (time: TimeHM, pad: boolean = true) => {
 const ministryMemberOutput = computed(() => {
   return ministryMemberStore.members
     .filter((m) => m.isSelected)
-    .map((m) => `${getTimeRanges(m, false)} UTC - ${m.name}`)
-    .join("\n");
+    .map((m) => `${getTimeRanges(m, false)} UTC - ${m.name}`);
 });
 
 const formatSpeedupTitle = (speedups: Speedup) => {

@@ -32,7 +32,7 @@
             <MarchOutputDisplay
               v-if="canCalculate"
               class="mt-2"
-              :launch-time-output="marchTimeOutput"
+              :launch-time-output-lines="marchTimeOutput"
               unique-id="march-times-march-landing-time-output"
               @refresh-output="setOutput"
             />
@@ -72,7 +72,7 @@ onUpdated(() => {
   setOutput();
 });
 
-const marchTimeOutput = ref<string>("");
+const marchTimeOutput = ref<string[]>([]);
 
 const canCalculate = computed(() => {
   return (
@@ -131,13 +131,13 @@ const calcLaunchTime = () => {
 };
 
 const formatNameTimesDisplay = (nameTimes: TargetOutputItem[]) => {
-  let display =
-    memberStore.allTargetNames.length > 1
-      ? memberStore.selectedTargetName + "\n"
-      : "";
-  display += nameTimes
-    .map((nt) => `${formatTime(nt.time)} - ${nt.memberName}`)
-    .join("\n");
+  const display = [];
+  if (memberStore.allTargetNames.length > 1) {
+    display.push(memberStore.selectedTargetName);
+  }
+  display.push(
+    ...nameTimes.map((nt) => `${formatTime(nt.time)} - ${nt.memberName}`)
+  );
   return display;
 };
 </script>
