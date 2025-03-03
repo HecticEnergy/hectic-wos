@@ -1,8 +1,17 @@
 <template>
-  <v-card class="pa-2" rounded color="background" data-tour="march-output-display">
+  <v-card
+    class="pa-2"
+    rounded
+    color="background"
+    data-tour="march-output-display"
+  >
     <v-row dense>
       <v-col cols="12">
-        <pre :id="uniqueId">{{ launchTimeOutput }}</pre>
+        <div :id="uniqueId">
+          <div v-for="line in launchTimeOutputLines" :key="line">
+            {{ line }}
+          </div>
+        </div>
       </v-col>
       <v-col cols="12">
         <v-row dense class="d-flex justify-center">
@@ -43,7 +52,7 @@
 import { copyHtmlContent } from "@/services/html-helpers";
 
 const props = defineProps<{
-  launchTimeOutput: string;
+  launchTimeOutputLines: string[];
   uniqueId: string;
   hideRefresh?: boolean;
 }>();

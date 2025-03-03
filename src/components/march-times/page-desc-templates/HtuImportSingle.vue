@@ -6,7 +6,7 @@
   <march-output-display
     :hide-refresh="true"
     unique-id="single-target-import-template"
-    launch-time-output="[Member Name]: 00:00"
+    :launch-time-output-lines='["[Member Name]: 00:00"]'
   />
   <br />
   <p>Example:</p>
