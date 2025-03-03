@@ -2,7 +2,7 @@
   <v-row dense height="100%">
     <v-col cols="12" data-tour="member-import-multi-htu">
       <HowToUse>
-        <HtuImportMulti  />
+        <HtuImportMulti />
       </HowToUse>
     </v-col>
   </v-row>
@@ -10,6 +10,7 @@
     v-model="importTargetModel"
     label="Member Data"
     data-tour="member-import-multi-textarea"
+    translate="no"
     placeholder="Hectic
 West: 00:16
 SFC: 34
