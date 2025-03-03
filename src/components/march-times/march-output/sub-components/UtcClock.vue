@@ -1,6 +1,6 @@
 <template>
   <UtcTime
-    :key="updateTimerKey"
+    :time-update-key="updateTimerKey"
     :label="label"
     :time="currentUtc"
   />
