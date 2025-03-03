@@ -9,6 +9,10 @@
         <v-card-text class="pt-5">
           <p>Welcome!</p>
           <br />
+          <p>Choose your Language!</p>
+
+          <div id="google_translate_element"></div>
+          <br />
           <p>
             We have designed a few tools that should make managing your alliance
             <i>a bit</i> easier.
@@ -101,9 +105,18 @@
           <p>They have a lot of great tools and resources for the game!</p>
           <br />
           <v-row class="d-flex justify-space-between" align="end">
-            <v-col style="max-height: 46px;">
+            <v-col style="max-height: 46px">
               <a href="https://discord.gg/dMYY8bcPXp" target="_blank">
-                <v-img src="../assets/discord.webp" style="position: abosolute; top: -12px; left: -12px; width: 60px; height: 60px;" />
+                <v-img
+                  src="../assets/discord.webp"
+                  style="
+                    position: abosolute;
+                    top: -12px;
+                    left: -12px;
+                    width: 60px;
+                    height: 60px;
+                  "
+                />
               </a>
             </v-col>
             <v-col align="end">
@@ -170,4 +183,15 @@
   </ParentCard>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import translate from '@/services/google-translate';
+
+onMounted(() => {
+  translate.loadGoogleTranslateScript();
+  setTimeout(() => {
+    translate.googleTranslateElementInit();
+  }, 1000);
+});
+
+</script>
+
