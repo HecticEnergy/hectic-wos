@@ -3,7 +3,6 @@
     <!-- <v-btn flat icon="mdi-home" to="/" /> -->
     <v-app-bar-nav-icon @click.stop="toggleRail" />
     <v-toolbar-title>Hectic WOS</v-toolbar-title>
-    <v-spacer />
     <v-divider vertical />
     <BuyMeBeer />
   </v-app-bar>
