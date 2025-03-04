@@ -36,6 +36,13 @@
           />
         </v-col>
       </v-row>
+      <br />
+      <br />
+      <h3>TODO List</h3>
+      <p>
+        manage groups <br />
+        manage launch/landing settings <br />
+      </p>
       <template #bottomContent>
         <v-row dense>
           <v-col cols="12" align="center">
