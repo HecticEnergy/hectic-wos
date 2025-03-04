@@ -37,16 +37,7 @@
         />
       </v-col>
       <v-col shrink cols="auto" align="end">
-        <v-btn
-          data-tour="member-edit"
-          prepend-icon="mdi-pencil"
-          title="Edit Members"
-          style="cursor: pointer"
-          color="primary"
-          size="small"
-          text="Members"
-          @click="() => (isEditing = true)"
-        />
+        
       </v-col>
     </v-row>
     <v-row dense align="center" class="d-flex" width="100%">
@@ -74,10 +65,6 @@
       </v-col>
       <v-col cols="auto" shrink />
     </v-row>
-
-    <DialogFullScreen v-model="isEditing" contained title="Manage Members">
-      <Members :open-import="defaultOpenEdit" />
-    </DialogFullScreen>
 
     <v-dialog v-model="showGroupDialog" max-width="400">
       <v-card>
@@ -125,10 +112,6 @@ onMounted(() => {
   //
 });
 
-const { defaultOpenEdit = false } = defineProps<{
-  defaultOpenEdit?: boolean;
-}>();
-
 const emit = defineEmits<{
   (event: "change"): void;
 }>();
@@ -147,7 +130,7 @@ const selectedMembers = computed({
   },
 });
 
-const isGroups = ref<boolean>(!!memberStore.selectedGroups.length);
+const isGroups = ref<boolean | null>(!!memberStore.selectedGroups.length);
 const selectedGroups = computed({
   get: () => memberStore.selectedGroups,
   set: (value: string[]) => {
@@ -185,5 +168,4 @@ const closeGroupDialog = () => {
   createGroupEdit.value = "";
 };
 
-const isEditing = ref(defaultOpenEdit);
 </script>

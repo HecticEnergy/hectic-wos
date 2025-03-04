@@ -8,6 +8,9 @@
         <v-col align="end">
           <UtcClock label="Current UTC Time" />
         </v-col>
+        <v-col cols="auto" align="end">
+          <MarchSettingsPanel />
+        </v-col>
       </v-row>
     </template>
     <v-row dense>
@@ -18,7 +21,7 @@
         />
       </v-col>
       <v-col cols="12">
-        <MembersSelect :default-open-edit="openImport" @change="savePageData" />
+        <MembersSelect @change="savePageData" />
       </v-col>
       <v-col cols="12">
         <MarchTypeToggle @change="savePageData" />
@@ -77,12 +80,10 @@ const marchTimeOutput = ref<string>("");
 const canCalculate = computed(() => {
   return (
     !!memberStore.getSelectedMembers().length &&
-    (!!memberStore.selectedTargetName.length ||
+    (!!memberStore.selectedTargetName?.length ||
       memberStore.allTargetNames.length === 1)
   );
 });
-
-const openImport = ref(false); //computed(() => memberStore.members.length === 0);
 
 const savePageData = () => {
   //localStorage save

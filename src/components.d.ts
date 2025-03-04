@@ -28,6 +28,7 @@ declare module 'vue' {
     LaunchTimeCard: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/LaunchTimeCard.vue')['default']
     MarchOutputDisplay: typeof import('./components/march-times/march-output/sub-components/MarchOutputDisplay.vue')['default']
     MarchSettingsEdit: typeof import('./components/march-times/march-output/MarchSettingsEdit.vue')['default']
+    MarchSettingsPanel: typeof import('./components/march-times/MarchSettingsPanel.vue')['default']
     MarchTimeCardBase: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/MarchTimeCardBase.vue')['default']
     MarchTimes: typeof import('./components/march-times/MarchTimes.vue')['default']
     MarchTypeToggle: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/MarchTypeToggle.vue')['default']
