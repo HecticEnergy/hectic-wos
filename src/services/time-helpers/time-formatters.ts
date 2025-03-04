@@ -1,4 +1,9 @@
 import type { MemberTargetTimes, Time } from "@/models";
+import { getTimeFromSeconds } from "./time-conversions";
+
+export const formatTimeNumber = (number: number) => {
+  return number.toString().padStart(2, "0");
+};
 
 export const formatTimeHMS = (
   hours: number,
@@ -29,20 +34,11 @@ export const formatTime = (time: Time) => {
   }
 };
 
+export const formatTimeFromSeconds = (totalSeconds: number) => {
+  const time = getTimeFromSeconds(totalSeconds);
+  return formatTime(time);
+};
+
 export const formatTargetTime = (targetTime: MemberTargetTimes) => {
   return formatTimeMS(targetTime?.minutes ?? 0, targetTime?.seconds ?? 0);
-};
-
-export const formatTimeFromSeconds = (totalSeconds: number) => {
-  let hours = Math.floor(totalSeconds / 3600);
-  if (hours > 24) {
-    hours = hours - 24;
-  }
-  const minutes = Math.floor(totalSeconds % 3600 / 60);
-  const seconds = totalSeconds % 60;
-  return formatTimeNumber(hours) + ":" + formatTimeMS(minutes, seconds);
-};
-
-export const formatTimeNumber = (number: number) => {
-  return number.toString().padStart(2, "0");
 };
