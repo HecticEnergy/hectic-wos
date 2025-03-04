@@ -30,6 +30,7 @@ declare module 'vue' {
     MarchSettingsEdit: typeof import('./components/march-times/march-output/MarchSettingsEdit.vue')['default']
     MarchTimeCardBase: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/MarchTimeCardBase.vue')['default']
     MarchTimes: typeof import('./components/march-times/MarchTimes.vue')['default']
+    MarchTimeTextBox: typeof import('./components/march-times/_sub-components/MarchTimeTextBox.vue')['default']
     MarchTypeToggle: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/MarchTypeToggle.vue')['default']
     Md2Example: typeof import('./components/test/colors/Md2Example.vue')['default']
     Md3Examples: typeof import('./components/test/colors/Md3Examples.vue')['default']

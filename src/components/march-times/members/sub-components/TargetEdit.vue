@@ -17,7 +17,8 @@
       />
     </v-col>
     <v-col cols="auto" align="center" class="d-flex flex-row">
-      <TimeTextBoxes
+     
+      <march-time-text-box
         v-model="targets[idx]"
         @update:model-value="
           (v) =>
