@@ -31,6 +31,8 @@
             color="error"
             icon="mdi-close"
             class="ml-1 cursor-pointer"
+            tabindex="-1"
+            title="Remove Target"
             @click="() => $emit('remove', target.id)"
           />
         </v-col>
