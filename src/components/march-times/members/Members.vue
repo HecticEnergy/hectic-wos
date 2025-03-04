@@ -25,7 +25,7 @@
     />
     <template #bottomContent>
       <v-row dense>
-        <v-col cols="4" align="center">
+        <v-col cols="6" align="center">
           <v-btn
             prepend-icon="mdi-plus"
             color="secondary"
@@ -35,18 +35,7 @@
             member
           </v-btn>
         </v-col>
-        <v-col cols="4" align="center">
-          <v-btn
-            text="import"
-            prepend-icon="mdi-upload-circle-outline"
-            color="primary"
-            width="100%"
-            data-tour="members-import-btn"
-            @click="showImportDialog = true"
-          />
-        </v-col>
-
-        <v-col cols="4" align="center">
+        <v-col cols="6" align="center">
           <v-btn
             text="clear"
             title="delete all user info"
@@ -72,19 +61,12 @@
     text="Are you sure you want to clear all member data?"
     @confirm="clearData"
   />
-  <DialogFullScreen v-model="showImportDialog" contained title="Import Members">
-    <MemberImport />
-  </DialogFullScreen>
 </template>
 <script setup lang="ts">
 import type { Member } from "@/models";
 import { useMemberStore } from "@/stores/member-store";
 
 const memberStore = useMemberStore();
-
-const { openImport = false } = defineProps<{
-  openImport?: boolean;
-}>();
 
 const isEditing = ref(!!memberStore.editMember);
 const addNewMember = () => {
@@ -118,7 +100,6 @@ const closeEdit = () => {
   isEditing.value = false;
 };
 
-const showImportDialog = ref<boolean>(openImport);
 const confirmClear = ref<boolean>(false);
 const clearData = () => {
   memberStore.clearAllData();
