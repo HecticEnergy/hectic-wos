@@ -141,7 +141,7 @@ const emit = defineEmits<{
   (e: "close"): void;
 }>();
 
-const marchSettingsType = ref<MarchSettingsType>(
+const marchSettingsType = ref<MarchSettingsType | undefined>(
   marchSettingStore.marchSettingsType
 );
 

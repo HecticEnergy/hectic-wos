@@ -24,7 +24,7 @@ export const useMemberStore = defineStore("member-store", {
     editMember: undefined as Member | undefined,
     groups: [] as string[],
     selectedGroups: [] as string[],
-    selectedTargetName: "",
+    selectedTargetName: "" as string | undefined,
   }),
   getters: {
     nextMemberId: (state) => Math.max(...state.members.map(m => m.id)) + 1,

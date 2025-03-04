@@ -3,15 +3,20 @@
 </template>
 
 <script setup lang="ts">
-import type { Time } from "@/models";
+import { cTime } from "@/models";
 import { formatTime } from "@/services/time-helpers";
 
-const props = defineProps<{
-  label?: string;
-  time: Time;
-}>();
-
-const label = props.label ?? "Current UTC Time";
+const props = defineProps({
+  time: {
+    type: cTime,
+    required: true,
+  },
+  label: {
+    type: String,
+    required: false,
+    default: "Current UTC Time",
+  },
+});
 
 const getUtcTimeOffset = () => {
   return formatTime(props.time) ?? "00:00:00";

@@ -52,3 +52,15 @@ export type Time = {
   minutes: number;
   seconds: number;
 };
+
+export class cTime  {
+  hours: number;
+  minutes: number;
+  seconds: number;
+
+  constructor(hours: number, minutes: number, seconds: number) {
+    this.hours = hours;
+    this.minutes = minutes;
+    this.seconds = seconds;
+  }
+}
