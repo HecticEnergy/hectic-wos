@@ -74,9 +74,9 @@ const updateModel = () => {
   const timeFromSec = getTimeFromSeconds(getSecondsFromTime(time));
   marchTime.value = formatTimeMS(timeFromSec.minutes, timeFromSec.seconds);
   lastValidValue = "" + marchTime.value;
-  model.value.minutes = time.minutes;
-  model.value.seconds = time.seconds;
+  model.value.minutes = timeFromSec.minutes;
+  model.value.seconds = timeFromSec.seconds;
   emit("update:model-value", model.value);
-  //   console.log("updateModel", marchTime.value, model.value);
+  // console.log("updateModel", marchTime.value, model.value);
 };
 </script>
