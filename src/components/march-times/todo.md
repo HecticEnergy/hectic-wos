@@ -19,7 +19,7 @@
    1. (in `settings-panel` branch)
 8. Button tooltips (only useful on desktop ofc) - add title to all controls
 9. Menu: March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
-
+10. Add Images from the game to denote SFC targets
 ## Enhancements
 
 1. Settings page
