@@ -82,6 +82,40 @@ export const useMemberStore = defineStore("member-store", {
         this.groups.includes(g)
       );
     },
+    addDeDupe(member: Member) {
+      const existingMember = this.members.find(
+        (m) =>
+          m.name.trim().toLocaleLowerCase() ===
+          member.name.trim().toLocaleLowerCase()
+      );
+      if (existingMember) {
+        const newTargetTimes = member.targetTimes.map((tt) => {
+          const existingTarget = existingMember.targetTimes.find(
+            (ett) =>
+              ett.targetName.trim().toLocaleLowerCase() ===
+              tt.targetName.trim().toLocaleLowerCase()
+          );
+          if (existingTarget && tt.minutes === 0 && tt.seconds === 0) {
+            return existingTarget;
+          } else if (existingTarget && (tt.minutes > 0 || tt.seconds > 0)) {
+            return {
+              ...existingTarget,
+              minutes: tt.minutes,
+              seconds: tt.seconds,
+            };
+          } else {
+            return {
+              ...tt,
+              id: this.nextTargetId,
+            };
+          }
+        });
+        existingMember.targetTimes = newTargetTimes;
+        this.save(existingMember);
+      } else {
+        this.add(member);
+      }
+    },
     add(member: Member) {
       this.members.unshift(member);
       if (this.editMember?.id === member.id) {

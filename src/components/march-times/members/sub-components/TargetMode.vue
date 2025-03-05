@@ -31,8 +31,15 @@
 import type { TargetMode } from "@/models";
 
 const targetMode = defineModel<TargetMode>({ required: true });
+const props = defineProps({
+  changeEnabled: {
+    type: Boolean,
+    default: true,
+  },
+});
 
 const toggleTargetMode = () => {
+  if (!props.changeEnabled) return;
   targetMode.value =
     targetMode.value === "Single Target" ? "Sunfire Castle" : "Single Target";
 };
