@@ -3,29 +3,9 @@
     <v-col class="d-none d-md-block"> </v-col>
     <v-col>
       <ParentCard>
-        <v-row>
-          <v-col cols="12">
-            <target-mode v-model="member.targetType" :change-enabled="false" />
-          </v-col>
-          <v-col cols="12" class="my-2">
-            <h2>{{ member.name }}</h2>
-            <h2 v-if="!member.name" class="opacity-50 italic">
-              Empty Member Name
-            </h2>
-          </v-col>
-          <v-col cols="12">
-            <v-row v-for="(target, idx) in member.targetTimes" :key="idx">
-              <v-col cols="6">
-                <v-label>{{ target.targetName }}</v-label>
-              </v-col>
-              <v-col cols="6" align="end">
-                <v-label>{{
-                  formatTimeMS(target.minutes, target.seconds)
-                }}</v-label>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
+        <member-view-readonly v-model="member" unique-id="imported"/>
+        <br />
+        TODO: Show member merge with differences, have the user edit the merge and save.
         <template #bottomContent>
           <ButtonContainer width="95%">
             <v-row dense>
@@ -107,7 +87,6 @@
 import { type Member } from "@/models";
 import routeHelper from "@/router/route-helper";
 import { memberFromQueryStringFormat } from "@/services/import-parse";
-import { formatTimeMS } from "@/services/time-helpers/time-formatters";
 import { useMemberStore } from "@/stores/member-store";
 import { useRouter } from "vue-router";
 import { useAlertStore } from "@/stores/alert-store";
@@ -117,7 +96,6 @@ const memberStore = useMemberStore();
 const router = useRouter();
 const alertStore = useAlertStore();
 
-const message = ref<string>("Hello World");
 const member = ref<Member>({
   id: memberStore.nextMemberId,
   order: memberStore.nextOrder,
@@ -132,14 +110,8 @@ const isRerouting = ref(false);
 
 onMounted(() => {
   memberStore.loadData();
-  const urlParams = new URLSearchParams(window.location.search);
-  const messageValue = [];
-  for (const [key, value] of urlParams.entries()) {
-    messageValue.push(`${key}=${value}`);
-  }
-  const toParse = messageValue.join("&");
-  message.value = toParse;
-  const newMember = memberFromQueryStringFormat(toParse);
+//   console.log(window.location.search);
+  const newMember = memberFromQueryStringFormat(window.location.search);
 
   if (newMember) {
     member.value.name = newMember.name;

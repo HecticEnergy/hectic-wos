@@ -41,6 +41,7 @@ declare module 'vue' {
     MemberItemView: typeof import('./components/march-times/members/MemberItemView.vue')['default']
     Members: typeof import('./components/march-times/members/Members.vue')['default']
     MembersSelect: typeof import('./components/march-times/march-output/sub-components/MembersSelect.vue')['default']
+    MemberViewReadonly: typeof import('./components/march-times/members/sub-components/MemberViewReadonly.vue')['default']
     NumberTextField: typeof import('./components/global/sub-components/NumberTextField.vue')['default']
     ParentCard: typeof import('./components/global/ParentCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -97,8 +97,12 @@ onMounted(() => {
 });
 
 const saveData = () => {
-  member.value.targetTimes = targetTimes.value;
-//   console.log("saveData", JSON.parse(JSON.stringify(member.value)));
+  member.value.name = member.value.name.trim();
+  member.value.targetTimes = targetTimes.value.map((t) => ({
+    ...t,
+    targetName: t.targetName.trim(),
+  }));
+  //   console.log("saveData", JSON.parse(JSON.stringify(member.value)));
   tls.save(member.value);
 };
 
