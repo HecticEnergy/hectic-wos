@@ -1,49 +1,51 @@
 <template>
-  <v-row dense>
-    <v-col cols="12">
-      <v-textarea
-        v-model="model.memberData"
-        :label="label"
-        :placeholder="placeholder"
-        rows="7"
-        clearable
-        focused
-        data-tour="member-import-textarea"
-      />
-    </v-col>
-    <v-col cols="12">
-      <v-combobox
-        v-model="model.group"
-        :hide-no-data="false"
-        :items="memberStore.groups"
-        hint=""
-        label="Select Group"
-        hide-selected
-        single
-        hide-details="auto"
-        data-tour="member-import-group-select"
-      />
-    </v-col>
-  </v-row>
-  <ButtonContainer>
-    <v-row dense width="100%">
-      <v-col>
-        <v-btn
-          color="success"
-          :disabled="!model.memberData.trim().length"
-          width="100%"
-          prepend-icon="mdi-upload-circle-outline"
-          data-tour="member-import-import-btn"
-          @click="() => $emit('parseText')"
-        >
-          Import
-        </v-btn>
+  <div class="ma-0 pa-0">
+    <v-row dense>
+      <v-col cols="12">
+        <v-textarea
+          v-model="model.memberData"
+          :label="label"
+          :placeholder="placeholder"
+          rows="7"
+          clearable
+          focused
+          data-tour="member-import-textarea"
+        />
       </v-col>
-      <v-col v-if="!memberStore.members.length">
-        <TestData width="100%" />
+      <v-col cols="12">
+        <v-combobox
+          v-model="model.group"
+          :hide-no-data="false"
+          :items="memberStore.groups"
+          hint=""
+          label="Select Group"
+          hide-selected
+          single
+          hide-details="auto"
+          data-tour="member-import-group-select"
+        />
       </v-col>
     </v-row>
-  </ButtonContainer>
+    <ButtonContainer>
+      <v-row dense width="100%">
+        <v-col>
+          <v-btn
+            color="success"
+            :disabled="!model.memberData.trim().length"
+            width="100%"
+            prepend-icon="mdi-upload-circle-outline"
+            data-tour="member-import-import-btn"
+            @click="() => $emit('parseText')"
+          >
+            Import
+          </v-btn>
+        </v-col>
+        <v-col v-if="!memberStore.members.length">
+          <TestData width="100%" />
+        </v-col>
+      </v-row>
+    </ButtonContainer>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -63,5 +65,4 @@ defineProps<{
 defineEmits<{
   (e: "parseText"): void;
 }>();
-
 </script>

@@ -48,6 +48,7 @@ declare module 'vue' {
     SiteMenu: typeof import('./components/global/SiteMenu.vue')['default']
     StatusSnackbar: typeof import('./components/global/StatusSnackbar.vue')['default']
     TargetEdit: typeof import('./components/march-times/members/sub-components/TargetEdit.vue')['default']
+    TargetMode: typeof import('./components/march-times/members/sub-components/TargetMode.vue')['default']
     TargetSelect: typeof import('./components/march-times/march-output/sub-components/TargetSelect.vue')['default']
     TestData: typeof import('./components/march-times/import/TestData.vue')['default']
     TimeTextBoxes: typeof import('./components/march-times/_sub-components/TimeTextBoxes.vue')['default']

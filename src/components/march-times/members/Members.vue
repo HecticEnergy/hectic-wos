@@ -1,5 +1,8 @@
 <template>
   <ParentCard>
+    <template #topContent>
+      <target-mode v-model="memberStore.targetMode" />
+    </template>
     <MemberItemView
       v-if="memberStore.editMember"
       v-model="memberStore.editMember!"
@@ -77,7 +80,7 @@
   </DialogFullScreen>
 </template>
 <script setup lang="ts">
-import type { Member } from "@/models";
+import { SfcTargets, type Member, type MemberTargetTimes } from "@/models";
 import { useMemberStore } from "@/stores/member-store";
 
 const memberStore = useMemberStore();
@@ -88,14 +91,23 @@ const { openImport = false } = defineProps<{
 
 const isEditing = ref(!!memberStore.editMember);
 const addNewMember = () => {
+  let targets = [] as MemberTargetTimes[];
+  if (memberStore.targetMode === "Sunfire Castle")
+    targets = SfcTargets.map((t, i) => ({
+      targetName: t,
+      id: i + 1 * -2,
+    })) as MemberTargetTimes[];
   const member = {
     id: memberStore.nextMemberId,
     order: memberStore.nextOrder,
+    targetType: memberStore.targetMode,
     name: "New Member",
     isSelected: true,
-    targetTimes: [],
+    targetTimes: targets,
     group: "",
   };
+
+  console.log("empty member", member);
 
   memberStore.editMember = member;
   isEditing.value = true;

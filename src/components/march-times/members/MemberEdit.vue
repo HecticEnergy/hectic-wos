@@ -23,9 +23,10 @@
       v-model="member.targetTimes"
       :all-target-names="allTargetNames"
       :member-id="member.id"
+      :target-mode="member.targetType"
       @remove="removeTarget"
     />
-    <v-row dense class="flex-0-0">
+    <v-row v-if="member.targetType === 'Single Target'" dense class="flex-0-0">
       <v-col cols="12" align="end">
         <v-btn prepend-icon="mdi-plus" color="secondary" @click="addTarget">
           Add Target
@@ -72,7 +73,7 @@
 import type { Member } from "@/models";
 
 const model = defineModel<Member>({ required: true });
-defineProps<{ groups: string[], allTargetNames: string[] }>();
+defineProps<{ groups: string[]; allTargetNames: string[] }>();
 const member = ref<Member>(model.value);
 
 const emit = defineEmits<{

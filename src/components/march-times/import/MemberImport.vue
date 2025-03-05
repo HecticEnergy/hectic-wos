@@ -1,19 +1,11 @@
 <template>
   <ParentCard>
-    <v-select
-      v-model="importType"
-      data-tour="member-import-type-toggle"
-      :items="allImportTypes"
-      label="Import Type"
-    />
+    <target-mode v-model="memberStore.targetMode" />
     <MemberImportMultipleTarget
-      v-if="importType === 'Multiple Target'"
+      v-if="memberStore.targetMode === 'Sunfire Castle'"
       @parse-text="multipleTargetsParser"
     />
-    <MemberImportSingleTarget
-      v-if="importType === 'Single Target'"
-      @parse-text="singleTargetParser"
-    />
+    <MemberImportSingleTarget v-else @parse-text="singleTargetParser" />
 
     <CancelConfirmDialog
       v-model="showConfirm"
@@ -41,10 +33,6 @@ import {
 
 const memberStore = useMemberStore();
 const alertStore = useAlertStore();
-
-const allImportTypes = ["Single Target", "Multiple Target"] as const;
-type ImportType = (typeof allImportTypes)[number];
-const importType = ref<ImportType>("Multiple Target");
 
 const confirmEdits = ref<Member[]>([]);
 const showConfirm = ref(false);

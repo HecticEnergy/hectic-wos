@@ -12,11 +12,11 @@
     data-tour="member-import-multi-textarea"
     translate="no"
     placeholder="Hectic
-West: 00:16
-SFC: 34
-North: 36
-East: 0:59
-South: 00:51"
+West Turret: 00:16
+Sunfire Castle: 34
+North Turret: 36
+East Turret: 0:59
+South Turret: 00:51"
     @parse-text="parseText"
   />
 </template>

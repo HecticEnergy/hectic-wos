@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-import type { Member, MemberTarget } from "@/models";
-import { correctHMS, getSecondsFromTimeSMH } from "@/services/time-helpers";
+import type { Member, MemberTarget, TargetMode } from "@/models";
+import { getSecondsFromTimeSMH } from "@/services/time-helpers";
 import { LocalStorage } from "@/services/local-storage-typed";
+import { cleanTargets, validateTargets } from "@/services/target-logic";
 
 const localStorageKey = "march-members-lsk";
 
@@ -21,14 +22,16 @@ export const useMemberStore = defineStore("member-store", {
   state: () => ({
     // state
     members: [] as Member[],
+    targetMode: "Sunfire Castle" as TargetMode,
     editMember: undefined as Member | undefined,
     groups: [] as string[],
     selectedGroups: [] as string[],
     selectedTargetName: "",
   }),
   getters: {
-    nextMemberId: (state) => Math.max(...state.members.map(m => m.id)) + 1,
-    nextOrder: (state) => Math.max(...state.members.map(m => m.order), 0) + 10,
+    nextMemberId: (state) => Math.max(...state.members.map((m) => m.id)) + 1,
+    nextOrder: (state) =>
+      Math.max(...state.members.map((m) => m.order), 0) + 10,
     memberNames: (state) => state.members.map((m) => m.name),
     groupNames: (state) => state.groups,
     nextTargetId: (state) => {
@@ -52,6 +55,11 @@ export const useMemberStore = defineStore("member-store", {
       if (!!loadedMembers && loadedMembers.members.length > 0) {
         console.log("Loaded members", loadedMembers);
         this.members = loadedMembers.members;
+
+        this.members.forEach((m) => {
+          m.targetType = m.targetType ?? "Sunfire Castle";
+        });
+
         this.updateGroups();
 
         this.setDefaultTarget();
@@ -92,7 +100,7 @@ export const useMemberStore = defineStore("member-store", {
       console.log("save: Members", this.members);
       this.validateMember(member);
       console.log("save: Validated", member);
-      
+
       const index = this.members.findIndex((m) => m.id === member.id);
       if (index === -1) {
         this.add(member);
@@ -120,20 +128,7 @@ export const useMemberStore = defineStore("member-store", {
       if (!member.name) {
         throw new Error("Name is required");
       }
-      if (!member.targetTimes?.length) {
-        throw new Error("At least one target time is required");
-      }
-      if (member.targetTimes.some((tt) => !tt.targetName)) {
-        throw new Error("Target name is required");
-      }
-      if (member.targetTimes.some((tt) => tt.minutes < 0 || tt.seconds < 0)) {
-        throw new Error("Invalid target time");
-      }
-      //no duplicate target names
-      const targetNames = member.targetTimes.map((tt) => tt.targetName);
-      if (new Set(targetNames).size !== targetNames.length) {
-        throw new Error("Duplicate target names are not allowed");
-      }
+      validateTargets(member.targetTimes);
     },
     cleanData() {
       //TODO: Don't replace values inplace, create new [] and assign at the end
@@ -163,22 +158,11 @@ export const useMemberStore = defineStore("member-store", {
         );
         m.group = groupName ?? m.group?.trim();
 
-        m.targetTimes.forEach((tt) => {
-          const targetName = this.allTargetNames.find(
-            (tn) =>
-              tn.trim().toLocaleLowerCase() ===
-              tt.targetName?.trim().toLocaleLowerCase()
-          );
-          tt.targetName = targetName ?? tt.targetName?.trim();
-
-          const targetTime = correctHMS({
-            hours: 0,
-            minutes: tt.minutes,
-            seconds: tt.seconds,
-          });
-          tt.minutes = targetTime.minutes;
-          tt.seconds = targetTime.seconds;
-        });
+        m.targetTimes = cleanTargets(
+          m.targetTimes,
+          this.nextTargetId,
+          this.allTargetNames
+        );
       });
 
       this.members = this.members.sort((a, b) => a.order - b.order);

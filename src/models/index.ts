@@ -1,18 +1,7 @@
-export type MemberTargetTimes = {
-  id: number;
-  targetName: string;
+export type Time = {
+  hours: number;
   minutes: number;
   seconds: number;
-};
-
-export type Member = {
-  id: number;
-  order: number;
-  name: string;
-  targetTimes: MemberTargetTimes[];
-  isSelected: boolean;
-  group: string;
-  //separateSeconds: Time;
 };
 
 export type MemberTarget = {
@@ -34,6 +23,24 @@ export type TargetOutputItem = {
   totalSeconds: number;
 };
 
+export type MemberTargetTimes = {
+  id: number;
+  targetName: string;
+  minutes: number;
+  seconds: number;
+};
+
+export type Member = {
+  id: number;
+  order: number;
+  name: string;
+  targetType: TargetMode;
+  targetTimes: MemberTargetTimes[];
+  isSelected: boolean;
+  group: string;
+  //separateSeconds: Time;
+};
+
 export type LaunchSettings = {
   ignoreSeconds: boolean;
   separateSeconds: Time;
@@ -47,8 +54,16 @@ export type LandingSettings = {
   landingTime: Time;
 };
 
-export type Time = {
-  hours: number;
-  minutes: number;
-  seconds: number;
-};
+
+export const SfcTargets = [
+  "Sunfire Castle",
+  "North Turret",
+  "East Turret",
+  "South Turret",
+  "West Turret",
+] as const;
+
+export type SfcTarget = typeof SfcTargets[number];
+
+export const targetModes = ["Sunfire Castle", "Single Target"] as const;
+export type TargetMode = typeof targetModes[number];
