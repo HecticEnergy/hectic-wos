@@ -70,6 +70,8 @@ const updateModel = (value: string, index: number) => {
   );
 
   targets.value[index].targetName = itemUpdated ?? value;
+
+  emit("update:model-value", targets.value);
 };
 const updateTarget = (
   target: MemberTargetTimes,
@@ -84,7 +86,7 @@ const updateTarget = (
   if (newTarget.seconds === undefined) {
     throw new Error("seconds is required");
   }
-  
+
   emit("update:model-value", targets.value);
 };
 
