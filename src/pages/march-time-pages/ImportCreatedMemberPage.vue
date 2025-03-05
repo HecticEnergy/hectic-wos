@@ -35,6 +35,7 @@
                   color="success"
                   prepend-icon="mdi-content-save"
                   width="100%"
+                  :disabled="isRerouting"
                   @click="saveMember"
                 />
               </v-col>
@@ -45,6 +46,7 @@
                   color="primary"
                   prepend-icon="mdi-pencil"
                   width="100%"
+                  :disabled="isRerouting"
                   @click="showEdit = true"
                 />
               </v-col>
@@ -54,29 +56,48 @@
                   color="error"
                   prepend-icon="mdi-trash-can"
                   width="100%"
-                  @click="() => router.push(routeHelper.MARCH_TIME)"
+                  :disabled="isRerouting"
+                  @click="reroute"
                 />
               </v-col>
             </v-row>
           </ButtonContainer>
         </template>
-
-        <DialogFullScreen
-          v-model="showEdit"
-          contained
-          title="Edit Member"
-          @close="showEdit = false"
-        >
-          <MemberEdit
-            v-model="member"
-            :groups="memberStore.groups"
-            :all-target-names="memberStore.allTargetNames"
-            @save="saveMember"
-            @cancel="() => (showEdit = false)"
-            @delete="() => router.push(routeHelper.MARCH_TIME)"
-          />
-        </DialogFullScreen>
       </ParentCard>
+
+      <DialogFullScreen
+        v-model="showEdit"
+        contained
+        title="Edit Member"
+        @close="showEdit = false"
+      >
+        <MemberEdit
+          v-model="member"
+          :groups="memberStore.groups"
+          :all-target-names="memberStore.allTargetNames"
+          @save="saveMember"
+          @cancel="() => (showEdit = false)"
+          @delete="reroute"
+        />
+      </DialogFullScreen>
+
+      <v-dialog v-model="isRerouting" persistent max-width="600">
+        <v-card rounded align="center">
+          <v-card-title> Redirecting . . .</v-card-title>
+          <v-card-text>
+            <v-row align="center" class="d-flex flex-column">
+              <v-col> Taking you to the march time page! </v-col>
+              <v-col class="mt-2">
+                <p class="opacity-50 font-size-small">
+                  You can use the back button on your browser to come back and
+                  see these specific settings.
+                </p>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-progress-linear indeterminate color="primary" />
+        </v-card>
+      </v-dialog>
     </v-col>
     <v-col class="d-none d-md-block"> </v-col>
   </v-row>
@@ -107,6 +128,7 @@ const member = ref<Member>({
   targetType: "Single Target",
 });
 const showEdit = ref(false);
+const isRerouting = ref(false);
 
 onMounted(() => {
   memberStore.loadData();
@@ -143,8 +165,16 @@ const saveMember = () => {
   try {
     memberStore.addDeDupe(member.value);
     alertStore.success(`Member ${member.value.name} saved.`);
+    reroute();
   } catch (error) {
     throw new Error(`There was an error importing the member: ${error}`);
   }
+};
+
+const reroute = () => {
+  isRerouting.value = true;
+  setTimeout(() => {
+    router.push(routeHelper.MARCH_TIME);
+  }, 5000);
 };
 </script>
