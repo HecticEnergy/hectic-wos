@@ -8,13 +8,14 @@
   <march-output-display
     :hide-refresh="true"
     unique-id="multi-target-import-template"
+    translate="no"
     :launch-time-output-lines="[
       '[Member Name]',
-      'North: 00:00',
-      'West: 00:00',
-      'South: 00:00',
-      'East: 00:00',
-      'SFC: 00:00',
+      'North Turret: 00:00',
+      'South Turret: 00:00',
+      'West Turret: 00:00',
+      'East Turret: 00:00',
+      'Sunfire Castle: 00:00',
     ]"
   />
 
@@ -23,11 +24,11 @@
   <v-sheet color="background" rounded class="pa-2">
     <pre>
 Hectic
-West: 00:16
-SFC: 34
-North: 36
-East: 0:59
-South: 00:51</pre
+West Turret: 00:16
+Sunfire Castle: 34
+North Turret: 36
+East Turret: 0:59
+South Turret: 00:51</pre
     >
   </v-sheet>
   <br />

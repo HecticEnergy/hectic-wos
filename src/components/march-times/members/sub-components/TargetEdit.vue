@@ -3,9 +3,11 @@
     v-for="(target, idx) in targets"
     :key="memberId + target.id + idx"
     dense
+    align="center"
   >
     <v-col grow>
       <v-combobox
+        v-if="targetMode === 'Single Target'"
         v-model="targets[idx].targetName"
         v-model:search="targetSearch"
         :items="allTargetNames"
@@ -15,9 +17,11 @@
         hide-details
         @update:model-value="(value:string) => updateModel(value, idx)"
       />
+      <v-label v-else>
+        {{ target.targetName }}
+      </v-label>
     </v-col>
     <v-col cols="auto" align="center" class="d-flex flex-row">
-     
       <march-time-text-box
         v-model="targets[idx]"
         @update:model-value="
@@ -28,6 +32,7 @@
       <v-row dense height="100%" align="center">
         <v-col>
           <v-icon
+            v-if="targetMode === 'Single Target'"
             color="error"
             icon="mdi-close"
             class="ml-1 cursor-pointer"
@@ -48,6 +53,7 @@ const targets = defineModel<MemberTargetTimes[]>({ required: true });
 const props = defineProps({
   memberId: { type: Number, required: true },
   allTargetNames: { type: Array<string>, required: true },
+  targetMode: { type: String, required: true },
 });
 
 defineEmits<{
