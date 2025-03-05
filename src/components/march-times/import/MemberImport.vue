@@ -1,6 +1,9 @@
 <template>
   <ParentCard>
-    <target-mode v-model="memberStore.targetMode" />
+    <target-mode
+      v-model="memberStore.targetMode"
+      data-tour="member-import-type-toggle"
+    />
     <MemberImportMultipleTarget
       v-if="memberStore.targetMode === 'Sunfire Castle'"
       @parse-text="multipleTargetsParser"
