@@ -40,6 +40,7 @@ export const parseTextMultipleTargets = (memberInfo: string, group: string) => {
     id: -1,
     order: -1,
     name: memberName,
+    targetType: "Sunfire Castle",
     targetTimes: targetTimes,
     isSelected: true,
     group: group,
@@ -65,9 +66,10 @@ export const parseTextSingleTarget = (memberInfo: string, group: string) => {
       if (!m.groups) {
         throw new Error("Unable to parse member target data.");
       }
-      const member = {
+      const member:Member = {
         id: -1,
         order: -1,
+        targetType: "Single Target",
         name: m.groups["memberName"],
         isSelected: true,
         group: group,
