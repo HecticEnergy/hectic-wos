@@ -4,7 +4,7 @@
   <v-main>
     <v-container
       class="pa-0 ma-0 d-flex flex-column"
-      style="height: 100%; max-width: 100%; overflow-y: scroll;"
+      style="height: 100%; max-width: 100%; overflow-y: auto;"
     >
       <router-view />
       <status-snackbar />

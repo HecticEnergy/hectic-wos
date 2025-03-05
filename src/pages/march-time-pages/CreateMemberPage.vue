@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row class="ma-0 pa-0">
     <v-col class="d-none d-md-block"> </v-col>
     <v-col>
       <ParentCard>
