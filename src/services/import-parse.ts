@@ -53,7 +53,7 @@ export const parseTextMultipleTargets = (memberInfo: string, group: string) => {
 export const parseTextSingleTarget = (memberInfo: string, group: string) => {
   const memberInfoLines = memberInfo.split("\n").filter((l) => !!l.trim());
 
-  console.log("MemberInfoLines", memberInfoLines);
+  // console.log("MemberInfoLines", memberInfoLines);
   if (memberInfoLines.length < 1)
     throw new Error("at least 1 line is required to parse");
 
@@ -144,29 +144,21 @@ export const memberFromQueryStringFormat = (input: string) => {
     tt: [],
   };
 
-  const inputParts = input.split("&");
-  inputParts.forEach((part) => {
-    const [key, value] = part.split("=");
-    switch (key) {
-      case "n":
-        member.n = value;
-        break;
-      case "type":
-        member.type = value === "sfc" ? "sfc" : "s";
-        break;
-      case "tt":
-        const targetTimes = value.split(",");
-        targetTimes.forEach((t) => {
-          const [targetName, minutes, seconds] = t.split("-");
-          member.tt.push({
-            n: hydrateTargetName(targetName),
-            m: Number.parseInt(minutes),
-            s: Number.parseInt(seconds),
-          });
-        });
-        break;
+  const urlParams = new URLSearchParams(input);
+
+  if (urlParams.has("n")) member.n = urlParams.get("n")!;
+  if (urlParams.has("type"))
+    member.type = urlParams.get("type") === "sfc" ? "sfc" : "s";
+  if (urlParams.has("tt")) {
+    const targetTimesParams = new URLSearchParams(urlParams.get("tt")!);
+    for (const [key, value] of targetTimesParams.entries()) {
+      member.tt.push({
+        n: hydrateTargetName(key),
+        m: Number.parseInt(value.split("-")[0]),
+        s: Number.parseInt(value.split("-")[1]),
+      });
     }
-  });
+  }
 
   const output: Member = {
     id: -1,
@@ -199,14 +191,17 @@ export const memberToQueryStringFormat = (member: Member) => {
       })),
   };
 
-  let output = "";
-  output += `n=${outputMember.n}`;
-  if (outputMember.type === "sfc") output += `&type=${outputMember.type}`;
-  output += `&tt=`;
-  output += outputMember.tt
-    .map((t) => `${t.n}:${t.m}:${t.s}`.replace(/ /g, "").replace(/:/g, "-"))
-    .join(",");
+  const targetParams = new URLSearchParams();
+  for (const t of outputMember.tt) {
+    targetParams.append(`${t.n}`, `${t.m}-${t.s}`);
+  }
+  const memberParams = new URLSearchParams();
+  memberParams.set("n", outputMember.n);
+  if (outputMember.type === "sfc") memberParams.set("type", outputMember.type);
+  memberParams.set("tt", targetParams.toString());
 
+  const output = memberParams.toString();
+  // console.log("output", output);
   return output;
 };
 
