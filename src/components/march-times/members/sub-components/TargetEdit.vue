@@ -56,8 +56,9 @@ const props = defineProps({
   targetMode: { type: String, required: true },
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (e: "remove", id: number): void;
+  (e: "update:model-value", value: MemberTargetTimes[]): void;
 }>();
 
 const targetSearch = ref("");
@@ -83,6 +84,8 @@ const updateTarget = (
   if (newTarget.seconds === undefined) {
     throw new Error("seconds is required");
   }
+  
+  emit("update:model-value", targets.value);
 };
 
 onMounted(() => {

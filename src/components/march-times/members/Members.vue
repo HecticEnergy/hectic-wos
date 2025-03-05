@@ -80,7 +80,8 @@
   </DialogFullScreen>
 </template>
 <script setup lang="ts">
-import { SfcTargets, type Member, type MemberTargetTimes } from "@/models";
+import { type Member, type MemberTargetTimes } from "@/models";
+import { getSfcMemberTargetTimes } from "@/services/target-logic";
 import { useMemberStore } from "@/stores/member-store";
 
 const memberStore = useMemberStore();
@@ -93,10 +94,7 @@ const isEditing = ref(!!memberStore.editMember);
 const addNewMember = () => {
   let targets = [] as MemberTargetTimes[];
   if (memberStore.targetMode === "Sunfire Castle")
-    targets = SfcTargets.map((t, i) => ({
-      targetName: t,
-      id: i + 1 * -2,
-    })) as MemberTargetTimes[];
+    targets = getSfcMemberTargetTimes();
   const member = {
     id: memberStore.nextMemberId,
     order: memberStore.nextOrder,

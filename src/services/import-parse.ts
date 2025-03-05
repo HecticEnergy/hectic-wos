@@ -1,4 +1,5 @@
 import type { Member, MemberTargetTimes } from "@/models";
+import { formatTimeMS } from "./time-helpers/time-formatters";
 
 export const parseTextMultipleTargets = (memberInfo: string, group: string) => {
   const memberInfoLines = memberInfo.split("\n").filter((l) => !!l.trim());
@@ -66,7 +67,7 @@ export const parseTextSingleTarget = (memberInfo: string, group: string) => {
       if (!m.groups) {
         throw new Error("Unable to parse member target data.");
       }
-      const member:Member = {
+      const member: Member = {
         id: -1,
         order: -1,
         targetType: "Single Target",
@@ -88,4 +89,137 @@ export const parseTextSingleTarget = (memberInfo: string, group: string) => {
   });
 
   return parsedMembers;
+};
+
+type ImportTarget = {
+  n: string;
+  m: number;
+  s: number;
+};
+
+type ImportMember = {
+  type: "sfc" | "s";
+  n: string;
+  tt: ImportTarget[];
+};
+
+const shortenTargetName = (targetName: string) => {
+  switch (targetName) {
+    case "Sunfire Castle":
+      return "SFC";
+    case "North Turret":
+      return "NT";
+    case "East Turret":
+      return "ET";
+    case "South Turret":
+      return "ST";
+    case "West Turret":
+      return "WT";
+    default:
+      return targetName;
+  }
+};
+
+const hydrateTargetName = (shortName: string) => {
+  switch (shortName) {
+    case "SFC":
+      return "Sunfire Castle";
+    case "NT":
+      return "North Turret";
+    case "ET":
+      return "East Turret";
+    case "ST":
+      return "South Turret";
+    case "WT":
+      return "West Turret";
+    default:
+      return shortName;
+  }
+};
+
+export const memberFromQueryStringFormat = (input: string) => {
+  const member: ImportMember = {
+    type: "s",
+    n: "",
+    tt: [],
+  };
+
+  const inputParts = input.split("&");
+  inputParts.forEach((part) => {
+    const [key, value] = part.split("=");
+    switch (key) {
+      case "n":
+        member.n = value;
+        break;
+      case "type":
+        member.type = value === "sfc" ? "sfc" : "s";
+        break;
+      case "tt":
+        const targetTimes = value.split(",");
+        targetTimes.forEach((t) => {
+          const [targetName, minutes, seconds] = t.split("-");
+          member.tt.push({
+            n: hydrateTargetName(targetName),
+            m: Number.parseInt(minutes),
+            s: Number.parseInt(seconds),
+          });
+        });
+        break;
+    }
+  });
+
+  const output: Member = {
+    id: -1,
+    order: -1,
+    name: member.n,
+    targetType: member.type === "sfc" ? "Sunfire Castle" : "Single Target",
+    targetTimes: member.tt.map((t) => ({
+      id: -1,
+      targetName: hydrateTargetName(t.n),
+      minutes: t.m,
+      seconds: t.s,
+    })),
+    isSelected: true,
+    group: "",
+  };
+
+  return output;
+};
+
+export const memberToQueryStringFormat = (member: Member) => {
+  const outputMember: ImportMember = {
+    type: member.targetType === "Sunfire Castle" ? "sfc" : "s",
+    n: member.name,
+    tt: member.targetTimes
+      .filter((t) => t.minutes > 0 || t.seconds > 0)
+      .map((t) => ({
+        n: shortenTargetName(t.targetName),
+        m: t.minutes,
+        s: t.seconds,
+      })),
+  };
+
+  let output = "";
+  output += `n=${outputMember.n}`;
+  if (outputMember.type === "sfc") output += `&type=${outputMember.type}`;
+  output += `&tt=`;
+  output += outputMember.tt
+    .map((t) => `${t.n}:${t.m}:${t.s}`.replace(/ /g, "").replace(/:/g, "-"))
+    .join(",");
+
+  return output;
+};
+
+export const formatMemberForImport = (member: Member) => {
+  const output: string[] = [];
+
+  output.push(member.name);
+
+  member.targetTimes
+    .filter((t) => t.minutes > 0 || t.seconds > 0)
+    .forEach((t) => {
+      output.push(`${t.targetName}: ${formatTimeMS(t.minutes, t.seconds)}`);
+    });
+
+  return output.join("\n");
 };

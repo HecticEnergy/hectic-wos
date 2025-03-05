@@ -1,4 +1,4 @@
-import type { MemberTargetTimes } from "@/models";
+import { SfcTargets, type MemberTargetTimes } from "@/models";
 import { correctHMS } from "./time-helpers";
 
 export const validateTargets = (targets: MemberTargetTimes[] | undefined) => {
@@ -53,4 +53,14 @@ export const cleanTargets = (
   });
 
   return newTargets;
+};
+
+export const getSfcMemberTargetTimes = () => {
+  const targetTimes = SfcTargets.map((t, i) => ({
+    targetName: t,
+    id: i + 1 * -2,
+    minutes: 0,
+    seconds: 0,
+  })) as MemberTargetTimes[];
+  return targetTimes;
 };

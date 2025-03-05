@@ -1,13 +1,19 @@
-import type { Router } from 'vue-router';
+import type { Router } from "vue-router";
 
 enum Routes {
-  HOME = '/',
-  MARCH_TIME = '/MarchTimesPage',
-  MINISTRY_APPOINTMENTS = '/MinistryAppointments',
+  HOME = "/",
+  MARCH_TIME = "/MarchTimesPage",
+  CREATE_MEMBER_SINGLE = "/march-time-pages/CreateMemberPage",
+  IMPORT_CREATED_MEMBER = "/march-time-pages/ImportCreatedMemberPage",
+
+  MINISTRY_APPOINTMENTS = "/MinistryAppointments",
 }
 
 const HOME = Routes.HOME;
 const MARCH_TIME = Routes.MARCH_TIME;
+const CREATE_MEMBER_SINGLE = Routes.CREATE_MEMBER_SINGLE;
+const IMPORT_CREATED_MEMBER = Routes.IMPORT_CREATED_MEMBER;
+
 const MINISTRY_APPOINTMENTS = Routes.MINISTRY_APPOINTMENTS;
 
 // const formatPrintPuppyCertificateUrl = (pupIds: string[]) => {
@@ -23,18 +29,18 @@ const MINISTRY_APPOINTMENTS = Routes.MINISTRY_APPOINTMENTS;
 // };
 
 const openInNewTab = (router: Router, to: string): boolean => {
-  const openNewTab = localStorage.getItem('newTabsDisabled');
-  if (openNewTab === null || openNewTab === 'false') {
+  const openNewTab = localStorage.getItem("newTabsDisabled");
+  if (openNewTab === null || openNewTab === "false") {
     const routeData = router.resolve(to);
-    window.open(routeData.href, '_blank');
-    const showAlert = localStorage.getItem('showPopupEnableAlert');
+    window.open(routeData.href, "_blank");
+    const showAlert = localStorage.getItem("showPopupEnableAlert");
 
-    if (showAlert === null || showAlert === 'true') {
+    if (showAlert === null || showAlert === "true") {
       const continueToShowAlert = confirm(
-        'Did the new tab open? - Print view should be opened in a new tab. If not, you may need to enable popups for this site.' +
+        "Did the new tab open? - Print view should be opened in a new tab. If not, you may need to enable popups for this site." +
           " - 'Ok' to close this and continue. - 'Cancel' to stay here and try again."
       );
-      localStorage.setItem('showPopupEnableAlert', `${!continueToShowAlert}`);
+      localStorage.setItem("showPopupEnableAlert", `${!continueToShowAlert}`);
       return !continueToShowAlert;
     }
   } else {
@@ -45,10 +51,12 @@ const openInNewTab = (router: Router, to: string): boolean => {
   return true;
 };
 
-
 export default {
   HOME,
   MARCH_TIME,
+  CREATE_MEMBER_SINGLE,
+  IMPORT_CREATED_MEMBERS: IMPORT_CREATED_MEMBER,
+
   MINISTRY_APPOINTMENTS,
   // formatPrintPuppyCertificateUrl,
   // unformatPrintPuppyCertificateUrl,
