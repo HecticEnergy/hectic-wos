@@ -62,6 +62,9 @@ import {
 } from "@/services/import-parse";
 import { LocalStorage } from "@/services/local-storage-typed";
 import { getSfcMemberTargetTimes } from "@/services/target-logic";
+import { useAlertStore } from "@/stores/alert-store";
+
+const alertStore = useAlertStore();
 
 const defaultMember: Member = {
   id: -1,
@@ -136,6 +139,7 @@ const copyContent = () => {
 
   const content = formatMemberForImport(member.value);
   navigator.clipboard.writeText(content);
+  alertStore.success("Content copied to clipboard");
 };
 
 const copyLink = () => {
@@ -146,5 +150,6 @@ const copyLink = () => {
   const content = memberToQueryStringFormat(member.value);
   const link = `${url}?${content}`;
   navigator.clipboard.writeText(link);
+  alertStore.success("Link copied to clipboard");
 };
 </script>
