@@ -64,3 +64,19 @@ export const getSfcMemberTargetTimes = () => {
   })) as MemberTargetTimes[];
   return targetTimes;
 };
+
+export const mapSvsTargets = (targets: MemberTargetTimes[]) => {
+  const allTargets = getSfcMemberTargetTimes().map((t) => {
+    const found = targets.find(
+      (nt) =>
+        nt.targetName?.toLocaleLowerCase()?.trim() ===
+        t.targetName.toLocaleLowerCase().trim()
+    );
+    if (found) {
+      t.minutes = found.minutes;
+      t.seconds = found.seconds;
+    }
+    return t;
+  });
+  return allTargets;
+};

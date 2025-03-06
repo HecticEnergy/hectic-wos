@@ -1,11 +1,15 @@
 <template>
   <v-row>
-    <v-col cols="12">
-      <target-mode v-model="member.targetType" :change-enabled="false" />
+    <v-col cols="auto" class="my-2" align="center">
+      <h2>
+        {{ member.name }}
+        <h2 v-if="!member.name" class="opacity-50 italic">Empty Member Name</h2>
+      </h2>
     </v-col>
-    <v-col cols="12" class="my-2">
-      <h2>{{ member.name }}</h2>
-      <h2 v-if="!member.name" class="opacity-50 italic">Empty Member Name</h2>
+    <v-col align="end">
+      <h2>
+        <span class="opacity-50" style="font-style: italic">{{ title }}</span>
+      </h2>
     </v-col>
     <v-col cols="12">
       <v-row v-for="(target, idx) in member.targetTimes" :key="idx">
@@ -13,7 +17,11 @@
           <v-label>{{ target.targetName }}</v-label>
         </v-col>
         <v-col cols="6" align="end">
-          <v-label :id="`${uniqueId}-tt-time-${target.targetName}`">{{ formatTimeMS(target.minutes, target.seconds) }}</v-label>
+          <v-label
+            :class="diffRows.includes(target.targetName) ? 'different' : ''"
+          >
+            {{ formatTimeMS(target.minutes, target.seconds) }}
+          </v-label>
         </v-col>
       </v-row>
     </v-col>
@@ -26,6 +34,13 @@ import { formatTimeMS } from "@/services/time-helpers/time-formatters";
 
 const member = defineModel<Member>({ required: true });
 defineProps({
-    uniqueId: { type: String, required: true },
-})
+  title: { type: String, required: false, default: "" },
+  diffRows: { type: Array, required: false, default: () => [] },
+});
 </script>
+
+<style scoped>
+.different {
+  color: green;
+}
+</style>

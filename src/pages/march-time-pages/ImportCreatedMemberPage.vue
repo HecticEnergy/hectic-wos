@@ -3,9 +3,19 @@
     <v-col class="d-none d-md-block"> </v-col>
     <v-col>
       <ParentCard>
-        <member-view-readonly v-model="member" unique-id="imported"/>
-        <br />
-        TODO: Show member merge with differences, have the user edit the merge and save.
+        <v-row>
+          <v-col cols="12">
+            <target-mode v-model="member.targetType" :change-enabled="false" />
+          </v-col>
+        </v-row>
+        <member-view-readonly v-model="member" />
+        <member-view-readonly
+          v-if="!!mergedMember"
+          v-model="mergedMember"
+          title="Merged"
+          :diff-rows="highlightRows"
+          class="mt-5"
+        />
         <template #bottomContent>
           <ButtonContainer width="95%">
             <v-row dense>
@@ -60,24 +70,6 @@
           @delete="reroute"
         />
       </DialogFullScreen>
-
-      <v-dialog v-model="isRerouting" persistent max-width="600">
-        <v-card rounded align="center">
-          <v-card-title> Redirecting . . .</v-card-title>
-          <v-card-text>
-            <v-row align="center" class="d-flex flex-column">
-              <v-col> Taking you to the march time page! </v-col>
-              <v-col class="mt-2">
-                <p class="opacity-50 font-size-small">
-                  You can use the back button on your browser to come back and
-                  see these specific settings.
-                </p>
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-progress-linear indeterminate color="primary" />
-        </v-card>
-      </v-dialog>
     </v-col>
     <v-col class="d-none d-md-block"> </v-col>
   </v-row>
@@ -90,7 +82,7 @@ import { memberFromQueryStringFormat } from "@/services/import-parse";
 import { useMemberStore } from "@/stores/member-store";
 import { useRouter } from "vue-router";
 import { useAlertStore } from "@/stores/alert-store";
-import { getSfcMemberTargetTimes } from "@/services/target-logic";
+import { mapSvsTargets } from "@/services/target-logic";
 
 const memberStore = useMemberStore();
 const router = useRouter();
@@ -105,32 +97,37 @@ const member = ref<Member>({
   targetTimes: [],
   targetType: "Single Target",
 });
+
+const mergedMember = ref<Member | undefined>(undefined);
+const highlightRows = ref<string[]>([]);
 const showEdit = ref(false);
 const isRerouting = ref(false);
 
 onMounted(() => {
   memberStore.loadData();
-//   console.log(window.location.search);
   const newMember = memberFromQueryStringFormat(window.location.search);
 
   if (newMember) {
-    member.value.name = newMember.name;
+    const targets = mapSvsTargets(newMember.targetTimes);
 
-    const targets = getSfcMemberTargetTimes().map((t) => {
-      const found = newMember.targetTimes.find(
-        (nt) =>
-          nt.targetName?.toLocaleLowerCase()?.trim() ===
-          t.targetName.toLocaleLowerCase().trim()
-      );
-      if (found) {
-        t.minutes = found.minutes;
-        t.seconds = found.seconds;
-      }
-      return t;
-    });
+    member.value.name = newMember.name;
     member.value.targetTimes = targets;
     member.value.targetType = newMember.targetType;
   }
+
+  mergedMember.value = memberStore.deDupeMember(member.value);
+
+  mergedMember.value?.targetTimes.forEach((t) => {
+    const memberTargetTime = member.value.targetTimes.find(
+      (mt) => mt.targetName === t.targetName
+    );
+    if (
+      memberTargetTime?.minutes !== t.minutes ||
+      memberTargetTime?.seconds !== t.seconds
+    ) {
+      highlightRows.value.push(t.targetName);
+    }
+  });
 });
 
 const saveMember = () => {
@@ -147,6 +144,6 @@ const reroute = () => {
   isRerouting.value = true;
   setTimeout(() => {
     router.push(routeHelper.MARCH_TIME);
-  }, 5000);
+  }, 2000);
 };
 </script>
