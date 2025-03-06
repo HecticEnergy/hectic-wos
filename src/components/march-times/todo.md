@@ -78,7 +78,7 @@
 5. Mark rallies as successful (rally log)
 
 6. Mystic
-   1. Shared Coordinator Rally Log:
+   1. Shared Coordinator Rally Log: [cf queue](https://developers.cloudflare.com/queues/)
       1. This log should record:
          1. Every rally deployed by a coordinator.
          2. The target location and landing time of each rally.
@@ -97,7 +97,7 @@
          2. In this case, the battle group code would only be shared within a specific alliance.
       4. This provides flexibility to coordinate on different scales.
       5. We need to be able to make codes based on events, like a "Sunfire Castle" battle.
-   3. Real-Time Rally and Movement Tracking for Battles:
+   3. Real-Time Rally and Movement Tracking for Battles: (message queue)
       1. Shared Rally List:
          1. This list should be drawn directly from the coordinator rally log.
          2. It should clearly show active and upcoming rallies.
@@ -121,6 +121,15 @@
        2.  Notifications
            1.  tying "members" to Discord users
            2.  Optionally no discord user to manage non discord members
+
+
+### Dev Details
+1. "Join Code"
+   1. {StateNumber}[+{AllianceName}]+{8CharRandomCode}
+1. Coordinators
+   1. Support multiple, should be able to see other's marches (not members)
+   2. Switch coordinators (takeover members / targets)
+   3. 
 
 ## Maybe...
 
