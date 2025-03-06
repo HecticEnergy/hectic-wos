@@ -26,18 +26,38 @@
         @click="rail = true"
       />
       <v-divider />
-      <template v-for="item in menuItems" :key="item.label">
+      <v-list-item
+        title="Home"
+        prepend-icon="mdi-home"
+        data-tour="home-navbar-link"
+        :to="RouteHelper.HOME"
+      />
+      <v-list-group value="March Times">
+        <template #activator="{ props }">
+          <v-list-item
+            v-bind="props"
+            title="March Times Tools"
+            prepend-icon="mdi-rocket-launch"
+            data-tour="march-times-navbar-link"
+          />
+        </template>
         <v-list-item
-          v-for="subItem in item.items"
-          :key="subItem.key"
-          :to="subItem.to"
-          :title="subItem.title"
-          :prepend-icon="subItem.icon"
-          :data-tour="subItem.dataTour"
+          title="March Times"
+          prepend-icon="mdi-rocket-launch"
+          data-tour="march-times-navbar-link"
+          :to="RouteHelper.MARCH_TIME"
+          class="list-item-tab-index-fix"
         />
-        <v-divider v-if="item.divider" />
-        <v-spacer />
-      </template>
+        <v-list-item
+          title="Create Yourself"
+          prepend-icon="mdi-account"
+          data-tour="create-member-single-navbar-link"
+          :to="RouteHelper.CREATE_MEMBER_SINGLE"
+          class="list-item-tab-index-fix"
+        />
+      </v-list-group>
+      <v-divider />
+      <v-spacer />
       <!-- <v-list-item
         v-if="canViewPage(RouteHelper.TEST)"
         title="Test Page"
@@ -48,15 +68,15 @@
     <template #append>
       <v-divider />
       <template v-for="item in bottomMenuItems" :key="item.label">
-        <v-list-subheader v-if="!rail" :title="item.label"  />
+        <v-list-subheader v-if="!rail" :title="item.label" />
         <v-list-item
-            v-for="subItem in item.items"
-            :key="subItem.key"
-            :to="subItem.to"
-            :title="subItem.title"
-            :value="subItem.title"
-            :prepend-icon="subItem.icon"
-          />
+          v-for="subItem in item.items"
+          :key="subItem.key"
+          :to="subItem.to"
+          :title="subItem.title"
+          :value="subItem.title"
+          :prepend-icon="subItem.icon"
+        />
         <v-divider v-if="item.divider" />
       </template>
       <!--
@@ -107,32 +127,8 @@ const setupMenuRail = () => {
   }
 };
 
-const menuItems = ref([
-  {
-    label: "",
-    divider: false,
-    items: [
-      {
-        title: "Home",
-        icon: "mdi-home",
-        to: RouteHelper.HOME,
-        key: "home-menu-item",
-        dataTour: "home-navbar-link",
-      },
-      {
-        title: "March Times",
-        icon: "mdi-rocket-launch",
-        to: RouteHelper.MARCH_TIME,
-        key: "march-time-new-menu-item",
-        dataTour: "march-times-navbar-link",
-      },
-    ],
-  },
-]);
-
 const bottomMenuItems = ref([
- 
-{
+  {
     label: "Under Construction",
     divider: false,
     items: [
@@ -144,7 +140,7 @@ const bottomMenuItems = ref([
         dataTour: "ministry-appointments-navbar-link",
       },
     ],
-  }
+  },
 ]);
 
 watch(route, (to, from) => {
@@ -161,3 +157,9 @@ setupMenuRail();
 //       : "customLightTheme";
 // };
 </script>
+
+<style scoped>
+.list-item-tab-index-fix {
+  padding-inline-start: 25px !important;
+}
+</style>
