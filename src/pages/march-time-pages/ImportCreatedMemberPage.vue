@@ -8,12 +8,13 @@
             <target-mode v-model="member.targetType" :change-enabled="false" />
           </v-col>
         </v-row>
-        <member-view-readonly v-model="member" />
+        <member-view-readonly v-model="member" title="Imported" />
         <member-view-readonly
           v-if="!!mergedMember"
           v-model="mergedMember"
           title="Merged"
           :diff-rows="highlightRows"
+          :original="originalMember"
           class="mt-5"
         />
         <template #bottomContent>
@@ -62,12 +63,12 @@
         @close="showEdit = false"
       >
         <MemberEdit
-          v-model="member"
+          v-model="editMember"
           :groups="memberStore.groups"
           :all-target-names="memberStore.allTargetNames"
-          @save="saveMember"
+          @save="saveMember(0)"
           @cancel="() => (showEdit = false)"
-          @delete="reroute"
+          @delete="reroute(0)"
         />
       </DialogFullScreen>
     </v-col>
@@ -88,18 +89,23 @@ const memberStore = useMemberStore();
 const router = useRouter();
 const alertStore = useAlertStore();
 
-const member = ref<Member>({
-  id: memberStore.nextMemberId,
-  order: memberStore.nextOrder,
-  name: "",
-  group: "",
-  isSelected: true,
-  targetTimes: [],
-  targetType: "Single Target",
-});
+const getDefaultMember = () =>
+  ({
+    id: memberStore.nextMemberId,
+    order: memberStore.nextOrder,
+    name: "",
+    group: "",
+    isSelected: true,
+    targetTimes: [],
+    targetType: "Single Target",
+  } as Member);
+
+const member = ref<Member>(getDefaultMember());
 
 const mergedMember = ref<Member | undefined>(undefined);
-const highlightRows = ref<string[]>([]);
+const editMember = ref<Member>(getDefaultMember());
+const originalMember = ref<Member | undefined>(undefined);
+const highlightRows = ref<{ isAdded: boolean; targetName: string }[]>([]);
 const showEdit = ref(false);
 const isRerouting = ref(false);
 
@@ -116,6 +122,11 @@ onMounted(() => {
   }
 
   mergedMember.value = memberStore.deDupeMember(member.value);
+  originalMember.value = memberStore.members.find(
+    (m) =>
+      m.name.trim().toLocaleLowerCase() ===
+      member.value.name.trim().toLocaleLowerCase()
+  );
 
   mergedMember.value?.targetTimes.forEach((t) => {
     const memberTargetTime = member.value.targetTimes.find(
@@ -125,25 +136,41 @@ onMounted(() => {
       memberTargetTime?.minutes !== t.minutes ||
       memberTargetTime?.seconds !== t.seconds
     ) {
-      highlightRows.value.push(t.targetName);
+      highlightRows.value.push({ isAdded: true, targetName: t.targetName });
+    }
+
+    if (!!originalMember.value) {
+      const existingTargetTime = originalMember.value.targetTimes.find(
+        (et) => et.targetName === t.targetName
+      );
+      if (
+        existingTargetTime?.minutes !== t.minutes ||
+        existingTargetTime?.seconds !== t.seconds
+      ) {
+        highlightRows.value.push({ isAdded: false, targetName: t.targetName });
+      }
     }
   });
+
+  editMember.value = (
+    mergedMember.value ? mergedMember.value : member.value
+  ) as Member;
 });
 
-const saveMember = () => {
+const saveMember = (delayReroute: number | undefined) => {
   try {
     memberStore.addDeDupe(member.value);
     alertStore.success(`Member ${member.value.name} saved.`);
-    reroute();
+    reroute(delayReroute);
   } catch (error) {
     throw new Error(`There was an error importing the member: ${error}`);
   }
 };
 
-const reroute = () => {
+const reroute = (delay: number | undefined) => {
   isRerouting.value = true;
   setTimeout(() => {
     router.push(routeHelper.MARCH_TIME);
-  }, 2000);
+  }, delay ?? 2000);
 };
 </script>
