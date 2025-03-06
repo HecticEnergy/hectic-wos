@@ -1,8 +1,15 @@
 import { defineStore } from "pinia";
-import type { Member, MemberTarget, TargetMode } from "@/models";
+import type {
+  Member,
+  MemberTarget,
+  TargetMode,
+} from "@/models";
 import { getSecondsFromTimeSMH } from "@/services/time-helpers";
 import { LocalStorage } from "@/services/local-storage-typed";
-import { cleanTargets, validateTargets } from "@/services/target-logic";
+import {
+  cleanTargets,
+  validateTargets,
+} from "@/services/target-logic";
 
 const localStorageKey = "march-members-lsk";
 
@@ -82,7 +89,9 @@ export const useMemberStore = defineStore("member-store", {
         this.groups.includes(g)
       );
     },
-    addDeDupe(member: Member) {
+    deDupeMember(member: Member) {
+      let newMember = undefined;
+
       const existingMember = this.members.find(
         (m) =>
           m.name.trim().toLocaleLowerCase() ===
@@ -110,13 +119,23 @@ export const useMemberStore = defineStore("member-store", {
             };
           }
         });
-        existingMember.targetTimes = newTargetTimes;
+        newMember = {
+          ...existingMember,
+          targetTimes: newTargetTimes,
+        };
+      }
+      return newMember;
+    },
+    addDeDupe(member: Member) {
+      const existingMember = this.deDupeMember(member);
+      if (existingMember) {
         this.save(existingMember);
       } else {
         this.add(member);
       }
     },
     add(member: Member) {
+      //TODO: Dupe check
       this.members.unshift(member);
       if (this.editMember?.id === member.id) {
         this.editMember = undefined;
