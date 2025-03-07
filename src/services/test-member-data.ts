@@ -14,83 +14,61 @@ const setTargets = (
   startIndex: number,
   times: { minutes: number; seconds: number }[]
 ): MemberTargetTimes[] => {
-  return [
-    {
-      id: 0 + startIndex,
-      targetName: "West Turret",
-      minutes: times[0].minutes,
-      seconds: times[0].seconds,
-    },
-    {
-      id: 1 + startIndex,
-      targetName: "Sunfire Castle",
-      minutes: times[1].minutes,
-      seconds: times[1].seconds,
-    },
-    {
-      id: 2 + startIndex,
-      targetName: "North Turret",
-      minutes: times[2].minutes,
-      seconds: times[2].seconds,
-    },
-    {
-      id: 3 + startIndex,
-      targetName: "East Turret",
-      minutes: times[3].minutes,
-      seconds: times[3].seconds,
-    },
-    {
-      id: 4 + startIndex,
-      targetName: "South Turret",
-      minutes: times[4].minutes,
-      seconds: times[4].seconds,
-    },
+  const targetNames = [
+    "West Turret",
+    "Sunfire Castle",
+    "North Turret",
+    "East Turret",
+    "South Turret",
   ];
+
+  const targets = targetNames.map((tn, i) => ({
+    targetName: tn,
+    minutes: times[i].minutes,
+    seconds: times[i].seconds,
+    id: i + startIndex,
+  }));
+
+  return targets;
 };
 
-export const testMemberData: Member[] = [
-  {
+const getTargetsRandomMarch = (startIndex: number): MemberTargetTimes[] => {
+  const getNextSeconds = () => Math.floor(Math.random() * 50) + 10;
+
+  return setTargets(startIndex, [
+    { minutes: 0, seconds: 0 },
+    { minutes: 0, seconds: getNextSeconds() },
+    { minutes: 1, seconds: getNextSeconds() },
+    { minutes: 1, seconds: getNextSeconds() },
+    { minutes: 1, seconds: getNextSeconds() },
+  ]);
+};
+
+const getTestMemberData = () => {
+  const names = [
+    "Hectic",
+    "Snow",
+    "Neg",
+    "L6F",
+    "Mofarch",
+    "Ragnar",
+    "Ironman",
+    "Waco",
+    "Jama",
+    "Vin",
+    "Mystic",
+    "North",
+    "South",
+  ];
+  const memberData = names.map((name, i) => ({
     ...defaultMember,
-    name: "Hectic",
-    order: 10,
-    id: 1,
-    isSelected: true,
-    targetTimes: setTargets(0, [
-      { minutes: 0, seconds: 0 },
-      { minutes: 0, seconds: 34 },
-      { minutes: 0, seconds: 36 },
-      { minutes: 0, seconds: 59 },
-      { minutes: 0, seconds: 51 },
-    ]),
-  },
-  {
-    ...defaultMember,
-    name: "Snow",
-    order: 20,
-    id: 2,
-    isSelected: true,
-    group: "",
-    targetTimes: setTargets(5, [
-      { minutes: 0, seconds: 0 },
-      { minutes: 0, seconds: 31 },
-      { minutes: 0, seconds: 32 },
-      { minutes: 0, seconds: 49 },
-      { minutes: 0, seconds: 41 },
-    ]),
-  },
-  {
-    ...defaultMember,
-    name: "Neg",
-    order: 5,
-    id: 3,
-    isSelected: true,
-    group: "",
-    targetTimes: setTargets(10, [
-      { minutes: 0, seconds: 0 },
-      { minutes: 0, seconds: 34 },
-      { minutes: 0, seconds: 33 },
-      { minutes: 0, seconds: 51 },
-      { minutes: 1, seconds: 22 },
-    ]),
-  },
-];
+    name,
+    order: i * 5,
+    id: i + 1,
+    isSelected: i < 3,
+    targetTimes: getTargetsRandomMarch(i * 5),
+  }));
+  return memberData;
+};
+
+export const testMemberData: Member[] = getTestMemberData();
