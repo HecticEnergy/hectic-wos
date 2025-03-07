@@ -16,9 +16,10 @@
       v-for="targetName in memberStore.allTargetNames"
       :key="targetName"
       :color="targetName === selectedTargetName ? 'primary' : ''"
-      :size="targetName === selectedTargetName ? 'large' : 'small'"
-      :style="{
-        fontSize: targetName === selectedTargetName ? '1.2rem' : '',
+      :style="{ 
+        width: targetName === selectedTargetName ? '' : '45px',
+        padding: targetName === selectedTargetName ? '' : '5px'
+
       }"
       @click="selectedTargetName = targetName"
     >
