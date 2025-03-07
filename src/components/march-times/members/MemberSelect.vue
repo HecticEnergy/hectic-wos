@@ -1,6 +1,6 @@
 <template>
   <ParentCard v-bind="$attrs" title="Members">
-    <draggable v-model="allMembers" item-key="id" handle=".move-handle">
+    <draggable v-model="allSelectMembers" item-key="id" handle=".move-handle">
       <template #item="{ element }">
         <div>
           <div
@@ -53,33 +53,29 @@
       </template>
     </draggable>
   </ParentCard>
-
-  <DialogFullScreen
-    v-if="!!editMember"
-    v-model="isEdit"
-    contained
-    title="Edit Member"
-    @close="() => (editMember = undefined)"
-  >
-    <MemberEdit
-      v-if="!!editMember"
-      v-model="editMember"
-      :groups="groups"
-      :all-target-names="allTargetNames"
-      @save="saveEdit"
-      @cancel="() => (editMember = undefined)"
-      @delete="deleteMember"
-    />
-  </DialogFullScreen>
 </template>
 
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import { formatTimeMS } from "@/services/time-helpers/time-formatters";
-import { useMemberStore } from "@/stores/member-store";
 import type { Member } from "@/models";
+import { getMemberMarchTime } from "@/services/target-logic";
 
-const memberStore = useMemberStore();
+const model = defineModel<Member[]>({
+  required: true,
+});
+
+const props = defineProps({
+  selectedTargetName: {
+    type: String,
+    required: true,
+  },
+});
+
+const emit = defineEmits<{
+  (event: "save", members: Member): void;
+  (event: "edit", member: Member): void;
+}>();
 
 type SelectMember = {
   id: number;
@@ -90,39 +86,37 @@ type SelectMember = {
 };
 
 const _allMembers = ref<SelectMember[] | undefined>(undefined);
-const editMember = ref<Member | undefined>(undefined);
 
-const groups = ref<string[]>(memberStore.groups);
-const allTargetNames = ref<string[]>(memberStore.allTargetNames);
-
-const isEdit = computed(() => !!editMember.value);
-
-const allMembers = computed({
+const allSelectMembers = computed({
   get: () => _allMembers.value,
   set: (value: SelectMember[]) => {
+    const updateMembers: Member[] = [];
     let order = 0;
     value.forEach((m) => {
-      m.member.order = order += 10;
+      const newOrder = (order += 10);
+      if (m.member.order !== newOrder) {
+        m.member.order = newOrder;
+        updateMembers.push(m.member);
+      }
     });
     _allMembers.value = value;
-    memberStore.saveAll();
+    updateMembers.forEach((m) => emit("save", m));
   },
 });
 const isDragging = ref<boolean>(false);
 
 onMounted(() => {
-  memberStore.loadData();
   loadAllMembers();
 });
 
 const loadAllMembers = () => {
-  allMembers.value = memberStore.members
+  allSelectMembers.value = model.value
     .sort((m) => m.order)
     .map((member) => {
       return {
         id: member.id,
         name: member.name,
-        marchTime: getMemberMarchTime(member.name),
+        marchTime: getMemberMarchTimeDisplay(member),
         member,
       } as SelectMember;
     });
@@ -131,7 +125,7 @@ const loadAllMembers = () => {
 const move = (element: SelectMember, isMouseDown: boolean) => {
   isDragging.value = isMouseDown;
   element.isDragging = isMouseDown;
-  allMembers.value?.forEach((m) => {
+  allSelectMembers.value?.forEach((m) => {
     if (m.id !== element.id) {
       m.isDragging = false;
     }
@@ -140,29 +134,18 @@ const move = (element: SelectMember, isMouseDown: boolean) => {
 
 const toggleMemberSelected = (element: SelectMember) => {
   element.member.isSelected = !element.member.isSelected;
-  memberStore.saveAll();
+  const modelMember = model.value.find((m) => m.id === element.id);
+  if (modelMember) {
+    modelMember.isSelected = element.member.isSelected;
+  }
 };
 
 const edit = (member: SelectMember) => {
-  editMember.value = JSON.parse(JSON.stringify(member.member));
+  emit("edit", member.member);
 };
 
-const saveEdit = (member: Member) => {
-  if (!editMember.value) return;
-  memberStore.save(member);
-  loadAllMembers();
-  editMember.value = undefined;
-};
-
-const deleteMember = (memberId: number) => {
-  if (!editMember.value) return;
-  memberStore.remove(memberId);
-  loadAllMembers();
-  editMember.value = undefined;
-};
-
-const getMemberMarchTime = (memberName: string) => {
-  const marchTime = memberStore.getMemberMarchTime(memberName);
+const getMemberMarchTimeDisplay = (member: Member) => {
+  const marchTime = getMemberMarchTime(member, props.selectedTargetName);
 
   if (!marchTime) return undefined;
 
