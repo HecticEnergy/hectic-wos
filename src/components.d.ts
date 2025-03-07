@@ -40,6 +40,7 @@ declare module 'vue' {
     MemberImportSingleTarget: typeof import('./components/march-times/import/MemberImportSingleTarget.vue')['default']
     MemberItemView: typeof import('./components/march-times/members/MemberItemView.vue')['default']
     Members: typeof import('./components/march-times/members/Members.vue')['default']
+    MemberSelect: typeof import('./components/march-times/members/MemberSelect.vue')['default']
     MembersSelect: typeof import('./components/march-times/march-output/sub-components/MembersSelect.vue')['default']
     MemberViewReadonly: typeof import('./components/march-times/members/sub-components/MemberViewReadonly.vue')['default']
     NumberTextField: typeof import('./components/global/sub-components/NumberTextField.vue')['default']
