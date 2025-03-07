@@ -56,6 +56,7 @@
             <template #item="{ element }">
               <v-chip
                 :color="element.isSelected ? 'primary' : ''"
+                style="margin: 2px 0;"
                 @click="toggleMemberSelected(element)"
               >
                 <v-icon icon="mdi-drag" size="large" class="move-handle" />
