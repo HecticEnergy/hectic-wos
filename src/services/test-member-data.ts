@@ -1,4 +1,4 @@
-import type { Member, MemberTargetTimes } from "@/models";
+import { SfcTargets, type Member, type MemberTargetTimes } from "@/models";
 
 const defaultMember: Member = {
   name: "",
@@ -14,13 +14,7 @@ const setTargets = (
   startIndex: number,
   times: { minutes: number; seconds: number }[]
 ): MemberTargetTimes[] => {
-  const targetNames = [
-    "West Turret",
-    "Sunfire Castle",
-    "North Turret",
-    "East Turret",
-    "South Turret",
-  ];
+  const targetNames = SfcTargets;
 
   const targets = targetNames.map((tn, i) => ({
     targetName: tn,
@@ -59,7 +53,7 @@ const getTestMemberData = () => {
     "Mystic",
     "North",
     "South",
-  ];
+  ].sort(() => Math.random() - 0.5);
   const memberData = names.map((name, i) => ({
     ...defaultMember,
     name,
