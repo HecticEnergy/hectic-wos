@@ -1,7 +1,7 @@
 <template>
   <v-app-bar :density="smAndDown ? 'compact' : 'comfortable'">
     <!-- <v-btn flat icon="mdi-home" to="/" /> -->
-    <v-app-bar-nav-icon @click.stop="toggleRail" />
+    <v-app-bar-nav-icon @click.stop="toggleDrawer" />
     <v-toolbar-title>Hectic WOS</v-toolbar-title>
     <v-divider vertical />
     <BuyMeBeer />
@@ -42,19 +42,32 @@
           />
         </template>
         <v-list-item
+          :key="key"
           title="March Times"
-          prepend-icon="mdi-rocket-launch"
           data-tour="march-times-navbar-link"
           :to="RouteHelper.MARCH_TIME"
-          class="list-item-tab-index-fix"
-        />
+          :style="{
+            paddingInlineStart: rail ? '10px !important' : '25px !important',
+          }"
+        >
+          <template #prepend>
+            <v-icon icon="mdi-rocket-launch" size="small" />
+          </template>
+        </v-list-item>
         <v-list-item
+          :key="key"
           title="Create Yourself"
           prepend-icon="mdi-account"
           data-tour="create-member-single-navbar-link"
           :to="RouteHelper.CREATE_MEMBER_SINGLE"
-          class="list-item-tab-index-fix"
-        />
+          :style="{
+            paddingInlineStart: rail ? '10px !important' : '25px !important',
+          }"
+        >
+          <template #prepend>
+            <v-icon icon="mdi-account" size="small" />
+          </template>
+        </v-list-item>
       </v-list-group>
       <v-divider />
       <v-spacer />
@@ -111,12 +124,13 @@ const route = useRoute();
 const { smAndDown } = useDisplay();
 
 const rail = defineModel<boolean>("rail", { required: true });
+const key = ref<number>(0);
+const drawer = ref(!smAndDown.value);
 
-const drawer = ref(false);
-
-const toggleRail = () => {
-  rail.value = !rail.value;
+const toggleDrawer = () => {
+  //rail.value = !rail.value;
   drawer.value = !drawer.value;
+  key.value++;
 };
 
 const setupMenuRail = () => {
@@ -161,5 +175,8 @@ setupMenuRail();
 <style scoped>
 .list-item-tab-index-fix {
   padding-inline-start: 25px !important;
+}
+.list-item-tab-index-fix-rail {
+  padding-inline-start: 10px !important;
 }
 </style>

@@ -9,10 +9,10 @@
 
 ## Get back to main
 
-1. fix menu
-   1. rail looks funny with sub items (icons off)
-      1. add dividers and padding
-   2. March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
+1. [x] fix menu
+   1. [x] rail looks funny with sub items (icons off)
+      1. [x] ~~add dividers and~~ fix padding
+   2. [x] March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
 2. Create yo self
    1. Test everything
 3. Draggable members
@@ -21,6 +21,16 @@
    2. Mouse Up to remove "dragging" opacity isn't working
    3. Test everything
 4. **_Fix Tour!!!!_**
+5. update HTU's
+   1. add more for 
+      1. Create yourself / import member link
+      2. Member Edit
+      3. Main Page 
+6. Home Page
+   1. update Thank You's
+   2. make icon link you to the page (and icon-click event for buy me beer)
+   3. add new blocks for recently added pages
+   4. pull out item box into it's own HomePageDescription box
 
 ## Quick wins
 
