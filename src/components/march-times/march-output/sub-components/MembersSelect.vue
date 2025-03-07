@@ -12,8 +12,8 @@
           prepend-icon="mdi-account"
           @click="toggleGroupsChanged"
         />
-        </v-col>
-        <v-col grow>
+      </v-col>
+      <v-col grow>
         <!-- <v-chip
           data-tour="groups-toggle"
           :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
@@ -51,18 +51,22 @@
     </v-row>
     <v-row dense align="center" class="d-flex" width="100%">
       <v-col grow data-tour="member-group-select">
+        <div v-if="!isGroups" class="bg-primary-lighten-1 rounded">
+          <draggable v-model="allMembers" item-key="id">
+            <template #item="{ element }">
+              <v-chip
+                :color="element.isSelected ? 'primary' : ''"
+                @click="toggleMemberSelected(element)"
+              >
+                <v-icon icon="mdi-drag" size="large" class="move-handle" />
+                {{ element.name }}
+              </v-chip>
+            </template>
+          </draggable>
+        </div>
+
         <ComboboxChips
-          v-if="!isGroups"
-          v-model="selectedMembers"
-          :all-items="allMembers"
-          label="Select Members"
-          disallow-new-items
-          multiple
-          dense
-          @update:model-value="$emit('change')"
-        />
-        <ComboboxChips
-          v-else-if="!!isGroups"
+          v-if="!!isGroups"
           v-model="selectedGroups"
           :all-items="memberStore.groups"
           label="Selected Groups"
@@ -72,7 +76,7 @@
           @update:model-value="$emit('change')"
         />
       </v-col>
-      <v-col cols="auto" shrink />
+      <v-col v-if="!!isGroups" cols="auto" shrink> </v-col>
     </v-row>
 
     <DialogFullScreen v-model="isEditing" contained title="Manage Members">
@@ -118,6 +122,8 @@
 </template>
 
 <script setup lang="ts">
+import draggable from "vuedraggable";
+import type { Member } from "@/models";
 import { useMemberStore } from "@/stores/member-store";
 const memberStore = useMemberStore();
 
@@ -136,14 +142,16 @@ const emit = defineEmits<{
 const showGroupDialog = ref(false);
 const createGroupEdit = ref("");
 
-const allMembers = computed(() => memberStore.members.map((m) => m.name));
+const allMembers = computed({
+  get: () => memberStore.members,
+  set: (value: Member[]) => changeOrder(value),
+});
 const selectedMembers = computed({
-  get: () => memberStore.getSelectedMembers().map((m) => m.name),
-  set: (value: string[]) => {
-    memberStore.getMembersByNames(value).forEach((m) => (m.isSelected = true));
-    memberStore
-      .getMembersByNames(allMembers.value.filter((m) => !value.includes(m)))
-      .forEach((m) => (m.isSelected = false));
+  get: () => memberStore.getSelectedMembers(),
+  set: (value: Member[]) => {
+    memberStore.members.forEach(
+      (m) => (m.isSelected = value.some((v) => v.id === m.id))
+    );
   },
 });
 
@@ -165,6 +173,23 @@ const selectedGroups = computed({
   },
 });
 
+const changeOrder = (members: Member[]) => {
+  const updateMembers: Member[] = [];
+  let order = 0;
+  members.forEach((m) => {
+    const newOrder = (order += 10);
+    m.order = newOrder;
+    updateMembers.push(m);
+  });
+  memberStore.members = updateMembers;
+  memberStore.saveAll();
+};
+
+const toggleMemberSelected = (member: Member) => {
+  member.isSelected = !member.isSelected;
+  memberStore.save(member);
+};
+
 const toggleGroupsChanged = () => {
   isGroups.value = !isGroups.value;
   emit("change");
@@ -172,7 +197,7 @@ const toggleGroupsChanged = () => {
 
 const createGroup = () => {
   memberStore.members
-    .filter((m) => selectedMembers.value.includes(m.name))
+    .filter((m) => selectedMembers.value.map((m) => m.name).includes(m.name))
     .forEach((m) => (m.group = createGroupEdit.value));
   memberStore.saveAll();
   showGroupDialog.value = false;
