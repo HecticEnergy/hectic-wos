@@ -1,12 +1,30 @@
 <template>
-  <v-select
+  <!-- <v-select
     v-if="memberStore.allTargetNames.length > 1"
     v-model="selectedTargetName"
     :items="memberStore.allTargetNames"
     label="Select Target"
     data-tour="march-output-target-select"
     dense
-  />
+  /> -->
+
+  <v-item-group
+    v-if="memberStore.allTargetNames.length > 1"
+    v-model="selectedTargetName"
+  >
+    <v-chip
+      v-for="targetName in memberStore.allTargetNames"
+      :key="targetName"
+      :color="targetName === selectedTargetName ? 'primary' : ''"
+      :size="targetName === selectedTargetName ? 'large' : 'small'"
+      :style="{
+        fontSize: targetName === selectedTargetName ? '1.2rem' : '',
+      }"
+      @click="selectedTargetName = targetName"
+    >
+      {{ targetName }}
+    </v-chip>
+  </v-item-group>
   <v-alert
     v-else-if="memberStore.allTargetNames.length === 0"
     color="warning"

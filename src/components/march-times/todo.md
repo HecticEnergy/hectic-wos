@@ -35,7 +35,7 @@
 ## Quick wins
 
 1. !!! **_FIX TOUR_** !!!
-2. Make TargetSelect clickable chips (like a radio button)
+2. [x] Make TargetSelect clickable chips (like a radio button)
 3. Make Beer icon amber?
 4. March Output Box
    1. stop showing it by default
