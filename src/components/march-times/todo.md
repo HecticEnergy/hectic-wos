@@ -1,3 +1,17 @@
+## Get back to main
+1. fix menu
+   1. rail looks funny with sub items (icons off)
+      1. add opacity
+2. Fix Tour!!!!
+3. Create yo self
+   1. Test everything
+4. Draggable members
+   1. Add Draggable Component
+      1. replace all the draggable imports and use auto importer for everything else
+   2. Mouse Up to remove "dragging" opacity isn't working
+   3. Test everything 
+
+
 ## Quick wins
 
 1. !!! **_FIX TOUR_** !!!
@@ -25,7 +39,10 @@
 
 ## Terms
 
-- Members - "Leads"
+- Leads - rally callers
+- Coordinator - the user organizing the Leads
+- Target - the name of the thing you want to attack
+  - March Time - how long it takes the rally caller to get there
 
 ## Enhancements
 
@@ -35,19 +52,16 @@
    3. manage deployment groups
       1. requires switching layout for a deployment group layout
    4. Upload / export state
-2. [ ] Member should be able to create and output their own info
+2. Make TargetSelect clickable chips (like a radio button)
+3. [ ] Member should be able to create and output their own info
    1. not linked to rally organizer, but copy and paste to chat
    2. OR - send the link (query string) and owner can import
-3. [ ] Multi target is just Castle Battle
+4. [ ] Multi target is just Castle Battle
    1. Load default target names for SFC
       1. Have an option for "What battle are you preparing for?" and make it easy?
-      2. Make target names a label and not a combobox
-4. Member select - 10
-   1. Make member reorder drag and drop
-   2. show a screen to touch member names to select them (not dropdown)
-      1. touch again to deselect
 5. Member part of more than one group - 7
    1. groups should have members, not the other way around
+   2. split screen - all members (chips) drag/drop to groups
 6. Deployment Groups
    1. Multiple members/groups to a single target
    2. output for multiple targets
