@@ -6,7 +6,7 @@
             :class="
               `my-2 rounded` +
               (element.isDragging ? ' on-hover' : ' ') +
-              (element.member.isSelected ? ' bg-primary' : '  bg-background')
+              (element.member.isSelected ? ' bg-primary' : ' bg-surface-variant')
             "
           >
             <v-row
