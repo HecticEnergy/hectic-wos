@@ -73,7 +73,7 @@
           disallow-new-items
           multiple
           dense
-          @update:model-value="$emit('change')"
+          @update:model-value="$emit('update')"
         />
       </v-col>
       <v-col v-if="!!isGroups" cols="auto" shrink> </v-col>
@@ -136,7 +136,7 @@ const { defaultOpenEdit = false } = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (event: "change"): void;
+  (event: "update"): void;
 }>();
 
 const showGroupDialog = ref(false);
@@ -183,16 +183,18 @@ const changeOrder = (members: Member[]) => {
   });
   memberStore.members = updateMembers;
   memberStore.saveAll();
+  emit("update");
 };
 
 const toggleMemberSelected = (member: Member) => {
   member.isSelected = !member.isSelected;
   memberStore.save(member);
+  emit("update");
 };
 
 const toggleGroupsChanged = () => {
   isGroups.value = !isGroups.value;
-  emit("change");
+  emit("update");
 };
 
 const createGroup = () => {
@@ -202,7 +204,7 @@ const createGroup = () => {
   memberStore.saveAll();
   showGroupDialog.value = false;
   createGroupEdit.value = "";
-  emit("change");
+  emit("update");
 };
 
 const closeGroupDialog = () => {

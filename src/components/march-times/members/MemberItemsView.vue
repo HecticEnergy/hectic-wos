@@ -1,56 +1,44 @@
 <template>
-    <draggable v-model="allSelectMembers" item-key="id" handle=".move-handle">
-      <template #item="{ element }">
-        <div>
-          <div
-            :class="
-              `my-2 rounded` +
-              (element.isDragging ? ' on-hover' : ' ') +
-              (element.member.isSelected ? ' bg-primary' : ' bg-surface-variant')
-            "
+  <draggable v-model="allSelectMembers" item-key="id" handle=".move-handle">
+    <template #item="{ element }">
+      <div>
+        <div
+          :class="
+            `my-2 rounded` +
+            (element.isDragging ? ' on-hover' : ' ') +
+            (element.member.isSelected ? ' bg-primary' : ' bg-surface-variant')
+          "
+        >
+          <v-row
+            class="py-2 ma-1"
+            align="center"
+            @click="toggleMemberSelected(element)"
           >
-            <v-row
-              class="py-2 ma-1"
-              align="center"
-              @click="toggleMemberSelected(element)"
-            >
-              <v-col cols="auto">
-                <v-icon
-                  icon="mdi-drag"
-                  size="large"
-                  class="move-handle"
-                  @touchstart="move(element, true)"
-                  @touchend="move(element, false)"
-                  @mousedown="move(element, true)"
-                  @mouseup="move(element, false)"
-                />
-              </v-col>
-              <!-- <v-col cols="auto">
-                <v-icon
-                  :icon="
-                    element.member.isSelected
-                      ? 'mdi-check'
-                      : 'mdi-square-rounded-outline'
-                  "
-                  :color="element.member.isSelected ? 'success' : ''"
-                  size="small"
-                  @click="toggleMemberSelected(element)"
-                />
-              </v-col> -->
-              <v-col>
-                <label>{{ element.name }}</label>
-              </v-col>
-              <v-col cols="auto" class="mr-2">
-                <label>{{ element.marchTime }}</label>
-              </v-col>
-              <v-col cols="auto">
-                <v-icon icon="mdi-pencil" @click.stop="edit(element)" />
-              </v-col>
-            </v-row>
-          </div>
+            <v-col cols="auto">
+              <v-icon
+                icon="mdi-drag"
+                size="large"
+                class="move-handle"
+                @touchstart="move(element, true)"
+                @touchend="move(element, false)"
+                @mousedown="move(element, true)"
+                @mouseup="move(element, false)"
+              />
+            </v-col>
+            <v-col>
+              <label>{{ element.name }}</label>
+            </v-col>
+            <v-col cols="auto" class="mr-2">
+              <label>{{ element.marchTime }}</label>
+            </v-col>
+            <v-col cols="auto">
+              <v-icon icon="mdi-pencil" @click.stop="edit(element)" />
+            </v-col>
+          </v-row>
         </div>
-      </template>
-    </draggable>
+      </div>
+    </template>
+  </draggable>
 </template>
 
 <script setup lang="ts">
@@ -73,6 +61,7 @@ const props = defineProps({
 const emit = defineEmits<{
   (event: "save", members: Member): void;
   (event: "edit", member: Member): void;
+  (event: "update"): void;
 }>();
 
 type SelectMember = {
@@ -99,6 +88,7 @@ const allSelectMembers = computed({
     });
     _allMembers.value = value;
     updateMembers.forEach((m) => emit("save", m));
+    emit("update");
   },
 });
 const isDragging = ref<boolean>(false);
@@ -135,6 +125,7 @@ const toggleMemberSelected = (element: SelectMember) => {
   const modelMember = model.value.find((m) => m.id === element.id);
   if (modelMember) {
     modelMember.isSelected = element.member.isSelected;
+    emit("update");
   }
 };
 

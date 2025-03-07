@@ -8,6 +8,7 @@
       v-model="memberStore.members"
       :selected-target-name="memberStore.selectedTargetName"
       @edit="edit"
+      @update="$emit('update')"
     />
     <template #bottomContent>
       <v-row dense>
@@ -89,7 +90,12 @@ const { openImport = false } = defineProps<{
   openImport?: boolean;
 }>();
 
+const emit = defineEmits<{
+  (e: "update"): void
+}>();
+
 const isEditing = ref(!!memberStore.editMember);
+
 const addNewMember = () => {
   let targets = [] as MemberTargetTimes[];
   if (memberStore.targetMode === "Sunfire Castle")
@@ -114,12 +120,14 @@ const saveMember = (member: Member) => {
   memberStore.save(member);
   memberStore.editMember = undefined;
   isEditing.value = false;
+  emit("update");
 };
 
 const removeMember = (memberId: number) => {
   memberStore.remove(memberId);
   memberStore.editMember = undefined;
   isEditing.value = false;
+  emit("update");
 };
 
 const closeEdit = () => {

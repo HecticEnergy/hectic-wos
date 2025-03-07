@@ -18,7 +18,10 @@
         />
       </v-col>
       <v-col cols="12">
-        <MembersSelect :default-open-edit="openImport" @change="savePageData" />
+        <MembersSelect
+          :default-open-edit="openImport"
+          @update="savePageData"
+        />
       </v-col>
       <v-col cols="12">
         <MarchTypeToggle @change="savePageData" />
