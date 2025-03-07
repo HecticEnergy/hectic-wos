@@ -1,6 +1,6 @@
 <template>
   <ParentCard color="background">
-    <h2>Members</h2>
+    <h2><label>Members</label></h2>
     <draggable v-model="allMembers" item-key="id">
       <template #item="{ element }">
         <div>
@@ -16,6 +16,7 @@
               @touchstart="move(element, true)"
               @touchend="move(element, false)"
               @mousedown="move(element, true)"
+              @mouseup="move(element, false)"
             >
               <v-col cols="auto">
                 <v-icon
