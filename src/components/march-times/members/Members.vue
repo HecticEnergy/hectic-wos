@@ -3,7 +3,7 @@
     <template #topContent>
       <target-mode v-model="memberStore.targetMode" />
     </template>
-    <MemberItemView
+    <!-- <MemberItemView
       v-if="memberStore.editMember"
       v-model="memberStore.editMember!"
       :groups="memberStore.groups"
@@ -25,6 +25,12 @@
       @save="saveMember"
       @remove="removeMember"
       @close-edit="closeEdit"
+    /> -->
+    <member-select
+      v-if="memberStore.members.length"
+      v-model="memberStore.members"
+      :selected-target-name="memberStore.selectedTargetName"
+      @edit="edit"
     />
     <template #bottomContent>
       <v-row dense>
@@ -78,6 +84,22 @@
   <DialogFullScreen v-model="showImportDialog" contained title="Import Members">
     <MemberImport />
   </DialogFullScreen>
+  <DialogFullScreen
+    v-model="isEditing"
+    contained
+    title="Edit Member"
+    @close="closeEdit"
+  >
+    <MemberEdit
+      v-if="!!memberStore.editMember"
+      v-model="memberStore.editMember"
+      :groups="memberStore.groups"
+      :all-target-names="memberStore.allTargetNames"
+      @save="saveMember"
+      @cancel="closeEdit"
+      @delete="(m) => removeMember(m)"
+    />
+  </DialogFullScreen>
 </template>
 <script setup lang="ts">
 import { type Member, type MemberTargetTimes } from "@/models";
@@ -105,7 +127,7 @@ const addNewMember = () => {
     group: "",
   };
 
-  console.log("empty member", member);
+  // console.log("empty member", member);
 
   memberStore.editMember = member;
   isEditing.value = true;
@@ -117,8 +139,8 @@ const saveMember = (member: Member) => {
   isEditing.value = false;
 };
 
-const removeMember = (member: Member) => {
-  memberStore.remove(member.id);
+const removeMember = (memberId: number) => {
+  memberStore.remove(memberId);
   memberStore.editMember = undefined;
   isEditing.value = false;
 };
@@ -126,6 +148,11 @@ const removeMember = (member: Member) => {
 const closeEdit = () => {
   memberStore.editMember = undefined;
   isEditing.value = false;
+};
+
+const edit = (member: Member) => {
+  memberStore.editMember = member;
+  isEditing.value = true;
 };
 
 const showImportDialog = ref<boolean>(openImport);

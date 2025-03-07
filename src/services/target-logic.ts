@@ -1,4 +1,4 @@
-import { SfcTargets, type MemberTargetTimes } from "@/models";
+import { SfcTargets, type Member, type MemberTargetTimes } from "@/models";
 import { correctHMS } from "./time-helpers";
 
 export const validateTargets = (targets: MemberTargetTimes[] | undefined) => {
@@ -79,4 +79,20 @@ export const mapSvsTargets = (targets: MemberTargetTimes[]) => {
     return t;
   });
   return allTargets;
+};
+
+export const getMemberMarchTime = (member: Member, targetName: string) => {
+  const targetTime = member.targetTimes.find(
+    (tt) =>
+      tt.targetName.trim().toLocaleLowerCase() ===
+      (targetName ?? targetName).trim().toLocaleLowerCase()
+  );
+  if (!targetTime) return undefined;
+
+  return {
+    memberName: member.name,
+    order: member.order,
+    minutes: targetTime.minutes,
+    seconds: targetTime.seconds,
+  };
 };
