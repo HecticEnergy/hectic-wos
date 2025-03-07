@@ -14,6 +14,7 @@
               class="py-2 ma-1"
               align="center"
               @touchstart="move(element, true)"
+              @touchend="move(element, false)"
               @mousedown="move(element, true)"
             >
               <v-col cols="auto">
