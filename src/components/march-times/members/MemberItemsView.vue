@@ -1,5 +1,4 @@
 <template>
-  <ParentCard v-bind="$attrs" title="Members">
     <draggable v-model="allSelectMembers" item-key="id" handle=".move-handle">
       <template #item="{ element }">
         <div>
@@ -52,7 +51,6 @@
         </div>
       </template>
     </draggable>
-  </ParentCard>
 </template>
 
 <script setup lang="ts">

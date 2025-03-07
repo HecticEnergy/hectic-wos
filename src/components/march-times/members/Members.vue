@@ -3,30 +3,7 @@
     <template #topContent>
       <target-mode v-model="memberStore.targetMode" />
     </template>
-    <!-- <MemberItemView
-      v-if="memberStore.editMember"
-      v-model="memberStore.editMember!"
-      :groups="memberStore.groups"
-      :all-target-names="memberStore.allTargetNames"
-      :show-selected="false"
-      :edit-open="isEditing"
-      @save="saveMember"
-      @remove="removeMember"
-      @close-edit="closeEdit"
-    />
-    <MemberItemView
-      v-for="(member, idx) in memberStore.members"
-      :key="member.id"
-      v-model="memberStore.members[idx]"
-      :groups="memberStore.groups"
-      :all-target-names="memberStore.allTargetNames"
-      :show-selected="false"
-      :edit-open="false"
-      @save="saveMember"
-      @remove="removeMember"
-      @close-edit="closeEdit"
-    /> -->
-    <member-select
+    <member-items-view
       v-if="memberStore.members.length"
       v-model="memberStore.members"
       :selected-target-name="memberStore.selectedTargetName"
