@@ -1,15 +1,8 @@
 import { defineStore } from "pinia";
-import type {
-  Member,
-  MemberTarget,
-  TargetMode,
-} from "@/models";
+import type { Member, MemberTarget, TargetMode } from "@/models";
 import { getSecondsFromTimeSMH } from "@/services/time-helpers";
 import { LocalStorage } from "@/services/local-storage-typed";
-import {
-  cleanTargets,
-  validateTargets,
-} from "@/services/target-logic";
+import { cleanTargets, validateTargets } from "@/services/target-logic";
 
 const localStorageKey = "march-members-lsk";
 
@@ -293,6 +286,28 @@ export const useMemberStore = defineStore("member-store", {
     },
     getMembersByNames(names: string[]) {
       return this.members.filter((member) => names.includes(member.name));
+    },
+    getMemberMarchTime(memberName: string, targetName?: string) {
+      const member = this.members.find(
+        (m) =>
+          m.name.trim().toLocaleLowerCase() ===
+          memberName.trim().toLocaleLowerCase()
+      );
+      if (!member) return undefined;
+
+      const targetTime = member.targetTimes.find(
+        (tt) =>
+          tt.targetName.trim().toLocaleLowerCase() ===
+          (targetName ?? this.selectedTargetName).trim().toLocaleLowerCase()
+      );
+      if (!targetTime) return undefined;
+
+      return {
+        memberName: member.name,
+        order: member.order,
+        minutes: targetTime.minutes,
+        seconds: targetTime.seconds,
+      };
     },
     getMemberSelectedTime(targetName: string, groupName?: string) {
       return this.getSelectedMembers(groupName)
