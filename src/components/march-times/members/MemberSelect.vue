@@ -25,9 +25,7 @@
                   "
                   :color="element.member.isSelected ? 'success' : ''"
                   size="small"
-                  @click="
-                    element.member.isSelected = !element.member.isSelected
-                  "
+                  @click="toggleMemberSelected(element)"
                 />
               </v-col>
               <v-col>
@@ -97,6 +95,12 @@ const move = (element: SelectMember, isMouseDown: boolean) => {
     }
   });
 };
+
+const toggleMemberSelected = (element: SelectMember) => {
+  element.member.isSelected = !element.member.isSelected;
+  memberStore.saveAll();
+};
+
 const edit = () => {
   console.log("edit");
 };
