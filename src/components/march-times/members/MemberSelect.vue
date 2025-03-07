@@ -6,8 +6,8 @@
         <div>
           <div
             :class="
-              `my-2 bg-surface rounded` +
-              (element.isDragging ? ' on-hover' : '')
+              `my-2 bg-surface rounded ` +
+              (element.isDragging ? 'on-hover' : '')
             "
           >
             <v-row
@@ -64,27 +64,35 @@ type SelectMember = {
   marchTime: string | undefined;
   member: Member;
 };
+
+const _allMembers = ref<SelectMember[] | undefined>(undefined);
+
 const allMembers = computed({
-  get: () =>
-    memberStore.members
-      .sort((m) => m.order)
-      .map((member) => {
-        return {
-          id: member.id,
-          name: member.name,
-          marchTime: getMemberMarchTime(member.name),
-          member,
-        } as SelectMember;
-      }),
+  get: () => _allMembers.value,
   set: (value: SelectMember[]) => {
     let order = 0;
     value.forEach((m) => {
       m.member.order = order += 10;
     });
+    _allMembers.value = value;
     memberStore.saveAll();
   },
 });
 const isDragging = ref<boolean>(false);
+
+onMounted(() => {
+  memberStore.loadData();
+  allMembers.value = memberStore.members
+    .sort((m) => m.order)
+    .map((member) => {
+      return {
+        id: member.id,
+        name: member.name,
+        marchTime: getMemberMarchTime(member.name),
+        member,
+      } as SelectMember;
+    });
+});
 
 const move = (element: SelectMember, isMouseDown: boolean) => {
   isDragging.value = isMouseDown;
@@ -112,11 +120,6 @@ const getMemberMarchTime = (memberName: string) => {
 
   return formatTimeMS(marchTime.minutes, marchTime.seconds);
 };
-
-onMounted(() => {
-  memberStore.loadData();
-});
-
 //
 </script>
 
