@@ -1,27 +1,30 @@
 ## Quick wins
 
-5. upload / export state - 5
-   1. ***Waiting for other state changes to be done: Groups***
+1. !!! **_FIX TOUR_** !!!
+2. upload / export state - 5
+   1. **_Waiting for other state changes to be done: Groups_**
    2. output the settings / members a json (already mostly in local storage)
    3. upload the settings into the state
    4. Share link with query string?
-6. Make Beer icon amber?
-1. Import
+3. Make Beer icon amber?
+4. Import
    1. Import should merge/update, not overwrite completely
       1. show a diff
    2. ~~Assume 130 is 1:30 (game shows minutes/seconds, assume that's what user is doing)~~
-2. Target Select - make it buttons (instead of dropdown)
-3. Output box order by - order by priority (landing time) or launch time?
+5. Target Select - make it buttons (instead of dropdown)
+6. Output box order by - order by priority (landing time) or launch time?
    1. give the user a control to select
-4. Member Notes
+7. Member Notes
    1. Add a notes field to member edit, show on member select/combobox list items
-7. Title Bar - show bread crumbs?: Hectic WOS > March / Hectic WOS > Ministry
+8. Title Bar - show bread crumbs?: Hectic WOS > March / Hectic WOS > Ministry
    1. (in `settings-panel` branch)
-8. Button tooltips (only useful on desktop ofc) - add title to all controls
-9. Menu: March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
-10. Add Images from the game to denote SFC targets
-11. Battle Prep Walkthrough
+9. Button tooltips (only useful on desktop ofc) - add title to all controls
+10. Menu: March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
+11. Add Images from the game to denote SFC targets
+12. Battle Prep Walkthrough
+
 ## Terms
+
 - Members - "Leads"
 
 ## Enhancements
@@ -45,28 +48,26 @@
       1. touch again to deselect
 5. Member part of more than one group - 7
    1. groups should have members, not the other way around
-6.  Deployment Groups 
+6. Deployment Groups
    1. Multiple members/groups to a single target
    2. output for multiple targets
-7.  SFC
+7. SFC
    1. Turrets
       1. a button for each, and a count down for each
       2. the button resets the timer and counts down from 1 minute
       3. coordinate landing time by turret
-8.  Member specific march offsets - 0
+8. Member specific march offsets - 0
    1. each member should have a customizable offset that will apply based on their order
-9.  Output box should limit length to 11, then split to a new output box (WOS line limit)
-    1. output box takes or makes an array of arrays, figure out max character count for WOS too
+9. Output box should limit length to 11, then split to a new output box (WOS line limit)
+   1. output box takes or makes an array of arrays, figure out max character count for WOS too
 10. I18N/Translation - test the page with different localizations/Translations and adjust the layout as needed
 11. Error Messages:
     1. Add new member without a target, the error message should dismiss if the window is either closed or saved
     2. Contain within the panel (desktop)
 12. "Battle Prep" Walk Through
-    1.  show pictures and give them a walk through of how to setup for the battle 
-    2.  check list?
+    1. show pictures and give them a walk through of how to setup for the battle
+    2. check list?
 13. Approximate march times based on coordinates and 1 target time?
-
-
 
 ## Server Required
 
@@ -111,25 +112,24 @@
             3. "Jordan" is being sent by "Coordinator B" to the "North Turret."
             4. "Drug bone" is being sent by "Coordinator C" to a location.
          4. This will stop us from accidentally sending our troops to the same place at the same time during the battle and allow coordinators to see their own commands.
-   4.  Smaller Battle Groups Inside the State/Alliance Group:
-      1.  Inside our main battle group, we need to be able to make smaller groups for different battle roles or tasks.
-      2.  For example, we could have groups like "Attack Team," "Defense Team," "Scout Team," or "Resource Team."
-      3.  Then we can put players into those smaller groups.
-      4.  Or just sort them by their alliance
-   5.  Discord Bot
-       1.  https://discord.com/developers/docs/intro
-       2.  Notifications
-           1.  tying "members" to Discord users
-           2.  Optionally no discord user to manage non discord members
-
+   4. Smaller Battle Groups Inside the State/Alliance Group:
+      1. Inside our main battle group, we need to be able to make smaller groups for different battle roles or tasks.
+      2. For example, we could have groups like "Attack Team," "Defense Team," "Scout Team," or "Resource Team."
+      3. Then we can put players into those smaller groups.
+      4. Or just sort them by their alliance
+   5. Discord Bot
+      1. https://discord.com/developers/docs/intro
+      2. Notifications
+         1. tying "members" to Discord users
+         2. Optionally no discord user to manage non discord members
 
 ### Dev Details
+
 1. "Join Code"
    1. {StateNumber}[+{AllianceName}]+{8CharRandomCode}
 1. Coordinators
    1. Support multiple, should be able to see other's marches (not members)
    2. Switch coordinators (takeover members / targets)
-   3. 
 
 ## Maybe...
 
