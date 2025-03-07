@@ -21,21 +21,26 @@
    3. upload the settings into the state
    4. Share link with query string?
 3. Make Beer icon amber?
-4. Import
+4. March Output Box
+   1. stop showing it by default
+      1. put a copy button on the bottom of the main display instead
+      2. show a dialog for a few seconds with the content 
+   2. fix member select not changing the contents
+5. Import
    1. Import should merge/update, not overwrite completely
       1. show a diff
    2. ~~Assume 130 is 1:30 (game shows minutes/seconds, assume that's what user is doing)~~
-5. Target Select - make it buttons (instead of dropdown)
-6. Output box order by - order by priority (landing time) or launch time?
+6. Target Select - make it buttons (instead of dropdown)
+7. Output box order by - order by priority (landing time) or launch time?
    1. give the user a control to select
-7. Member Notes
+8. Member Notes
    1. Add a notes field to member edit, show on member select/combobox list items
-8. Title Bar - show bread crumbs?: Hectic WOS > March / Hectic WOS > Ministry
+9.  Title Bar - show bread crumbs?: Hectic WOS > March / Hectic WOS > Ministry
    1. (in `settings-panel` branch)
-9. Button tooltips (only useful on desktop ofc) - add title to all controls
-10. Menu: March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
-11. Add Images from the game to denote SFC targets
-12. Battle Prep Walkthrough
+10. Button tooltips (only useful on desktop ofc) - add title to all controls
+11. Menu: March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
+12. Add Images from the game to denote SFC targets
+13. Battle Prep Walkthrough
 
 ## Terms
 
