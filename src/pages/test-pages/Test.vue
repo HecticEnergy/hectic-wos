@@ -1,5 +1,7 @@
 <template>
-  <members />
+  <parent-card>
+    <draggable-chips />
+  </parent-card>
 </template>
 
 <script setup lang="ts">
