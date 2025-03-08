@@ -70,6 +70,26 @@ import {
 import * as tourConsts from "@/services/tour/tour-consts";
 import { useMemberStore } from "@/stores/member-store";
 
+type TourStepType = {
+  target: string;
+  content: string;
+  action?: () => void | Promise<void>;
+  params?: object;
+};
+
+type TourType = {
+  start: () => void;
+  stop: () => void;
+  skip: () => void;
+  nextStep: () => void;
+  isFirst: boolean;
+  isLast: boolean;
+  currentStep: number;
+  previousStep: number;
+  steps: TourStepType[];
+  labels: unknown;
+};
+
 const memberStore = useMemberStore();
 
 const tourStopped = ref(false);
@@ -89,7 +109,7 @@ const startTour = () => {
   app?.proxy?.$tours["marchTimesTour"].start();
 };
 
-const nextStep = (tour: any) => {
+const nextStep = (tour: TourType) => {
   if (tour.isLast) {
     stopTour(tour);
     return;
@@ -97,21 +117,21 @@ const nextStep = (tour: any) => {
   tour.nextStep();
 };
 
-const stopTour = (tour: any) => {
+const stopTour = (tour: TourType) => {
   tour.stop();
   tourStopped.value = true;
   clearElementFlash();
   localStorage.setItem("marchTimesTour", "true");
 };
 
-const skipTour = (tour: any) => {
+const skipTour = (tour: TourType) => {
   tour.skip();
   tourStopped.value = true;
   clearElementFlash();
   localStorage.setItem("marchTimesTour", "true");
 };
 
-const welcomeSteps: any[] = [];
+const welcomeSteps: TourStepType[] = [];
 
 welcomeSteps.push({
   ...buildStep(

@@ -12,7 +12,8 @@
     v-if="memberStore.allTargetNames.length > 1"
     v-model="selectedTargetName"
     class="d-flex align-center no-wrap overflow-x-auto"
-    style="max-width:100%"
+    data-tour="march-output-target-select"
+    style="max-width: 100%"
   >
     <v-chip
       v-for="targetName in memberStore.allTargetNames"
@@ -20,7 +21,7 @@
       :color="targetName === selectedTargetName ? 'primary' : ''"
       :size="targetName === selectedTargetName ? 'default' : 'small'"
       class="flex-1-0"
-      :style="{ 
+      :style="{
         // width: targetName === selectedTargetName ? '' : '55px',
         padding: targetName === selectedTargetName ? '' : '5px',
         justifyContent: 'center',
