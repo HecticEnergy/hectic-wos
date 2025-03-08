@@ -1,6 +1,6 @@
 <template>
   <parent-card>
-    <draggable-chips />
+    <draggable-chips-test />
   </parent-card>
 </template>
 

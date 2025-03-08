@@ -8,7 +8,11 @@
 
     <v-row class="mb-4 d-flex flex-column align-center">
       <v-col>
-        <v-checkbox v-model="sortBySelected" label="Sort by Selected" hide-details />
+        <v-checkbox
+          v-model="sortBySelected"
+          label="Sort by Selected"
+          hide-details
+        />
       </v-col>
       <v-col>
         <v-select
@@ -26,7 +30,7 @@
         <v-label>Size when selected</v-label>
       </v-col>
       <v-col>
-        <draggable-chip
+        <draggable-chips
           v-model="sizes"
           :selected-color="color"
           :selected-size="size"
@@ -34,7 +38,7 @@
           :checkbox="dragHandleSelectModel === 'drag-icon-name'"
           :radio="true"
           :sort-by-selected="sortBySelected"
-          @click="(e) => (size = e.name)"
+          @click="size = $event.name"
           @update:model-value="sizes = $event"
         />
       </v-col>
@@ -44,7 +48,7 @@
         <v-label>Color when selected</v-label>
       </v-col>
       <v-col>
-        <draggable-chip
+        <draggable-chips
           v-model="colors"
           :selected-color="color"
           :selected-size="size"
@@ -52,7 +56,7 @@
           :checkbox="dragHandleSelectModel === 'drag-icon-name'"
           :radio="true"
           :sort-by-selected="sortBySelected"
-          @click="(e) => (color = e.name)"
+          @click="color = $event.name"
           @update:model-value="colors = $event"
         />
       </v-col>
@@ -63,7 +67,7 @@
         <v-label>Members!</v-label>
       </v-col>
       <v-col>
-        <draggable-chip
+        <draggable-chips
           v-model="allMembers"
           :selected-color="color"
           :selected-size="size"
@@ -79,7 +83,7 @@
 
 <script setup lang="ts">
 import { useMemberStore } from "@/stores/member-store";
-import type { DragHandleType } from "./chips-types";
+import type { DragHandleType } from "./draggable-chips/chips-types";
 
 const itemsWithKeys = (
   items: string[],
