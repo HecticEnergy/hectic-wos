@@ -1,5 +1,5 @@
 <template>
-  <div class="my-4">
+  <div class="my-4" data-tour="member-group-select">
     <v-row dense class="d-flex flex-row" align="center">
       <v-col shrink cols="auto" align="start">
         <v-switch
@@ -49,8 +49,14 @@
         />
       </v-col>
     </v-row>
-    <v-row dense align="center" class="d-flex rounded" width="100%" style="max-height: 90px; overflow-y:auto">
-      <v-col grow data-tour="member-group-select">
+    <v-row
+      dense
+      align="center"
+      class="d-flex rounded"
+      width="100%"
+      style="max-height: 90px; overflow-y: auto"
+    >
+      <v-col grow>
         <div v-if="!isGroups" class="bg-primary-lighten-1 rounded">
           <draggable v-model="allMembers" item-key="id">
             <template #item="{ element }"

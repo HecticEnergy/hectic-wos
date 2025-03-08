@@ -1,5 +1,10 @@
 <template>
-  <vue-draggable v-bind="$attrs" v-model="model" :handle="handle" element="span">
+  <vue-draggable
+    v-bind="$attrs"
+    v-model="model"
+    :handle="handle"
+    element="span"
+  >
     <template #item="{ element }">
       <span>
         <slot name="item" v-bind="{ element }"></slot>
