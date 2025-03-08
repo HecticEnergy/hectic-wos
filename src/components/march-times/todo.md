@@ -14,19 +14,22 @@
       1. [x] ~~add dividers and~~ fix padding
    2. [x] March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
 2. Create yo self
-   1. Test everything
-3. Draggable members
+   1. Single Target Broken
+   2. Test everything
+3. Import Member
+   1. Import not updating member edit (noticed it on single target)
+4. Draggable members
    1. [x] Add Draggable Component
       1. [x] replace all the draggable imports and use auto importer for everything else
    2. Mouse Up to remove "dragging" opacity isn't working
    3. Test everything
-4. **_Fix Tour!!!!_**
-5. update HTU's
+5. **_Fix Tour!!!!_**
+6. update HTU's
    1. add more for
       1. Create yourself / import member link
       2. Member Edit
       3. Main Page
-6. Home Page
+7. Home Page
    1. [x] update Thank You's
    2. [x] make icon link you to the page (and icon-click event for buy me beer)
    3. [x] add new blocks for recently added pages
