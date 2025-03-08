@@ -18,6 +18,7 @@ declare module 'vue' {
     DialogCloseable: typeof import('./components/global/sub-components/DialogCloseable.vue')['default']
     DialogFullScreen: typeof import('./components/global/sub-components/DialogFullScreen.vue')['default']
     Draggable: typeof import('./components/global/sub-components/Draggable.vue')['default']
+    DraggableChip: typeof import('./components/test/DraggableChip.vue')['default']
     DraggableChips: typeof import('./components/test/DraggableChips.vue')['default']
     Home: typeof import('./components/home/Home.vue')['default']
     HomeCard: typeof import('./components/home/HomeCard.vue')['default']
