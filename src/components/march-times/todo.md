@@ -22,10 +22,10 @@
    3. Test everything
 4. **_Fix Tour!!!!_**
 5. update HTU's
-   1. add more for 
+   1. add more for
       1. Create yourself / import member link
       2. Member Edit
-      3. Main Page 
+      3. Main Page
 6. Home Page
    1. [x] update Thank You's
    2. [x] make icon link you to the page (and icon-click event for buy me beer)
