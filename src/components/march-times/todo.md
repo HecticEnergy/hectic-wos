@@ -16,8 +16,8 @@
 2. Create yo self
    1. Test everything
 3. Draggable members
-   1. Add Draggable Component
-      1. replace all the draggable imports and use auto importer for everything else
+   1. [x] Add Draggable Component
+      1. [x] replace all the draggable imports and use auto importer for everything else
    2. Mouse Up to remove "dragging" opacity isn't working
    3. Test everything
 4. **_Fix Tour!!!!_**
