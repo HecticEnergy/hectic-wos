@@ -27,10 +27,10 @@
       2. Member Edit
       3. Main Page 
 6. Home Page
-   1. update Thank You's
-   2. make icon link you to the page (and icon-click event for buy me beer)
-   3. add new blocks for recently added pages
-   4. pull out item box into it's own HomePageDescription box
+   1. [x] update Thank You's
+   2. [x] make icon link you to the page (and icon-click event for buy me beer)
+   3. [x] add new blocks for recently added pages
+   4. [x] pull out item box into it's own HomePageDescription box
 
 ## Quick wins
 

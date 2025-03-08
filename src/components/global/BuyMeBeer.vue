@@ -7,6 +7,7 @@
       class="ma-4 d-flex flex-column align-center"
       style="cursor: pointer"
       title="Donate!"
+      data-tour="donate-link"
       @click="showDialog = true"
     >
       <v-icon
