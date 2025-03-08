@@ -59,6 +59,7 @@ declare module 'vue' {
     TestData: typeof import('./components/march-times/import/TestData.vue')['default']
     TimeTextBoxes: typeof import('./components/march-times/_sub-components/TimeTextBoxes.vue')['default']
     Tour: typeof import('./components/march-times/Tour.vue')['default']
+    TurretOffsetDisplay: typeof import('./components/march-times/march-output/sub-components/TurretOffsetDisplay.vue')['default']
     UploadMembers: typeof import('./components/ministry-appointments/UploadMembers.vue')['default']
     UtcClock: typeof import('./components/march-times/march-output/sub-components/UtcClock.vue')['default']
     UtcTime: typeof import('./components/march-times/march-output/sub-components/UtcTime.vue')['default']
