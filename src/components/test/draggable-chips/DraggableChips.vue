@@ -1,7 +1,6 @@
 <template>
   <div class="bg-primary-lighten-1 rounded">
     <draggable
-      :key="updateKey"
       v-model="allItems"
       item-key="id"
       handle=".move-handle"
@@ -58,7 +57,6 @@
 <script setup lang="ts" generic="T extends DraggableChipType">
 import type { DraggableChipType, DragHandleType } from "./chips-types";
 
-const updateKey = ref(0);
 const allItems = defineModel<T[]>({
   required: true,
 });
@@ -114,7 +112,6 @@ const sortBySelected = () => {
     console.log("hasChanges", JSON.parse(JSON.stringify(sorted)));
     allItems.value = sorted;
     console.log(JSON.parse(JSON.stringify(allItems.value)));
-    updateKey.value += 1;
   }
 };
 </script>
