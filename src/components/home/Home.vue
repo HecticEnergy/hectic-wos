@@ -168,7 +168,7 @@ const wosnerds = {
     `"WOS Nerds is all about digging into data, running tests, and
 figuring out the best strategies. We'd like to minimize any
 guides/advice that's not based on some solid/decent proof."`,
-    "They have a lot of great tools and resources for the game!",
+    "They have a lot of great tools and resources for the game! Tag me there if you have any feedback!",
   ],
 };
 
