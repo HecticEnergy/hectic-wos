@@ -49,22 +49,43 @@
         />
       </v-col>
     </v-row>
-    <v-row dense align="center" class="d-flex" width="100%">
+    <v-row dense align="center" class="d-flex rounded" width="100%" style="max-height: 90px; overflow-y:auto">
       <v-col grow data-tour="member-group-select">
         <div v-if="!isGroups" class="bg-primary-lighten-1 rounded">
           <draggable v-model="allMembers" item-key="id">
-            <template #item="{ element }">
-              <v-chip
+            <template #item="{ element }"
+              ><v-chip
+                :color="element.isSelected ? 'primary' : ''"
+                :size="element.isSelected ? 'default' : 'default'"
+                class="px-1"
+                style="margin: 2px 0"
+              >
+                <div class="move-handle cursor-pointer">
+                  <v-icon icon="mdi-drag" size="large" />
+                  {{ element.name }}
+                </div>
+                <v-icon
+                  :icon="
+                    element.isSelected
+                      ? 'mdi-check'
+                      : 'mdi-checkbox-blank-outline'
+                  "
+                  :class="'ml-1 ' + (element.isSelected ? '' : 'opacity-50')"
+                  size="large"
+                  @click="toggleMemberSelected(element)"
+                />
+              </v-chip>
+            </template>
+          </draggable>
+          <!-- <v-chip
                 :color="element.isSelected ? 'primary' : ''"
                 class="pl-1"
-                style="margin: 2px 0;"
+                style="margin: 2px 0"
                 @click="toggleMemberSelected(element)"
               >
                 <v-icon icon="mdi-drag" size="large" class="move-handle" />
                 {{ element.name }}
-              </v-chip>
-            </template>
-          </draggable>
+              </v-chip> -->
         </div>
 
         <ComboboxChips
