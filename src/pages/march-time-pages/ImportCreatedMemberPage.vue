@@ -125,7 +125,7 @@ onMounted(() => {
   originalMember.value = memberStore.members.find(
     (m) =>
       m.name.trim().toLocaleLowerCase() ===
-      member.value.name.trim().toLocaleLowerCase()
+      member.value.name?.trim().toLocaleLowerCase()
   );
 
   mergedMember.value?.targetTimes.forEach((t) => {
