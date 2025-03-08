@@ -19,12 +19,12 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
-    '/ColorsPage': RouteRecordInfo<'/ColorsPage', '/ColorsPage', Record<never, never>, Record<never, never>>,
     '/march-time-pages/CreateMemberPage': RouteRecordInfo<'/march-time-pages/CreateMemberPage', '/march-time-pages/CreateMemberPage', Record<never, never>, Record<never, never>>,
     '/march-time-pages/ImportCreatedMemberPage': RouteRecordInfo<'/march-time-pages/ImportCreatedMemberPage', '/march-time-pages/ImportCreatedMemberPage', Record<never, never>, Record<never, never>>,
     '/MarchTimesPage': RouteRecordInfo<'/MarchTimesPage', '/MarchTimesPage', Record<never, never>, Record<never, never>>,
     '/MinistryAppointments': RouteRecordInfo<'/MinistryAppointments', '/MinistryAppointments', Record<never, never>, Record<never, never>>,
-    '/Test': RouteRecordInfo<'/Test', '/Test', Record<never, never>, Record<never, never>>,
-    '/TransitionTestPage': RouteRecordInfo<'/TransitionTestPage', '/TransitionTestPage', Record<never, never>, Record<never, never>>,
+    '/test-pages/ColorsPage': RouteRecordInfo<'/test-pages/ColorsPage', '/test-pages/ColorsPage', Record<never, never>, Record<never, never>>,
+    '/test-pages/Test': RouteRecordInfo<'/test-pages/Test', '/test-pages/Test', Record<never, never>, Record<never, never>>,
+    '/test-pages/TransitionTestPage': RouteRecordInfo<'/test-pages/TransitionTestPage', '/test-pages/TransitionTestPage', Record<never, never>, Record<never, never>>,
   }
 }
