@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded class="ma-5 pa-5">
+  <v-card rounded class="ma-5 pa-5" style="filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5))" >
     <v-card-title>
       <v-row class="d-flex">
         <v-col cols="auto" shrink class="mr-5">
