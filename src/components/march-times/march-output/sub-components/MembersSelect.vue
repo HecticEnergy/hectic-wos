@@ -56,6 +56,7 @@
             <template #item="{ element }">
               <v-chip
                 :color="element.isSelected ? 'primary' : ''"
+                class="pl-1"
                 style="margin: 2px 0;"
                 @click="toggleMemberSelected(element)"
               >

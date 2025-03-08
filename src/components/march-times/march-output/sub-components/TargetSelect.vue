@@ -17,7 +17,7 @@
       :key="targetName"
       :color="targetName === selectedTargetName ? 'primary' : ''"
       :style="{ 
-        width: targetName === selectedTargetName ? '' : '45px',
+        width: targetName === selectedTargetName ? '' : '55px',
         padding: targetName === selectedTargetName ? '' : '5px'
 
       }"
