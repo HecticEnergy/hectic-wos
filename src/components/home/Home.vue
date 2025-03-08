@@ -45,7 +45,6 @@
           <p>
             <i class="opacity-40">This page is still under construction</i>
           </p>
-          <br />
         </template>
       </home-card>
 
