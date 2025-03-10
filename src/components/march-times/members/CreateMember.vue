@@ -1,56 +1,56 @@
 <template>
-      <ParentCard>
-        <v-row>
-          <v-col cols="12">
-            <target-mode
-              v-model="targetType"
-              @update:model-value="changeTargetType"
+  <ParentCard>
+    <v-row>
+      <v-col cols="12">
+        <target-mode
+          v-model="targetType"
+          @update:model-value="changeTargetType"
+        />
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
+          v-model="memberData.name"
+          label="Member Name"
+          clearable
+          @update:model-value.capture="() => {}"
+          @blur="saveData"
+        />
+      </v-col>
+      <v-col cols="12">
+        <TargetEdit
+          v-model="targetTimes"
+          :all-target-names="[]"
+          :member-id="memberData.id"
+          :target-mode="memberData.targetType"
+          @update:model-value="saveData"
+        />
+      </v-col>
+    </v-row>
+    <template #bottomContent>
+      <ButtonContainer width="95%">
+        <v-row dense>
+          <v-col>
+            <v-btn
+              text="Copy Output"
+              color="success"
+              prepend-icon="mdi-content-copy"
+              width="100%"
+              @click="copyContent"
             />
           </v-col>
-          <v-col cols="12">
-            <v-text-field
-              v-model="memberData.name"
-              label="Member Name"
-              clearable
-              @update:model-value.capture="() => {}"
-              @blur="saveData"
-            />
-          </v-col>
-          <v-col cols="12">
-            <TargetEdit
-              v-model="targetTimes"
-              :all-target-names="[]"
-              :member-id="memberData.id"
-              :target-mode="memberData.targetType"
-              @update:model-value="saveData"
+          <v-col>
+            <v-btn
+              text="Copy Link"
+              prepend-icon="mdi-link"
+              color="secondary"
+              width="100%"
+              @click="copyLink"
             />
           </v-col>
         </v-row>
-        <template #bottomContent>
-          <ButtonContainer width="95%">
-            <v-row dense>
-              <v-col>
-                <v-btn
-                  text="Copy Output"
-                  color="success"
-                  prepend-icon="mdi-content-copy"
-                  width="100%"
-                  @click="copyContent"
-                />
-              </v-col>
-              <v-col>
-                <v-btn
-                  text="Copy Link"
-                  prepend-icon="mdi-link"
-                  color="secondary"
-                  width="100%"
-                  @click="copyLink"
-                />
-              </v-col>
-            </v-row>
-          </ButtonContainer>
-        </template>
-      </ParentCard>
+      </ButtonContainer>
+    </template>
+  </ParentCard>
 </template>
 
 <script setup lang="ts">

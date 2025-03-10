@@ -94,33 +94,34 @@ export const useMemberStore = defineStore("member-store", {
           m.name.trim().toLocaleLowerCase() ===
           member.name.trim().toLocaleLowerCase()
       );
-      if (existingMember) {
-        const newTargetTimes = member.targetTimes.map((tt) => {
-          const existingTarget = existingMember.targetTimes.find(
-            (ett) =>
-              ett.targetName.trim().toLocaleLowerCase() ===
-              tt.targetName.trim().toLocaleLowerCase()
-          );
-          if (existingTarget && tt.minutes === 0 && tt.seconds === 0) {
-            return existingTarget;
-          } else if (existingTarget && (tt.minutes > 0 || tt.seconds > 0)) {
-            return {
-              ...existingTarget,
-              minutes: tt.minutes,
-              seconds: tt.seconds,
-            };
-          } else {
-            return {
-              ...tt,
-              id: this.nextTargetId,
-            };
-          }
-        });
-        newMember = {
-          ...existingMember,
-          targetTimes: newTargetTimes,
-        };
+      if (!existingMember) {
+        return undefined;
       }
+      const newTargetTimes = member.targetTimes.map((tt) => {
+        const existingTarget = existingMember.targetTimes.find(
+          (ett) =>
+            ett.targetName.trim().toLocaleLowerCase() ===
+            tt.targetName.trim().toLocaleLowerCase()
+        );
+        if (existingTarget && tt.minutes === 0 && tt.seconds === 0) {
+          return existingTarget;
+        } else if (existingTarget && (tt.minutes > 0 || tt.seconds > 0)) {
+          return {
+            ...existingTarget,
+            minutes: tt.minutes,
+            seconds: tt.seconds,
+          };
+        } else {
+          return {
+            ...tt,
+            id: this.nextTargetId,
+          };
+        }
+      });
+      newMember = {
+        ...existingMember,
+        targetTimes: newTargetTimes,
+      };
       return newMember;
     },
     addDeDupe(member: Member) {
@@ -129,6 +130,7 @@ export const useMemberStore = defineStore("member-store", {
         this.save(existingMember);
       } else {
         this.add(member);
+        this.saveAll();
       }
     },
     add(member: Member) {
@@ -166,7 +168,6 @@ export const useMemberStore = defineStore("member-store", {
       this.updateGroups();
       getLocalStorageInstance().save(this.$state);
       this.setDefaultTarget();
-
       //TODO Remove this - clearing out old local storage data
       localStorage.removeItem("members");
     },
@@ -215,7 +216,7 @@ export const useMemberStore = defineStore("member-store", {
         );
       });
 
-      this.members = this.members.sort((a, b) => a.order - b.order);
+      this.members.sort((a, b) => a.order - b.order);
     },
     getMaxMarchSeconds(targetName?: string) {
       if (this.members.length === 0) {
