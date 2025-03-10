@@ -114,7 +114,10 @@ onMounted(() => {
   const newMember = memberFromQueryStringFormat(window.location.search);
 
   if (newMember) {
-    const targets = mapSvsTargets(newMember.targetTimes);
+    const targets =
+      newMember.targetType === "Sunfire Castle"
+        ? mapSvsTargets(newMember.targetTimes)
+        : newMember.targetTimes;
 
     member.value.name = newMember.name;
     member.value.targetTimes = targets;

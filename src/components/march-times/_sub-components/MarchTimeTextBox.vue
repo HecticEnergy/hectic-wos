@@ -29,18 +29,13 @@ type TimeModel = {
 const model = defineModel<TimeModel>({ required: true });
 onMounted(() => {
   lastValidValue = "" + marchTime.value;
+  updateModel(formatTimeMS(model.value.minutes, model.value.seconds ?? 0), false);
+  // console.log("march-time-text-box", marchTime.value, model.value);
 });
 
 
 let lastValidValue: string;
-const marchTime = computed({
-  get: () => {
-    return formatTimeMS(model.value.minutes, model.value.seconds ?? 0);
-  },
-  set: (value: string) => {
-    updateModel(value);
-  },
-})
+const marchTime = ref<string>(formatTimeMS(model.value.minutes, model.value.seconds ?? 0));
 
 const updateModel = (value: string, save: boolean = true) => {
   //assume that marchTime is MMSS or MM:SS or SS
@@ -74,7 +69,7 @@ const updateModel = (value: string, save: boolean = true) => {
 
   const timeFromSec = getTimeFromSeconds(getSecondsFromTime(time));
   lastValidValue = "" + marchTime.value;
-  // marchTime.value = formatTimeMS(timeFromSec.minutes, timeFromSec.seconds);
+  marchTime.value = formatTimeMS(timeFromSec.minutes, timeFromSec.seconds);
 
 
   model.value.minutes = timeFromSec.minutes;

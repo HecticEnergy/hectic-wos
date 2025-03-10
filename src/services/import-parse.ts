@@ -197,6 +197,7 @@ export const memberToQueryStringFormat = (member: Member) => {
   }
   const memberParams = new URLSearchParams();
   memberParams.set("n", outputMember.n);
+  memberParams.set("type", outputMember.type);
   if (outputMember.type === "sfc") memberParams.set("type", outputMember.type);
   memberParams.set("tt", targetParams.toString());
 

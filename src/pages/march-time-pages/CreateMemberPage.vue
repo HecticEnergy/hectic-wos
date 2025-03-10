@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import type { MemberTargetTimes, Member, TargetMode } from "@/models";
+import type { Member, TargetMode } from "@/models";
 import { LocalStorage } from "@/services/local-storage-typed";
 import { getDefaultSfcMemberTargetTimes } from "@/services/target-logic";
 
@@ -71,8 +71,6 @@ const memberName = ref<string>("");
 const sfcMember = ref<Member>(defaultSfc);
 const stMember = ref<Member>(defaultSt);
 
-const sfcTargetTimes = ref<MemberTargetTimes[]>(sfcMember.value.targetTimes);
-const stTargetTimes = ref<MemberTargetTimes[]>(stMember.value.targetTimes);
 
 const load = () => {
   const loaded = tls.load();
@@ -82,28 +80,23 @@ const load = () => {
 
   if (!!loaded.sfc && loaded.sfc.targetTimes.length > 0) {
     sfcMember.value = loaded.sfc;
-    sfcTargetTimes.value = sfcMember.value.targetTimes;
-  } else if (!!loaded.single && loaded.single.targetTimes.length > 0) {
+  }
+  if (!!loaded.single && loaded.single.targetTimes.length > 0) {
     stMember.value = loaded.single;
-    stTargetTimes.value = stMember.value.targetTimes;
   }
 
-  // console.log("load", JSON.parse(JSON.stringify(loaded)));
+  memberName.value = sfcMember.value.name ?? stMember.value.name ?? "";
 };
 
 const saveData = (member: Member) => {
   memberName.value = member.name;
+  stMember.value.name = memberName.value;
+  sfcMember.value.name = memberName.value;
 
   if (member.targetType === "Sunfire Castle") {
     sfcMember.value = member;
-    sfcTargetTimes.value = sfcMember.value.targetTimes;
-
-    stMember.value.name = memberName.value;
   } else {
     stMember.value = member;
-    stTargetTimes.value = stMember.value.targetTimes;
-
-    sfcMember.value.name = memberName.value;
   }
 
   targetType.value = member.targetType;
