@@ -7,6 +7,7 @@ import Vue from "@vitejs/plugin-vue";
 import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import ViteFonts from "unplugin-fonts/vite";
 import VueRouter from "unplugin-vue-router/vite";
+//import { visualizer } from "rollup-plugin-visualizer";
 
 // Utilities
 import { defineConfig } from "vite";
@@ -56,6 +57,7 @@ export default defineConfig({
         configFile: "src/styles/settings.scss",
       },
     }),
+    //visualizer(),
   ],
   define: { "process.env": {} },
   resolve: {
@@ -64,8 +66,26 @@ export default defineConfig({
     },
     extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
   },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          u: [
+            // 'axios',
+            'core-js',
+            'roboto-fontface',
+          ],
+          v: ['vue'],
+          vt: ['vue3-tour'],
+          vd: ['vuedraggable'],
+          vf: ['vuetify'],
+        },
+      },
+    },
+  },
   server: {
-    port: 3000,
+    port: 3005,
   },
   css: {
     preprocessorOptions: {
