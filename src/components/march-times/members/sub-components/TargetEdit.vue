@@ -63,7 +63,7 @@ const emit = defineEmits<{
 }>();
 
 onMounted(() => {
-  console.log("target edit" + targets.value);
+  // console.log("target edit" + targets.value);
 });
 
 const targetSearch = ref("");
@@ -94,7 +94,6 @@ const updateTarget = (
 
   emit("update:model-value", targets.value);
 };
-
 
 //
 </script>
