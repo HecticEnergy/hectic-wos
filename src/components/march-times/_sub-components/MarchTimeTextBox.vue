@@ -4,7 +4,7 @@
     label="March Time"
     width="105px"
     inputmode="numeric"
-    @blur="updateModel"
+    @blur="updateModel(marchTime)"
     @focus="$event.target.select()"
   />
 </template>
@@ -28,33 +28,34 @@ type TimeModel = {
 };
 const model = defineModel<TimeModel>({ required: true });
 onMounted(() => {
-  marchTime.value = formatTimeMS(model.value.minutes, model.value.seconds ?? 0);
   lastValidValue = "" + marchTime.value;
-  updateModel();
 });
 
-// onUpdated(() => {
-//   marchTime.value = formatTimeMS(model.value.minutes, model.value.seconds ?? 0);
-//   updateModel();
-// });
 
 let lastValidValue: string;
-const marchTime = ref<string | null>(null);
+const marchTime = computed({
+  get: () => {
+    return formatTimeMS(model.value.minutes, model.value.seconds ?? 0);
+  },
+  set: (value: string) => {
+    updateModel(value);
+  },
+})
 
-const updateModel = () => {
+const updateModel = (value: string, save: boolean = true) => {
   //assume that marchTime is MMSS or MM:SS or SS
   //   console.log(
   //     "updateModel",
   //     marchTime.value,
   //     Number.isNaN(Number.parseInt(marchTime.value ?? ""))
   //   );
-  if (marchTime.value === null) return;
-  if (Number.isNaN(Number.parseInt(marchTime.value))) {
-    marchTime.value = lastValidValue;
+  if (value === null) return;
+  if (Number.isNaN(Number.parseInt(value))) {
+    value = lastValidValue;
     throw new Error("Invalid time format, numeric values only");
   }
   const time = { hours: 0, minutes: 0, seconds: 0 };
-  const marchTimeValue = marchTime.value
+  const marchTimeValue = value
     .replace(/[^0-9:]*/g, "")
     .padStart(4, "0");
   if (marchTimeValue.length > 2) {
@@ -72,11 +73,14 @@ const updateModel = () => {
   }
 
   const timeFromSec = getTimeFromSeconds(getSecondsFromTime(time));
-  marchTime.value = formatTimeMS(timeFromSec.minutes, timeFromSec.seconds);
   lastValidValue = "" + marchTime.value;
+  // marchTime.value = formatTimeMS(timeFromSec.minutes, timeFromSec.seconds);
+
+
   model.value.minutes = timeFromSec.minutes;
   model.value.seconds = timeFromSec.seconds;
-  emit("update:model-value", model.value);
+
+  if (save) emit("update:model-value", model.value);
   // console.log("updateModel", marchTime.value, model.value);
 };
 </script>

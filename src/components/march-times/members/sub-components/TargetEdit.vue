@@ -29,7 +29,8 @@
             updateTarget(target, { minutes: v.minutes, seconds: v.seconds })
         "
       />
-      <v-row dense height="100%" align="center">
+      <!-- Single Target.. why are we removing it? -->
+      <!-- <v-row dense height="100%" align="center">
         <v-col>
           <v-icon
             v-if="targetMode === 'Single Target'"
@@ -41,7 +42,7 @@
             @click="() => $emit('remove', target.id)"
           />
         </v-col>
-      </v-row>
+      </v-row> -->
     </v-col>
   </v-row>
 </template>
@@ -60,6 +61,10 @@ const emit = defineEmits<{
   (e: "remove", id: number): void;
   (e: "update:model-value", value: MemberTargetTimes[]): void;
 }>();
+
+onMounted(() => {
+  console.log("target edit" + targets.value);
+});
 
 const targetSearch = ref("");
 const getValue = (item: string) => item?.toLocaleLowerCase()?.trim();
@@ -90,9 +95,6 @@ const updateTarget = (
   emit("update:model-value", targets.value);
 };
 
-onMounted(() => {
-  console.log("target edit" + targets.value);
-});
 
 //
 </script>

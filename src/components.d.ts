@@ -15,6 +15,7 @@ declare module 'vue' {
     ColorsList: typeof import('./components/test/colors/ColorsList.vue')['default']
     ColorTemplate: typeof import('./components/test/colors/ColorTemplate.vue')['default']
     ComboboxChips: typeof import('./components/global/sub-components/ComboboxChips.vue')['default']
+    CreateMember: typeof import('./components/march-times/members/CreateMember.vue')['default']
     DialogCloseable: typeof import('./components/global/sub-components/DialogCloseable.vue')['default']
     DialogFullScreen: typeof import('./components/global/sub-components/DialogFullScreen.vue')['default']
     Draggable: typeof import('./components/global/sub-components/Draggable.vue')['default']
