@@ -42,7 +42,6 @@
           />
         </template>
         <v-list-item
-          :key="key"
           title="March Times"
           data-tour="march-times-navbar-link"
           :to="RouteHelper.MARCH_TIME"
@@ -55,7 +54,6 @@
           </template>
         </v-list-item>
         <v-list-item
-          :key="key"
           title="Create Yourself"
           prepend-icon="mdi-account"
           data-tour="create-member-single-navbar-link"
@@ -124,13 +122,11 @@ const route = useRoute();
 const { smAndDown } = useDisplay();
 
 const rail = defineModel<boolean>("rail", { required: true });
-const key = ref<number>(0);
 const drawer = ref(!smAndDown.value);
 
 const toggleDrawer = () => {
   //rail.value = !rail.value;
   drawer.value = !drawer.value;
-  key.value++;
 };
 
 const setupMenuRail = () => {
