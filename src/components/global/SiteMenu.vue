@@ -90,6 +90,18 @@
         />
         <v-divider v-if="item.divider" />
       </template>
+
+      <template v-if="isDev">
+        <v-list-item
+          v-for="subItem in testPages"
+          :key="subItem.key"
+          :to="subItem.to"
+          :title="subItem.title"
+          :value="subItem.title"
+          :prepend-icon="subItem.icon"
+        />
+        <!-- <v-divider v-if="item.divider" /> -->
+      </template>
       <!--
       <v-list-item
         @click="logout"
@@ -120,6 +132,8 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 // const theme = useTheme();
 const { smAndDown } = useDisplay();
+
+const isDev = ref(document.baseURI.includes("localhost"));
 
 const rail = defineModel<boolean>("rail", { required: true });
 const drawer = ref(!smAndDown.value);
@@ -152,6 +166,14 @@ const bottomMenuItems = ref([
     ],
   },
 ]);
+
+const testPages = ref([{
+  title: "Test Page",
+  icon: "mdi-test-tube",
+  to: RouteHelper.TEST_PAGE,
+  key: "test-page-menu-item",
+  dataTour: "test-page-navbar-link",
+}]);
 
 watch(route, (to, from) => {
   console.debug("Route Changed", to, from);

@@ -7,14 +7,18 @@ enum Routes {
   IMPORT_CREATED_MEMBER = "/march-time-pages/ImportCreatedMemberPage",
 
   MINISTRY_APPOINTMENTS = "/MinistryAppointments",
+
+  TEST_PAGE = "/test-pages/Test",
 }
 
 const HOME = Routes.HOME;
 const MARCH_TIME = Routes.MARCH_TIME;
 const CREATE_MEMBER_SINGLE = Routes.CREATE_MEMBER_SINGLE;
-const IMPORT_CREATED_MEMBER = Routes.IMPORT_CREATED_MEMBER;
+const IMPORT_CREATED_MEMBERS = Routes.IMPORT_CREATED_MEMBER;
 
 const MINISTRY_APPOINTMENTS = Routes.MINISTRY_APPOINTMENTS;
+
+const TEST_PAGE = Routes.TEST_PAGE;
 
 // const formatPrintPuppyCertificateUrl = (pupIds: string[]) => {
 //   const queryString = pupIds.toString().replace(/"|\[|\]/g, '');
@@ -55,9 +59,12 @@ export default {
   HOME,
   MARCH_TIME,
   CREATE_MEMBER_SINGLE,
-  IMPORT_CREATED_MEMBERS: IMPORT_CREATED_MEMBER,
+  IMPORT_CREATED_MEMBERS,
+
 
   MINISTRY_APPOINTMENTS,
+
+  TEST_PAGE,
   // formatPrintPuppyCertificateUrl,
   // unformatPrintPuppyCertificateUrl,
   openInNewTab,
