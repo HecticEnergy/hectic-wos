@@ -1,166 +1,118 @@
 <template>
   <v-row class="ma-0 pa-0">
     <v-col class="d-none d-md-block"> </v-col>
-    <v-col>
-      <ParentCard>
-        <v-row>
-          <v-col cols="12">
-            <target-mode
-              v-model="member.targetType"
-              @update:model-value="changeTargetType"
-            />
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              v-model="member.name"
-              label="Member Name"
-              clearable
-              @update:model-value="saveData"
-            />
-          </v-col>
-          <v-col cols="12">
-            <TargetEdit
-              v-model="targetTimes"
-              :all-target-names="[]"
-              :member-id="member.id"
-              :target-mode="member.targetType"
-              @update:model-value="saveData"
-              @remove="removeTarget"
-            />
-          </v-col>
-        </v-row>
-        <template #bottomContent>
-          <ButtonContainer width="95%">
-            <v-row dense>
-              <v-col>
-                <v-btn
-                  text="Copy Output"
-                  color="success"
-                  prepend-icon="mdi-content-copy"
-                  width="100%"
-                  @click="copyContent"
-                />
-              </v-col>
-              <v-col>
-                <v-btn
-                  text="Copy Link"
-                  prepend-icon="mdi-link"
-                  color="secondary"
-                  width="100%"
-                  @click="copyLink"
-                />
-              </v-col>
-            </v-row>
-          </ButtonContainer>
-        </template>
-      </ParentCard>
+    <v-col v-if="targetType === 'Sunfire Castle'">
+      <CreateMember
+        v-model="sfcMember"
+        @update:model-value="saveData"
+        @update:target-type="changeTargetType"
+      />
+    </v-col>
+    <v-col v-else-if="targetType === 'Single Target'">
+      <CreateMember
+        v-model="stMember"
+        @update:model-value="saveData"
+        @update:target-type="changeTargetType"
+      />
     </v-col>
     <v-col class="d-none d-md-block"> </v-col>
   </v-row>
 </template>
 
 <script setup lang="ts">
-import { type MemberTargetTimes, type Member } from "@/models";
-import routeHelper from "@/router/route-helper";
-import {
-  memberToQueryStringFormat,
-  formatMemberForImport,
-} from "@/services/import-parse";
+import type { MemberTargetTimes, Member, TargetMode } from "@/models";
 import { LocalStorage } from "@/services/local-storage-typed";
-import { getSfcMemberTargetTimes } from "@/services/target-logic";
-import { useAlertStore } from "@/stores/alert-store";
+import { getDefaultSfcMemberTargetTimes } from "@/services/target-logic";
 
-const alertStore = useAlertStore();
+onBeforeMount(() => {
+  load();
+});
 
-const defaultMember: Member = {
+const defaultSfc: Member = {
   id: -1,
   order: -1,
   targetType: "Sunfire Castle",
   group: "",
   isSelected: true,
   name: "",
-  targetTimes: [],
+  targetTimes: getDefaultSfcMemberTargetTimes(),
 };
 
-const tls = new LocalStorage<Member>("create-member-single", defaultMember);
-const member = ref<Member>(defaultMember);
+const defaultSt: Member = {
+  id: -1,
+  order: -1,
+  targetType: "Single Target",
+  group: "",
+  isSelected: true,
+  name: "",
+  targetTimes: [
+    {
+      targetName: "Target",
+      id: -2,
+      minutes: 0,
+      seconds: 0,
+    },
+  ],
+};
 
-const targetTimes = ref<MemberTargetTimes[]>(member.value.targetTimes);
+type StoreType = {
+  single: Member;
+  sfc: Member;
+};
 
-onMounted(() => {
-  changeTargetType(member.value.targetType);
-  const loaded = tls.load();
-  if (!!loaded && loaded.targetTimes.length > 0) {
-    member.value = loaded;
-    targetTimes.value = member.value.targetTimes;
-  }
+const tls = new LocalStorage<StoreType>("create-member-single", {
+  single: defaultSt,
+  sfc: defaultSfc,
 });
 
-const saveData = () => {
-  member.value.name = member.value.name?.trim();
-  member.value.targetTimes = targetTimes.value.map((t) => ({
-    ...t,
-    targetName: t.targetName?.trim(),
-  }));
-  //   console.log("saveData", JSON.parse(JSON.stringify(member.value)));
-  tls.save(member.value);
+const targetType = ref<TargetMode>("Sunfire Castle");
+const memberName = ref<string>("");
+
+const sfcMember = ref<Member>(defaultSfc);
+const stMember = ref<Member>(defaultSt);
+
+const sfcTargetTimes = ref<MemberTargetTimes[]>(sfcMember.value.targetTimes);
+const stTargetTimes = ref<MemberTargetTimes[]>(stMember.value.targetTimes);
+
+const load = () => {
+  const loaded = tls.load();
+  if (!loaded) {
+    return;
+  }
+
+  if (!!loaded.sfc && loaded.sfc.targetTimes.length > 0) {
+    sfcMember.value = loaded.sfc;
+    sfcTargetTimes.value = sfcMember.value.targetTimes;
+  } else if (!!loaded.single && loaded.single.targetTimes.length > 0) {
+    stMember.value = loaded.single;
+    stTargetTimes.value = stMember.value.targetTimes;
+  }
+
+  // console.log("load", JSON.parse(JSON.stringify(loaded)));
 };
 
-const removeTarget = (id: number) => {
-  targetTimes.value = targetTimes.value.filter((t) => t.id !== id);
-};
+const saveData = (member: Member) => {
+  memberName.value = member.name;
 
-const changeTargetType = (type: string) => {
-  if (type === "Sunfire Castle") {
-    targetTimes.value = getSfcMemberTargetTimes();
-  } else if (type === "Single Target") {
-    targetTimes.value = [
-      {
-        targetName: "",
-        id: -2,
-        minutes: 0,
-        seconds: 0,
-      },
-    ];
+  if (member.targetType === "Sunfire Castle") {
+    sfcMember.value = member;
+    sfcTargetTimes.value = sfcMember.value.targetTimes;
+
+    stMember.value.name = memberName.value;
   } else {
-    //Should never get here
-    throw new Error("Invalid target type");
+    stMember.value = member;
+    stTargetTimes.value = stMember.value.targetTimes;
+
+    sfcMember.value.name = memberName.value;
   }
-  member.value.targetType = type;
+
+  targetType.value = member.targetType;
+
+  // console.trace("saveData", JSON.parse(JSON.stringify(member)));
+  tls.save({ sfc: sfcMember.value, single: stMember.value });
 };
 
-const validate = () => {
-  if (member.value.name === "") {
-    throw new Error("Name is required");
-  }
-  if (targetTimes.value.length === 0) {
-    throw new Error("At least one target is required");
-  }
-  if (targetTimes.value.some((t) => t.targetName === "")) {
-    throw new Error("All targets must have a name");
-  }
-  if (targetTimes.value.every((t) => t.minutes == 0 && t.seconds == 0)) {
-    throw new Error("At least one target time must be specified");
-  }
-};
-
-const copyContent = () => {
-  validate();
-  member.value.targetTimes = targetTimes.value;
-
-  const content = formatMemberForImport(member.value);
-  navigator.clipboard.writeText(content);
-  alertStore.success("Content copied to clipboard");
-};
-
-const copyLink = () => {
-  validate();
-  member.value.targetTimes = targetTimes.value;
-
-  const url = window.location.origin + routeHelper.IMPORT_CREATED_MEMBERS;
-  const content = memberToQueryStringFormat(member.value);
-  const link = `${url}?${content}`;
-  navigator.clipboard.writeText(link);
-  alertStore.success("Link copied to clipboard");
+const changeTargetType = (value: TargetMode) => {
+  targetType.value = value;
 };
 </script>

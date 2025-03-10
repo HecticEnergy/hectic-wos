@@ -55,10 +55,10 @@ export const cleanTargets = (
   return newTargets;
 };
 
-export const getSfcMemberTargetTimes = () => {
+export const getDefaultSfcMemberTargetTimes = () => {
   const targetTimes = SfcTargets.map((t, i) => ({
     targetName: t,
-    id: i + 1 * -2,
+    id: (i + 1) * -2,
     minutes: 0,
     seconds: 0,
   })) as MemberTargetTimes[];
@@ -66,7 +66,7 @@ export const getSfcMemberTargetTimes = () => {
 };
 
 export const mapSvsTargets = (targets: MemberTargetTimes[]) => {
-  const allTargets = getSfcMemberTargetTimes().map((t) => {
+  const allTargets = getDefaultSfcMemberTargetTimes().map((t) => {
     const found = targets.find(
       (nt) =>
         nt.targetName?.toLocaleLowerCase()?.trim() ===

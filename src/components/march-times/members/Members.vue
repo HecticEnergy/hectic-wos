@@ -81,7 +81,7 @@
 </template>
 <script setup lang="ts">
 import { type Member, type MemberTargetTimes } from "@/models";
-import { getSfcMemberTargetTimes } from "@/services/target-logic";
+import { getDefaultSfcMemberTargetTimes } from "@/services/target-logic";
 import { useMemberStore } from "@/stores/member-store";
 
 const memberStore = useMemberStore();
@@ -99,7 +99,7 @@ const isEditing = ref(!!memberStore.editMember);
 const addNewMember = () => {
   let targets = [] as MemberTargetTimes[];
   if (memberStore.targetMode === "Sunfire Castle")
-    targets = getSfcMemberTargetTimes();
+    targets = getDefaultSfcMemberTargetTimes();
   const member = {
     id: memberStore.nextMemberId,
     order: memberStore.nextOrder,
