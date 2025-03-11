@@ -23,7 +23,7 @@ import { bottomItems, testItems, topItems } from "./nav-items";
 //TODO: Make these props
 const topNavItems = ref(topItems);
 const bottomNavItems = ref(bottomItems);
-const isDev = ref(document.baseURI.includes("localhost"));
+const isDev = ref(!document.baseURI.includes("hectic-wos.com"));
 if (isDev.value) {
   bottomNavItems.value.push(...testItems);
 }
