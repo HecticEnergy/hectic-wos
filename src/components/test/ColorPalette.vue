@@ -13,7 +13,7 @@
         </v-row>
       </v-container>
     </v-app-bar>
-    <div  style="margin-top: 3em; margin-bottom: 3em;">
+    <div style="margin-top: 3em; margin-bottom: 3em">
       <ColorsList />
       <Md2Example />
       <!-- Md3Examples needs work -->
@@ -24,9 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import { useTheme } from 'vuetify';
-const theme = useTheme();
+import { ThemeSelect, themeNames } from "@/services/vuetify-themes";
 
-const selectedTheme = theme.global.name;
-const themes = ['light', 'dark'];
+const themeSelect = new ThemeSelect();
+
+const selectedTheme = ref(themeSelect.getTheme());
+
+watch(selectedTheme, themeSelect.setTheme);
+
+const themes = themeNames;
 </script>
