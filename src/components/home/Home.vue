@@ -1,102 +1,139 @@
 <template>
-  <ParentCard color="background">
+  <parent-card color="background">
     <v-container style="max-width: 800px">
-      <home-card
-        :title="welcome.title"
-        :icon="welcome.icon"
-        :text-lines="welcome.textLines"
-      >
-        <template #append>
-          <p>
-            <v-icon
-              icon="mdi-glass-mug-variant"
-              color="secondary"
-              class="mr-1"
-              @click="showBeer"
-            />
-            Buy me a beer to support this project!
-          </p>
-        </template>
-      </home-card>
-
-      <home-card
-        :title="marchTimes.title"
-        :icon="marchTimes.icon"
-        :text-lines="marchTimes.textLines"
-        @icon-click="marchTimes.iconClick"
-      >
-        <template #append>
+      <v-window v-model="step" hide-delimiters>
+        <v-window-item cycle hide-delimiter-background>
           <home-card
-            :title="marchTimesCreateYourself.title"
-            :icon="marchTimesCreateYourself.icon"
-            :text-lines="marchTimesCreateYourself.textLines"
-            @icon-click="marchTimesCreateYourself.iconClick"
-          />
-        </template>
-      </home-card>
-
-      <home-card
-        :title="ministry.title"
-        :icon="ministry.icon"
-        :text-lines="ministry.textLines"
-        @icon-click="ministry.iconClick"
-      >
-        <template #prepend>
-          <p>
-            <i class="opacity-40">This page is still under construction</i>
-          </p>
-        </template>
-      </home-card>
-
-      <home-card
-        :title="wosnerds.title"
-        :text-lines="wosnerds.textLines"
-        icon="mdi-link"
-      >
-        <template #title-icon>
-          <v-img src="../../assets/greg.png" width="30" height="30" rounded />
-        </template>
-        <template #append>
-          <v-row class="d-flex justify-space-between" align="end">
-            <v-col style="max-height: 46px">
-              <a href="https://discord.gg/dMYY8bcPXp" target="_blank">
-                <v-img
-                  src="../../assets/discord.webp"
-                  style="
-                    position: abosolute;
-                    top: -12px;
-                    left: -12px;
-                    width: 60px;
-                    height: 60px;
-                  "
+            :title="welcome.title"
+            :icon="welcome.icon"
+            :text-lines="welcome.textLines"
+          >
+            <template #append>
+              <p>
+                <v-icon
+                  icon="mdi-glass-mug-variant"
+                  color="secondary"
+                  class="mr-1"
+                  @click="showBeer"
                 />
-              </a>
-            </v-col>
-            <v-col align="end">
-              <a href="https://wosnerds.com" target="_blank">wosnerds.com</a>
-            </v-col>
-          </v-row>
-        </template>
-      </home-card>
-
-      <home-card
-        :title="thankYous.title"
-        :icon="thankYous.icon"
-        :text-lines="thankYous.textLines"
-      >
-        <template #title-icon>
-          <v-icon :icon="thankYous.icon" color="secondary" />
-        </template>
-        <template #append>
-          <h3 class="text-secondary">Thank You!</h3>
-          <p>
-            This site wouldn't be what it is without your help! I hope many find
-            it useful!
-          </p>
-        </template>
-      </home-card>
+                Buy me a beer to support this project!
+              </p>
+            </template>
+          </home-card>
+        </v-window-item>
+        <v-window-item>
+          <home-card
+            :title="marchTimes.title"
+            :icon="marchTimes.icon"
+            :text-lines="marchTimes.textLines"
+            @icon-click="marchTimes.iconClick"
+          >
+            <template #append>
+              <home-card
+                :title="marchTimesCreateYourself.title"
+                :icon="marchTimesCreateYourself.icon"
+                :text-lines="marchTimesCreateYourself.textLines"
+                @icon-click="marchTimesCreateYourself.iconClick"
+              />
+            </template>
+          </home-card>
+        </v-window-item>
+        <v-window-item>
+          <home-card
+            :title="ministry.title"
+            :icon="ministry.icon"
+            :text-lines="ministry.textLines"
+            @icon-click="ministry.iconClick"
+          >
+            <template #prepend>
+              <p>
+                <i class="opacity-40">This page is still under construction</i>
+              </p>
+            </template>
+          </home-card>
+        </v-window-item>
+        <v-window-item>
+          <home-card
+            :title="wosnerds.title"
+            :text-lines="wosnerds.textLines"
+            icon="mdi-link"
+          >
+            <template #title-icon>
+              <v-img
+                src="../../assets/greg.png"
+                width="30"
+                height="30"
+                rounded
+              />
+            </template>
+            <template #append>
+              <v-row class="d-flex justify-space-between" align="end">
+                <v-col style="max-height: 46px">
+                  <a href="https://discord.gg/dMYY8bcPXp" target="_blank">
+                    <v-img
+                      src="../../assets/discord.webp"
+                      style="
+                        position: abosolute;
+                        top: -12px;
+                        left: -12px;
+                        width: 60px;
+                        height: 60px;
+                      "
+                    />
+                  </a>
+                </v-col>
+                <v-col align="end">
+                  <a href="https://wosnerds.com" target="_blank"
+                    >wosnerds.com</a
+                  >
+                </v-col>
+              </v-row>
+            </template>
+          </home-card>
+        </v-window-item>
+        <v-window-item>
+          <home-card
+            :title="thankYous.title"
+            :icon="thankYous.icon"
+            :text-lines="thankYous.textLines"
+          >
+            <template #title-icon>
+              <v-icon :icon="thankYous.icon" color="secondary" />
+            </template>
+            <template #append>
+              <h3 class="text-secondary">Thank You!</h3>
+              <p>
+                This site wouldn't be what it is without your help! I hope many
+                find it useful!
+              </p>
+            </template>
+          </home-card>
+        </v-window-item>
+      </v-window>
     </v-container>
-  </ParentCard>
+    <template #bottomContent>
+      <v-row class="d-flex justify-space-between">
+        <v-col grow>
+          <v-icon
+            icon="mdi-chevron-left"
+            size="xx-large"
+            color="primary"
+            class="ml-5"
+            @click="backStep"
+          />
+        </v-col>
+        <v-col cols="auto" shrink>
+          <v-icon
+            icon="mdi-chevron-right"
+            size="xx-large"
+            color="primary"
+            class="mr-5"
+            @click="nextStep"
+          />
+        </v-col>
+      </v-row>
+    </template>
+  </parent-card>
 </template>
 
 <script lang="ts" setup>
@@ -113,6 +150,16 @@ const welcome = {
     "We have designed a few tools that should make managing your alliance a bit easier.",
     "I'd like to expand the functionality of this site by putting a database behind this, but that costs money.",
   ],
+};
+
+const step = ref(0);
+const maxStep = 5;
+
+const backStep = () => {
+  step.value = (step.value - 1 + maxStep) % maxStep;
+};
+const nextStep = () => {
+  step.value = (step.value + 1) % maxStep;
 };
 
 const showBeer = () => {
