@@ -1,5 +1,9 @@
 import routeHelper from "@/router/route-helper";
 import type { NavItemProps } from "./models";
+import { ThemeSelect } from "@/services/vuetify-themes";
+
+let themeSelect: ThemeSelect;
+export const setup = () => (themeSelect = new ThemeSelect());
 
 export const topItems: NavItemProps[] = [
   {
@@ -104,6 +108,16 @@ export const testItems: NavItemProps[] = [
         onClick: undefined,
         to: routeHelper.DRAGGABLE_CHIPS_PAGE,
         dataTour: "draggable-chips-page-nav-bar-link",
+        prependDivider: false,
+        appendDivider: false,
+        subItems: undefined,
+      },
+      {
+        title: "Vuetify Themes Page",
+        prependIcon: "mdi-theme-light-dark",
+        onClick: () => themeSelect.rotateTheme(),
+        to: undefined,
+        dataTour: "vuetify-themes-page-nav-bar-link",
         prependDivider: false,
         appendDivider: false,
         subItems: undefined,

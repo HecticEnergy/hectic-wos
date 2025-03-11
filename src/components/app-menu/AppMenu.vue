@@ -18,9 +18,10 @@
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 import AppMenuNavDrawer from "./AppMenuNavDrawer.vue";
-import { bottomItems, testItems, topItems } from "./nav-items";
+import { setup, bottomItems, testItems, topItems } from "./nav-items";
 
 //TODO: Make these props
+setup();
 const topNavItems = ref(topItems);
 const bottomNavItems = ref(bottomItems);
 const isDev = ref(!document.baseURI.includes("hectic-wos.com"));
