@@ -27,6 +27,13 @@
             :icon="marchTimes.icon"
             :text-lines="marchTimes.textLines"
             @icon-click="marchTimes.iconClick"
+          />
+        </v-window-item>
+        <v-window-item>
+          <home-card
+            :title="marchTimes.title"
+            :icon="marchTimes.icon"
+            @icon-click="marchTimes.iconClick"
           >
             <template #append>
               <home-card
@@ -153,7 +160,7 @@ const welcome = {
 };
 
 const step = ref(0);
-const maxStep = 5;
+const maxStep = 6;
 
 const backStep = () => {
   step.value = (step.value - 1 + maxStep) % maxStep;
