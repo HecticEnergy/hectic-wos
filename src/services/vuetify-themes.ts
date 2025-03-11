@@ -20,9 +20,14 @@ export class ThemeSelect {
   constructor() {
     this.#theme = useTheme();
     this.#themeId = this.#theme.name.value as (typeof themeNames)[number];
-    const storageTheme = localStorage.load();
-    if (storageTheme?.theme !== undefined) {
-      this.#themeId = storageTheme.theme as (typeof themeNames)[number];
+    let storageTheme = this.#themeId;
+    try {
+      storageTheme = localStorage.load()?.theme as (typeof themeNames)[number];
+    } catch {
+      localStorage.save({ theme: this.#themeId });
+    }
+    if (storageTheme !== undefined) {
+      this.#themeId = storageTheme as (typeof themeNames)[number];
       this.#theme.global.name.value = this.#themeId;
     }
   }
