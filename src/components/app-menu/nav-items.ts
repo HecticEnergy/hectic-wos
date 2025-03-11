@@ -113,7 +113,7 @@ export const testItems: NavItemProps[] = [
         subItems: undefined,
       },
       {
-        title: "Vuetify Themes Page",
+        title: "Switch Theme",
         prependIcon: "mdi-theme-light-dark",
         onClick: () => themeSelect.rotateTheme(),
         to: undefined,
