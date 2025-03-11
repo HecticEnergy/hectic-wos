@@ -1,6 +1,6 @@
 <template>
   <span class="opacity-80"
-    >{{ label }}: <span :key="timeUpdateKey">{{ timeLabel }}</span></span
+    >{{ label ? label + ":" : "" }} <span :key="timeUpdateKey">{{ timeLabel }}</span></span
   >
 </template>
 
@@ -14,7 +14,7 @@ const props = defineProps<{
   timeUpdateKey?: string | number;
 }>();
 
-const label = props.label ?? "Current UTC Time";
+const label = props.label;
 
 const getUtcTimeOffset = () => {
   return formatTime(props.time) ?? "00:00:00";

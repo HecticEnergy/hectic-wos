@@ -24,7 +24,7 @@ export class Clock {
     }
     this.#interval = setInterval(() => {
       this.#updateClock();
-    }, 500);
+    }, 1000);
   };
 
   restartClock = () => {
@@ -36,12 +36,21 @@ export class Clock {
     this.#startTimer = setTimeout(() => {
       this.#runClock();
       this.#startTimer = undefined;
-    }, 1010 - new Date().getMilliseconds());
+    }, 1005 - new Date().getMilliseconds());
+  };
+
+  stopClock = () => {
+    this.destroy();
   };
 
   destroy = () => {
     if (this.#interval) {
       clearInterval(this.#interval);
+      this.#interval = undefined;
+    }
+    if (this.#startTimer) {
+      clearTimeout(this.#startTimer);
+      this.#startTimer = undefined;
     }
   };
 }
