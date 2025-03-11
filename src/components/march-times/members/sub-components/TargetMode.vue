@@ -18,10 +18,10 @@
         />
       </v-col>
       <v-col cols="auto">
-        <v-label v-if="targetMode === 'Single Target'">
+        <div v-if="targetMode === 'Single Target'" style="user-select: none">
           Single Target Mode
-        </v-label>
-        <v-label v-else> Sunfire Castle Mode </v-label>
+        </div>
+        <div v-else style="user-select: none">Sunfire Castle Mode</div>
       </v-col>
     </v-row>
   </div>
