@@ -60,7 +60,7 @@ export const bottomItems: NavItemProps[] = [
 
 export const testItems: NavItemProps[] = [
   {
-    title: "Test Page",
+    title: "Test Pages",
     prependIcon: "mdi-beaker",
     onClick: undefined,
     to: undefined,
