@@ -8,6 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AlertTest: typeof import('./components/test/colors/AlertTest.vue')['default']
+    AppMenu: typeof import('./components/app-menu/AppMenu.vue')['default']
+    AppMenuNavDrawer: typeof import('./components/app-menu/AppMenuNavDrawer.vue')['default']
+    AppMenuNavDrawerItem: typeof import('./components/app-menu/AppMenuNavDrawerItem.vue')['default']
     ButtonContainer: typeof import('./components/global/ButtonContainer.vue')['default']
     BuyMeBeer: typeof import('./components/global/BuyMeBeer.vue')['default']
     CancelConfirmDialog: typeof import('./components/global/CancelConfirmDialog.vue')['default']

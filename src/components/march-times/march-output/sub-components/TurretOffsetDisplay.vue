@@ -25,4 +25,11 @@
 const turretOffset = ref({ hours: 0, minutes: 0, seconds: 0 });
 const turretCountdown = ref({ hours: 0, minutes: 0, seconds: 0 });
 
+//TODO: Implement turret timer reset
+//  use clock-logic
+//  for "getTime", calculate the difference between the current time and the turret offset
+//  count down
+//  reset when the timer reaches 0 (or lower)
+
+// Store Turret Time in local storage
 </script>
