@@ -116,7 +116,7 @@ const copyLink = () => {
   validate();
   memberData.value.targetTimes = targetTimes.value;
 
-  const url = window.location.origin + routeHelper.IMPORT_CREATED_MEMBERS;
+  const url = window.location.origin + routeHelper.IMPORT_CREATED_MEMBER;
   const content = memberToQueryStringFormat(memberData.value);
   const link = `${url}?${content}`;
   navigator.clipboard.writeText(link);
