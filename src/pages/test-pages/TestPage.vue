@@ -1,5 +1,6 @@
 <template>
   <parent-card>
+    <turret-offset-display />
     <draggable-chips-test />
   </parent-card>
 </template>
