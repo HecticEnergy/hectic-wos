@@ -49,6 +49,7 @@ const defaultMarchSettings: MarchSettings = {
     rallyTimeMinutesIndex: 3,
     separateSeconds: { seconds: 2 } as Time,
     landingTime: { hours: 0, minutes: 0, seconds: 0 } as Time,
+    turretStrikeSeconds: undefined,
   },
 };
 
@@ -99,7 +100,9 @@ export const useMarchSettingStore = defineStore("MarchSetting", {
       const currentUtcTime = getOffsetUtcTime(
         new Date(),
         this.rallyTimeMinutes,
-        this.landingSettings.separateSeconds.seconds + maxMarchSeconds,
+        this.landingSettings.separateSeconds.seconds +
+          maxMarchSeconds +
+          (this.landingSettings.turretStrikeSeconds ?? 0),
         this.landingSettings.ignoreSeconds
       );
       this.landingSettings.landingTime = currentUtcTime;

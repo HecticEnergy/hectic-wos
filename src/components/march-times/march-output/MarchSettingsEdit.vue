@@ -51,19 +51,27 @@
           @change="savePageData"
         />
       </v-col>
-      <v-col cols="12">
+      <v-col v-if="marchSettingsType === 'landing'" cols="12" class="mt-4">
+        <v-row class="d-flex flex-row justify-space-between align-center">
+          <v-col cols="auto">
+            <TimeTextBoxes
+              v-model="marchSettingStore.landingSettings.separateSeconds"
+              label="March Separation"
+              @change="savePageData"
+            />
+          </v-col>
+          <v-col cols="auto">
+            <turret-offset-display
+              @update:march-land-seconds="updateTurretStrikeSeconds"
+            />
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col v-if="marchSettingsType === 'launch'" cols="12">
         <TimeTextBoxes
-          v-if="marchSettingsType === 'landing'"
-          v-model="marchSettingStore.landingSettings.separateSeconds"
-          class="mt-4"
-          label="Separate Each March By"
-          @change="savePageData"
-        />
-        <TimeTextBoxes
-          v-else-if="marchSettingsType === 'launch'"
           v-model="marchSettingStore.launchSettings.separateSeconds"
           class="mt-4"
-          label="Separate Each March By"
+          label="March Separation"
           @change="savePageData"
         />
       </v-col>
@@ -152,6 +160,11 @@ const getMaxMarchTime = () => {
   return getTimeFromSeconds(marchSettingStore.getMaxMarchSeconds(targets));
 };
 const maxMarchTime = ref<Time>(getMaxMarchTime());
+
+const updateTurretStrikeSeconds = (seconds: number) => {
+  marchSettingStore.launchSettings.launchTimeOffset.seconds = seconds;
+  marchSettingStore.saveData();
+};
 
 const refreshLandingTime = () => {
   const targets = memberStore.getSelectedTargets(
