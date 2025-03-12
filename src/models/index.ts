@@ -52,6 +52,7 @@ export type LandingSettings = {
   rallyTimeMinutesIndex: number;
   separateSeconds: Time;
   landingTime: Time;
+  turretStrikeSeconds: number | undefined;
 };
 
 
