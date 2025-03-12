@@ -32,6 +32,7 @@ const landingSettings_default: LandingSettings = {
   landingTime: { hours: 0, minutes: 0, seconds: 0 },
   separateSeconds: { hours: 0, minutes: 0, seconds: 0 },
   rallyTimeMinutesIndex: 0,
+  turretStrikeSeconds: 0,
 };
 
 describe("getLandingTime - should deduct to calculate launch", () => {
