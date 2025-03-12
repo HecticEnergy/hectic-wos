@@ -55,7 +55,6 @@ declare module 'vue' {
     ParentCard: typeof import('./components/global/ParentCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SiteMenu: typeof import('./components/global/SiteMenu.vue')['default']
     StatusSnackbar: typeof import('./components/global/StatusSnackbar.vue')['default']
     TargetEdit: typeof import('./components/march-times/members/sub-components/TargetEdit.vue')['default']
     TargetMode: typeof import('./components/march-times/members/sub-components/TargetMode.vue')['default']
