@@ -58,7 +58,7 @@
     >
       <v-col grow>
         <div v-if="!isGroups" class="bg-primary-lighten-1 rounded">
-          <draggable v-model="allMembers" item-key="id">
+          <draggable v-model="allMembers" item-key="id" handle=".move-handle">
             <template #item="{ element }"
               ><v-chip
                 :color="element.isSelected ? 'primary' : ''"

@@ -2,7 +2,12 @@
   <ParentCard>
     <v-row dense align="center" class="flex-0-0">
       <v-col cols="9">
-        <v-text-field v-model="member.name" label="Name" clearable />
+        <v-text-field
+          v-model="member.name"
+          label="Name"
+          clearable
+          @focus="$event.target.select()"
+        />
       </v-col>
       <v-col cols="3">
         <NumberTextField v-model="member.order" label="Order" />

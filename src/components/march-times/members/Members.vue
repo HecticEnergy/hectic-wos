@@ -9,6 +9,7 @@
       :selected-target-name="memberStore.selectedTargetName"
       @edit="edit"
       @update="$emit('update')"
+      @save="saveMember"
     />
     <template #bottomContent>
       <v-row dense>
@@ -91,7 +92,7 @@ const { openImport = false } = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "update"): void
+  (e: "update"): void;
 }>();
 
 const isEditing = ref(!!memberStore.editMember);
