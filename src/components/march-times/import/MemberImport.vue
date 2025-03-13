@@ -72,20 +72,26 @@ const requiresConfirmation = (member: Member) => {
 };
 
 const addMember = (member: Member, isReplace?: boolean) => {
+  //console.log("addMember", member, isReplace);
   memberStore.members = memberStore.members.filter(
     (m) =>
       m.name.trim().toLocaleLowerCase() !==
       member.name.trim().toLocaleLowerCase()
   );
+
   memberStore.add(member);
+
   showConfirm.value = false;
   confirmEdits.value = confirmEdits.value.filter((m) => m !== member);
+
   if (confirmEdits.value.length) {
     showConfirm.value = true;
   }
+
   alertStore.success(
     `Member "${member.name}" ${isReplace ? "replaced" : "added"}.`
   );
+
   memberStore.saveAll();
 };
 </script>
