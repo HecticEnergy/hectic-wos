@@ -15,7 +15,7 @@
     <v-col>
       <v-row class="align-center">
         <v-col cols="auto"> Last Turret Hit: </v-col>
-        <v-col cols="auto">
+        <v-col cols="12">
           <v-icon
             icon="mdi-minus"
             size="small"
@@ -23,11 +23,7 @@
             class="ma-0 pa-0"
             @click="decreaseTurretTime"
           />
-        </v-col>
-        <v-col cols="auto">
           <utc-time :time="turretLastHit" label="" />
-        </v-col>
-        <v-col cols="auto">
           <v-icon
             icon="mdi-plus"
             size="small"

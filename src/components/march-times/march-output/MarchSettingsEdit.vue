@@ -52,15 +52,15 @@
         />
       </v-col>
       <v-col v-if="marchSettingsType === 'landing'" cols="12" class="mt-4">
-        <v-row class="d-flex flex-row justify-space-between align-center">
-          <v-col cols="auto">
+        <v-row>
+          <v-col cols="6" sm="auto">
             <TimeTextBoxes
               v-model="marchSettingStore.landingSettings.separateSeconds"
               label="March Separation"
               @change="savePageData"
             />
           </v-col>
-          <v-col cols="auto">
+          <v-col cols="6" sm="auto">
             <turret-offset-display
               @update:march-land-seconds="updateTurretStrikeSeconds"
             />
