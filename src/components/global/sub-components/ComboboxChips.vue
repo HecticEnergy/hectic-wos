@@ -15,7 +15,7 @@
     <template #selection="{ item, index }">
       <v-chip
         v-if="item === Object(item)"
-        :text="item.title"
+        :text="item.value.name ?? item.value.title ?? item.value"
         size="small"
         variant="flat"
         closable
@@ -49,13 +49,16 @@
   </v-combobox>
 </template>
 
-<script setup lang="ts">
-const model = defineModel<any[]>({ required: true });
+<script setup lang="ts" generic="T extends ChipItem">
+import { type ChipItem } from "./chip-item-model";
+const model = defineModel<T[]>({ required: true });
 const emit = defineEmits(["update:modelValue"]);
+
+
 const props = defineProps<{
   label: string;
 
-  allItems: any[];
+  allItems: T[];
   disallowNewItems?: boolean;
 }>();
 
@@ -65,9 +68,14 @@ const removeSelection = (index: number) => {
   emit("update:modelValue", model.value);
 };
 
-const getValue = (item: any) => (item.name === undefined ? item : item.name);
+const getValue = (item: T) => {
+  if (typeof item === "string") {
+    return item;
+  }
+  return item.name ?? item.title ?? item;
+}
 
-const updateModel = (value: any[]) => {
+const updateModel = (value: T[]) => {
   // console.log("updateModel", value, model.value, props.allItems);
   const itemsDoNotExist = value.filter(
     (v) => !props.allItems.map((i) => getValue(i)).includes(getValue(v))
@@ -84,13 +92,13 @@ const updateModel = (value: any[]) => {
   );
   const updatedItems = newItems.map((i) =>
     props.allItems.find((item) => getValue(item) === getValue(i))
-  );
+  ).filter((i) => !!i) as T[];
 
   if (updatedItems.length > 0) {
     // console.log("updatedItems", updatedItems);
     model.value.push(...updatedItems);
   } else {
-    model.value = [];
+    model.value = [] as T[];
   }
 
   emit("update:modelValue", model.value);

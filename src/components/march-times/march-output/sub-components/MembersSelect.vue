@@ -175,6 +175,7 @@ const allMembers = computed({
   get: () => memberStore.members,
   set: (value: Member[]) => changeOrder(value),
 });
+
 const selectedMembers = computed({
   get: () => memberStore.getSelectedMembers(),
   set: (value: Member[]) => {
