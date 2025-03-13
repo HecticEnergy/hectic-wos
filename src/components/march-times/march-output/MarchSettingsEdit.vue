@@ -62,7 +62,8 @@
           </v-col>
           <v-col cols="6" sm="auto">
             <turret-offset-display
-              @update:march-land-seconds="updateTurretStrikeSeconds"
+            v-model="marchSettingStore.landingSettings.turretStrikeSeconds"
+            @update:model-value="updateTurretStrikeSeconds"
             />
           </v-col>
         </v-row>
@@ -161,8 +162,9 @@ const getMaxMarchTime = () => {
 };
 const maxMarchTime = ref<Time>(getMaxMarchTime());
 
-const updateTurretStrikeSeconds = (seconds: number) => {
-  marchSettingStore.launchSettings.launchTimeOffset.seconds = seconds;
+const updateTurretStrikeSeconds = (seconds: number | undefined) => {
+  // console.log("updateTurretStrikeSeconds", seconds);
+  marchSettingStore.landingSettings.turretStrikeSeconds = seconds;
   marchSettingStore.saveData();
 };
 
@@ -170,8 +172,7 @@ const refreshLandingTime = () => {
   const targets = memberStore.getSelectedTargets(
     memberStore.selectedTargetName
   );
-  const maxMarchSeconds = marchSettingStore.getMaxMarchSeconds(targets);
-  marchSettingStore.refreshLandingTime(maxMarchSeconds);
+  marchSettingStore.refreshLandingTime(targets);
   marchSettingStore.saveData();
 };
 

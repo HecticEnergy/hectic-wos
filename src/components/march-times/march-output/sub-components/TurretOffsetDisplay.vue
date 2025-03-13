@@ -1,15 +1,29 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <v-icon icon="mdi-chess-rook" />
-      <v-icon icon="mdi-clock" />
-      <utc-time :time="turretCountdown" label="" />
-
+      <v-icon icon="mdi-chess-rook" @click="resetTurretTimer" />
+      <v-icon icon="mdi-clock" @click="resetTurretTimer" />
       <v-icon
         icon="mdi-refresh"
         title="Restart Turret Timer"
         color="secondary"
         @click="resetTurretTimer"
+      />
+      <utc-time :time="turretCountdown" label="" />
+
+      <v-icon
+        v-if="stopped"
+        icon="mdi-play"
+        title="Start Turret Timer"
+        color="success"
+        @click="startClock"
+      />
+      <v-icon
+        v-else
+        icon="mdi-stop"
+        title="Stop Turret Timer"
+        color="error"
+        @click="stopClock"
       />
     </v-col>
     <v-col>
@@ -46,24 +60,73 @@ import {
   getUtcTime,
 } from "@/services/time-helpers";
 
+const model = defineModel<number | undefined>({ required: true });
+
 const emit = defineEmits<{
-  (e: "update:march-land-seconds", value: number): void;
+  (e: "update:model-value", value: number): void;
 }>();
 
+onMounted(() => {
+  setup(model.value);
+});
+
+watch(model, (value) => {
+  setup(value);
+});
+
 //Thats done.. now hit on the second with turret Offset
+const stopped = ref(true);
 const turretLastHit = ref({ hours: 0, minutes: 0, seconds: 0 });
 const turretCountdown = ref({ hours: 0, minutes: 0, seconds: 0 });
 
-let lastSeconds = turretCountdown.value.seconds;
-watch(turretCountdown, () => {
-  const marchLandSeconds = turretCountdown.value.seconds;
+let lastSeconds = turretLastHit.value.seconds;
+watch(turretLastHit, () => {
+  const marchLandSeconds = turretLastHit.value.seconds;
   if (marchLandSeconds !== lastSeconds) {
-    emit("update:march-land-seconds", marchLandSeconds);
     lastSeconds = marchLandSeconds;
+    emit("update:model-value", marchLandSeconds);
+    // console.log("watch: marchLandSeconds", marchLandSeconds);
   }
 });
 
-// Store Turret Time in local storage
+let lastModelValue = 0 as number | undefined;
+const setup = (value: number | undefined) => {
+  if (!value || value === lastModelValue) {
+    return;
+  }
+  lastModelValue = value;
+
+  const utcTime = getUtcTime(new Date());
+  const utcSeconds = getSecondsFromTime(utcTime);
+  let lastHitSeconds = getSecondsFromTime({
+    hours: utcTime.hours,
+    minutes: utcTime.minutes,
+    seconds: value,
+  });
+
+  if (lastHitSeconds > utcSeconds) {
+    lastHitSeconds -= 60;
+  }
+
+  if (getSecondsFromTime(turretLastHit.value) === lastHitSeconds) {
+    return;
+  }
+
+  const lastHitTime = getTimeFromSeconds(lastHitSeconds);
+  turretLastHit.value = lastHitTime;
+
+  // console.log(
+  //   "watch: value, lastHitTime, utcTime",
+  //   value,
+  //   lastHitTime,
+  //   utcTime
+  // );
+
+  let countdown = utcSeconds - lastHitSeconds;
+  if (countdown < 0) countdown += 60;
+
+  turretCountdown.value = getTimeFromSeconds(countdown);
+};
 
 const resetTurretTimer = () => {
   if (!clock) startClock();
@@ -102,7 +165,14 @@ let clock: Clock;
 
 const startClock = () => {
   if (!!clock) clock.destroy();
+  setup(model.value);
   clock = new Clock(setClock, getTime);
+  stopped.value = false;
+};
+
+const stopClock = () => {
+  if (!!clock) clock.destroy();
+  stopped.value = true;
 };
 
 onUnmounted(() => {
