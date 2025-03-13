@@ -22,7 +22,8 @@ import type { LandingSettings, LaunchSettings } from "@/models";
 import { getLaunchTime } from "./time-helpers/time-launch";
 import {
   calculateMinLandingTime,
-  getLandingTime,
+  getLaunchTimeFromLandingSettings,
+  getLandingTimeFromLandingSettings,
 } from "./time-helpers/time-landing";
 
 export {
@@ -35,6 +36,7 @@ export {
   formatTime,
   formatTimeHMS,
   formatTimeFromSeconds,
+  getLandingTimeFromLandingSettings,
 };
 
 export const correctHMS = (time: Time): Time => {
@@ -66,7 +68,7 @@ export const deductFromUtcTimeLanding = (
     memberTargets,
     landingSettings.separateSeconds.seconds
   );
-  const landingTimes = getLandingTime(sortedTargets, landingSettings, rallyTimeMinutes);
+  const landingTimes = getLaunchTimeFromLandingSettings(sortedTargets, landingSettings, rallyTimeMinutes);
 
   return landingTimes.sort((a, b) => a.totalSeconds - b.totalSeconds);
 };
@@ -104,6 +106,7 @@ export const sortAndPrepTargets = (
   memberTargets: MemberTarget[],
   addedSeconds?: number
 ): TargetProps[] => {
+  //add seconds to targets, in descending order
   const sortedTargets = memberTargets.sort((a, b) => b.order - a.order);
 
   const sortedTargetsExtraProps = sortedTargets.map(

@@ -31,7 +31,9 @@ export const getLaunchTime = (
 
   // Find max march time
   const maxMemberTime = Math.max(
-    ...sortedTargetsExtraProps.map((target) => target.totalSeconds + target.addedSecondsOffset)
+    ...sortedTargetsExtraProps.map(
+      (target) => target.totalSeconds - target.addedSecondsOffset
+    )
   );
 
   // Calculate the landing time for each member
@@ -57,7 +59,7 @@ export const getLaunchTime = (
 const calculateTimeToLaunch = (
   utcTotalSeconds: number,
   offsetInTotalSeconds: number,
-  marchInSeconds: number,
+  marchTotalSeconds: number,
   maxMarchInSeconds: number,
   addedSeconds?: number
 ): Time => {
@@ -65,7 +67,7 @@ const calculateTimeToLaunch = (
   //targetArrivalTime does not include rally time
   const groupTargetedArrivalTime =
     utcTotalSeconds + offsetInTotalSeconds + maxMarchInSeconds;
-  const memberMarchTime = marchInSeconds + (addedSeconds ?? 0);
+  const memberMarchTime = marchTotalSeconds + (addedSeconds ?? 0);
   const launchTimeSeconds = groupTargetedArrivalTime - memberMarchTime;
 
   const time = getTimeFromSeconds(launchTimeSeconds);

@@ -97,8 +97,7 @@ const refreshLandingTime = () => {
   const targets = memberStore.getSelectedTargets(
     memberStore.selectedTargetName
   );
-  const maxLandingSeconds = marchSettingStore.getMaxMarchSeconds(targets);
-  marchSettingStore.refreshLandingTime(maxLandingSeconds);
+  marchSettingStore.refreshLandingTime(targets);
   // console.log("refreshLandingTime", targets, maxLandingSeconds);
   marchSettingStore.saveData();
 };

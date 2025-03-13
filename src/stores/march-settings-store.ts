@@ -9,8 +9,9 @@ import type {
 import {
   addUtcTimeLaunch,
   correctHMS,
-  getOffsetUtcTime,
+  getLandingTimeFromLandingSettings,
   getUpdatedLandingTimeFromLaunch,
+  getUtcTime,
   sortAndPrepTargets,
 } from "@/services/time-helpers";
 
@@ -96,16 +97,14 @@ export const useMarchSettingStore = defineStore("MarchSetting", {
       const landingSettingsTO = this.landingSettings.landingTime;
       this.landingSettings.landingTime = correctHMS(landingSettingsTO);
     },
-    refreshLandingTime(maxMarchSeconds: number) {
-      const currentUtcTime = getOffsetUtcTime(
-        new Date(),
-        this.rallyTimeMinutes,
-        this.landingSettings.separateSeconds.seconds +
-          maxMarchSeconds +
-          (this.landingSettings.turretStrikeSeconds ?? 0),
-        this.landingSettings.ignoreSeconds
+    refreshLandingTime(selectedTargets: MemberTarget[]) {
+      const newLandingTime = getLandingTimeFromLandingSettings(
+        getUtcTime(new Date()),
+        sortAndPrepTargets(selectedTargets),
+        this.landingSettings,
+        this.rallyTimeMinutes
       );
-      this.landingSettings.landingTime = currentUtcTime;
+      this.landingSettings.landingTime = newLandingTime;
     },
     getMaxMarchSeconds(selectedTargets: MemberTarget[]) {
       return sortAndPrepTargets(selectedTargets).reduce((acc, target) => {
