@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 import AppMenuNavDrawer from "./AppMenuNavDrawer.vue";
 import { setup, bottomItems, testItems, topItems } from "./nav-items";
@@ -29,14 +28,13 @@ if (isDev.value) {
   bottomNavItems.value.push(...testItems);
 }
 
-const route = useRoute();
 const { smAndDown } = useDisplay();
 
 defineSlots<{
   appendTopBar: void;
 }>();
 
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     required: true,
@@ -48,26 +46,22 @@ const props = defineProps({
   },
 });
 
-const rail = ref(true);
-const drawer = ref(!smAndDown.value);
-
-watch(route, (to, from) => {
-  console.debug("Route Changed", to, from);
-  setupMenuRail();
+onMounted(() => {
+  rail.value = localStorage.getItem("rail") === "true";
+  console.log("load rail", rail.value);
 });
+
+const rail = ref<boolean>(false);
+
+watch(rail, (value) => {
+  localStorage.setItem("rail", value.toString());
+  console.log("set rail", value);
+});
+
+const drawer = ref(!smAndDown.value);
 
 const toggleDrawer = () => {
   //rail.value = !rail.value;
   drawer.value = !drawer.value;
 };
-
-const setupMenuRail = () => {
-  if (route.path === props.homeRoute) {
-    rail.value = false;
-  } else {
-    rail.value = true;
-  }
-};
-
-setupMenuRail();
 </script>
