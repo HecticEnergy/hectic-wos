@@ -1,5 +1,5 @@
 <template>
-  <app-menu title="Test Page">
+  <app-menu title="Hectic WOS">
     <template #appendTopBar>
       <buy-me-beer />
     </template>
