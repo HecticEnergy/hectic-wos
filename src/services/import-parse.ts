@@ -19,13 +19,12 @@ export const parseTextMultipleTargets = (memberInfo: string, group: string) => {
   const targetTimes: MemberTargetTimes[] = memberInfoLines.flatMap((line) => {
     const parsedData: MemberTargetTimes[] = [];
     const match = line.matchAll(
-      /(?<targetName>.*?):?\s(?<minutes>\d?\d)?:?(?<seconds>\d\d)/g
+      /(?<targetName>.*?):?\s(?<minutes>\d?\d)?:?(?<seconds>\d?\d)/g
     );
     for (const m of match) {
       //   console.log("match", m, m.index);
       if (!m.groups) {
         throw new Error("Unable to parse member target data.");
-        return [] as MemberTargetTimes[];
       }
       parsedData.push({
         id: -1,
@@ -60,10 +59,10 @@ export const parseTextSingleTarget = (memberInfo: string, group: string) => {
   const parsedMembers: Member[] = memberInfoLines.flatMap((line) => {
     const parsedData: Member[] = [];
     const match = line.matchAll(
-      /(?<memberName>.*?):?\s(?<minutes>\d?\d)?:?(?<seconds>\d\d)/g
+      /(?<memberName>.*?):?\s(?<minutes>\d?\d)?:?(?<seconds>\d?\d)/g
     );
     for (const m of match) {
-      //   console.log("match", m, m.index);
+      // console.log("match", m, m.index);
       if (!m.groups) {
         throw new Error("Unable to parse member target data.");
       }
