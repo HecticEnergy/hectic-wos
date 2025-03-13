@@ -17,6 +17,11 @@ export type TargetProps = {
   addedSecondsOffset: number;
 };
 
+export type TargetOutput = {
+  landingTime: Time;
+  launchTimes: TargetOutputItem[];
+}
+
 export type TargetOutputItem = {
   memberName: string;
   time: Time;

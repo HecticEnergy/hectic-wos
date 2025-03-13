@@ -7,7 +7,7 @@ const getMemberTarget = (
   seconds?: number,
   secondsOffset?: number,
   name?: string,
-  order?: number
+  order?: number,
 ): TargetProps => {
   const target = {
     memberName: name ?? "member1",
@@ -19,7 +19,7 @@ const getMemberTarget = (
   const memberTarget: TargetProps = {
     addedSecondsOffset: secondsOffset ?? 0,
     target: target,
-    totalSeconds: target.minutes * 60 + target.seconds,
+    totalSeconds: target.minutes * 60 + target.seconds + (secondsOffset ?? 0),
   };
   return memberTarget;
 };
@@ -46,6 +46,7 @@ describe("getLandingTime", () => {
           seconds: 0,
         },
         memberName: "member1",
+        totalSeconds: 0,
       },
     ];
     //do the action
@@ -71,6 +72,7 @@ describe("getLandingTime", () => {
           seconds: 20,
         },
         memberName: "member1",
+        totalSeconds: 80,
       },
     ];
     //do the action
@@ -101,6 +103,7 @@ describe("getLandingTime", () => {
           minutes: 1,
           seconds: 20,
         },
+        totalSeconds: 80,
       },
       {
         memberName: "member2",
@@ -109,6 +112,7 @@ describe("getLandingTime", () => {
           minutes: 1,
           seconds: 0,
         },
+        totalSeconds: 60,
       },
     ];
     //do the action

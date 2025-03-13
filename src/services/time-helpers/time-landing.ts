@@ -4,9 +4,59 @@ import type {
   TargetProps,
   Time,
 } from "@/models";
-import { getSecondsFromTime, getTimeFromSeconds } from "./time-conversions";
+import {
+  getSecondsFromTime,
+  getSecondsFromTimeSMH,
+  getTimeFromSeconds,
+} from "./time-conversions";
 
-export const getLandingTime = (
+export const getLandingTimeFromLandingSettings = (
+  utcTime: Time,
+  targets: TargetProps[],
+  landingSettings: LandingSettings,
+  rallyTimeMinutes: number
+): Time => {
+  //offset X seconds so people can receive the information and call
+  const callTimeDelaySeconds = 30;
+
+  let utcSeconds = utcTime.seconds;
+  if (landingSettings.ignoreSeconds) {
+    if (utcSeconds > callTimeDelaySeconds) utcSeconds += callTimeDelaySeconds;
+    //round off the minute
+    utcSeconds += 60 - (utcSeconds % 60);
+  } else {
+    utcSeconds += callTimeDelaySeconds;
+  }
+
+  const newUtc = {
+    ...utcTime,
+    seconds: utcSeconds,
+  };
+
+  const totalUtcSeconds = getSecondsFromTime(newUtc);
+
+  const firstLandSecondsNoRally = targets.reduce((acc, target) => {
+    return Math.max(acc, target.totalSeconds);
+  }, 0);
+
+  const firstLandSeconds =
+    totalUtcSeconds + firstLandSecondsNoRally + rallyTimeMinutes * 60;
+  const firstLandingTime = getTimeFromSeconds(firstLandSeconds);
+
+  const withLandingSeconds = getSecondsFromTimeSMH(
+    landingSettings.turretStrikeSeconds,
+    firstLandingTime.minutes,
+    firstLandingTime.hours
+  );
+
+  let landingTime = getTimeFromSeconds(withLandingSeconds);
+  if (withLandingSeconds < totalUtcSeconds) {
+    landingTime = getTimeFromSeconds(withLandingSeconds + 60);
+  }
+  return landingTime;
+};
+
+export const getLaunchTimeFromLandingSettings = (
   targets: TargetProps[],
   landingSettings: LandingSettings,
   rallyTimeMinutes: number
@@ -14,33 +64,46 @@ export const getLandingTime = (
   const utcArrivalTotalSeconds = getSecondsFromTime(
     landingSettings.landingTime
   );
+  // console.trace("targets", JSON.parse(JSON.stringify(targets)));
+  // const utcArrivalTime = getTimeFromSeconds(utcArrivalTotalSeconds);
+
   const offsetTotalSeconds = getSecondsFromTime({
     hours: 0,
     minutes: rallyTimeMinutes,
     seconds: 0,
   });
 
-  const memberLandingTimes = targets.map((target) => {
+  const maxAddedSeconds = Math.max(
+    ...targets.map((target) => target.addedSecondsOffset)
+  );
+
+  const memberLaunchTimes = targets.map((target): TargetOutputItem => {
     const launchTime = calculateLaunchFromArrivalTime(
       utcArrivalTotalSeconds,
       offsetTotalSeconds,
       target.totalSeconds,
-      target.addedSecondsOffset
+      target.addedSecondsOffset,
+      maxAddedSeconds
     );
     return {
       memberName: target.target.memberName,
       time: launchTime,
-      totalSeconds:  getSecondsFromTime(launchTime),
+      totalSeconds: getSecondsFromTime(launchTime),
     };
   });
-  return memberLandingTimes;
+  return memberLaunchTimes;
+  // return {
+  //   launchTimes: memberLaunchTimes,
+  //   landingTime: utcArrivalTime,
+  // };
 };
 
 const calculateLaunchFromArrivalTime = (
   utcArrivalTotalSeconds: number,
   offsetTotalSeconds: number,
   marchTotalSeconds: number,
-  addedSeconds: number
+  addedSeconds: number,
+  maxMemberAddedSeconds: number
 ) => {
   /*
   To calculate launch time based on landing time...
@@ -52,10 +115,12 @@ const calculateLaunchFromArrivalTime = (
   CT = T - MT + S
   */
 
-  const memberMarchTime = marchTotalSeconds + (addedSeconds ?? 0);
+  const memberMarchTime = marchTotalSeconds -maxMemberAddedSeconds + (addedSeconds ?? 0);
 
   const launchTimeSeconds =
-    utcArrivalTotalSeconds - offsetTotalSeconds - memberMarchTime;
+  utcArrivalTotalSeconds -
+  offsetTotalSeconds -
+    memberMarchTime;
   const time = getTimeFromSeconds(launchTimeSeconds);
   return time;
 };
