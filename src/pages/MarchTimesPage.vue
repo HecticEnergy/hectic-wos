@@ -8,7 +8,8 @@
     </v-col>
     <v-col class="d-none d-lg-block">
       <v-card height="98%" class="ma-0 pa-0" rounded>
-      <Members />
+      <!-- <Members /> -->
+       <!-- TODO - show settings panel here? -->
       </v-card>
     </v-col>
   </v-row>

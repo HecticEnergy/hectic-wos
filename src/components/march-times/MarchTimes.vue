@@ -5,8 +5,15 @@
         <v-col cols="auto">
           <Tour />
         </v-col>
-        <v-col align="end">
-          <UtcClock label="Current UTC Time" />
+        <v-col>
+          <v-row dense class="d-flex justify-end">
+            <v-col cols="auto">
+              <utc-clock label="Current UTC Time" />
+            </v-col>
+            <v-col cols="auto">
+              <settings />
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </template>
@@ -18,15 +25,12 @@
         />
       </v-col>
       <v-col cols="12">
-        <MembersSelect
-          :default-open-edit="openImport"
-          @update="savePageData"
-        />
+        <MembersSelect :default-open-edit="openImport" @update="savePageData" />
       </v-col>
       <v-col cols="12">
         <MarchTypeToggle @change="savePageData" />
       </v-col>
-      <v-col cols="12" align="right">
+      <v-col cols="12" class="align-right">
         <!-- Right: UTC Earliest March Time -->
       </v-col>
       <v-col cols="12">

@@ -7,12 +7,16 @@
 <script lang="ts" setup>
 import { useAlertStore } from "@/stores/alert-store";
 const alertStore = useAlertStore();
+const isDev = document.location.hostname === "localhost";
 
 onMounted(() => {
-  onErrorCaptured((err) => {
-    console.error(err);
-    alertStore.error("An error occurred: " + err.message);
-  });
+  if (!isDev) {
+    console.log("Development mode");
+    onErrorCaptured((err) => {
+      console.error(err);
+      alertStore.error("An error occurred: " + err.message);
+    });
+  }
 });
 </script>
 
@@ -20,7 +24,8 @@ onMounted(() => {
 html {
   overflow-y: hidden !important;
 }
-html, body {
+html,
+body {
   height: 100%;
   min-height: 100%;
   margin: 0;

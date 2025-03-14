@@ -1,54 +1,5 @@
 <template>
   <div class="my-4" data-tour="member-group-select">
-    <v-row dense class="d-flex flex-row" align="center">
-      <v-col shrink cols="auto" align="start">
-        <v-switch
-          v-model="isGroups"
-          data-tour="groups-toggle"
-          title="Toggle Groups"
-          density="compact"
-          hide-details
-          append-icon="mdi-account-group"
-          prepend-icon="mdi-account"
-          @click="toggleGroupsChanged"
-        />
-      </v-col>
-      <v-col grow>
-        <!-- <v-chip
-          data-tour="groups-toggle"
-          :prepend-icon="isGroups ? 'mdi-account-group' : 'mdi-account'"
-          title="Toggle Groups"
-          color="secondary"
-          size="small"
-          :text="isGroups ? 'Toggle Members' : 'Toggle Groups'"
-          style="cursor: pointer"
-          @click="toggleGroupsChanged"
-        /> -->
-      </v-col>
-      <v-col v-if="!isGroups" shrink cols="auto" align="end">
-        <v-btn
-          data-tour="groups-add"
-          prepend-icon="mdi-plus"
-          title="Add Group"
-          color="secondary"
-          size="small"
-          text="Group"
-          @click="showGroupDialog = true"
-        />
-      </v-col>
-      <v-col shrink cols="auto" align="end">
-        <v-btn
-          data-tour="member-edit"
-          prepend-icon="mdi-pencil"
-          title="Edit Members"
-          style="cursor: pointer"
-          color="primary"
-          size="small"
-          text="Members"
-          @click="() => (isMemberDialogOpen = true)"
-        />
-      </v-col>
-    </v-row>
     <v-row
       dense
       align="center"
@@ -58,7 +9,10 @@
     >
       <v-col grow>
         <div v-if="!isGroups" class="bg-primary-lighten-1 rounded">
-          <MemberSelectDraggableChips @update="$emit('update')" @edit="editMember"/>
+          <MemberSelectDraggableChips
+            @update="$emit('update')"
+            @edit="editMember"
+          />
         </div>
 
         <ComboboxChips
@@ -74,14 +28,6 @@
       </v-col>
       <v-col v-if="!!isGroups" cols="auto" shrink> </v-col>
     </v-row>
-
-    <DialogFullScreen
-      v-model="isMemberDialogOpen"
-      contained
-      title="Manage Members"
-    >
-      <Members :open-import="defaultOpenEdit" />
-    </DialogFullScreen>
 
     <v-dialog v-model="showGroupDialog" max-width="400">
       <v-card>
@@ -130,10 +76,6 @@ onMounted(() => {
   //
 });
 
-const { defaultOpenEdit = false } = defineProps<{
-  defaultOpenEdit?: boolean;
-}>();
-
 const emit = defineEmits<{
   (event: "update"): void;
 }>();
@@ -170,11 +112,6 @@ const selectedGroups = computed({
   },
 });
 
-const toggleGroupsChanged = () => {
-  isGroups.value = !isGroups.value;
-  emit("update");
-};
-
 const createGroup = () => {
   memberStore.members
     .filter((m) => selectedMembers.value.map((m) => m.name).includes(m.name))
@@ -196,5 +133,4 @@ const editMember = (member: Member) => {
   memberStore.editMember = member;
   isMemberDialogOpen.value = true;
 };
-
 </script>

@@ -12,10 +12,12 @@ const localStorageKey = "march-members-lsk";
 
 type MemberState = {
   members: Member[];
+  targetMode: TargetMode;
 };
 
 const defaultMemberData: MemberState = {
   members: [],
+  targetMode: "Sunfire Castle",
 };
 
 const getLocalStorageInstance = () => {
