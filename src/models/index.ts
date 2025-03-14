@@ -54,7 +54,7 @@ export type LaunchSettings = {
 
 export type LandingSettings = {
   ignoreSeconds: boolean;
-  rallyTimeMinutesIndex: number;
+  rallyMinutes: number;
   separateSeconds: Time;
   landingTime: Time;
   turretStrikeSeconds: number | undefined;

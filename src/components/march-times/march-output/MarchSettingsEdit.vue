@@ -54,16 +54,17 @@
       <v-col v-if="marchSettingsType === 'landing'" cols="12" class="mt-4">
         <v-row>
           <v-col cols="6" sm="auto">
-            <TimeTextBoxes
+            <time-text-box-auto-format
               v-model="marchSettingStore.landingSettings.separateSeconds"
-              label="March Separation"
-              @change="savePageData"
+              label="March Separation Seconds"
+              width="200px"
+              @update:model-value="savePageData"
             />
           </v-col>
           <v-col cols="6" sm="auto">
             <turret-offset-display
-            v-model="marchSettingStore.landingSettings.turretStrikeSeconds"
-            @update:model-value="updateTurretStrikeSeconds"
+              v-model="marchSettingStore.landingSettings.turretStrikeSeconds"
+              @update:model-value="updateTurretStrikeSeconds"
             />
           </v-col>
         </v-row>
@@ -82,26 +83,34 @@
 
     <div v-if="marchSettingsType === 'landing'">
       <v-row dense class="my-4">
-        <v-col cols="12"> Rally Time (minutes) </v-col>
-        <v-col cols="12" align="center">
+        <v-col cols="12">
           <!-- options: 1,2,5,10,15,20,30, 60 -->
-          <v-slider
-            v-model="marchSettingStore.landingSettings.rallyTimeMinutesIndex"
-            :ticks="marchSettingStore.rallyTimeTicks"
-            :max="rallyMinuteOptions.length - 1"
-            :step="1"
-            :tick-size="1"
-            show-ticks="always"
-            @click="savePageData"
+          <v-text-field
+            v-model="marchSettingStore.landingSettings.rallyMinutes"
+            type="number"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            label="Rally Minutes"
+            width="100%"
+            @update:model-value="(newValue:string) => {
+              savePageData();
+              marchSettingStore.landingSettings.rallyMinutes = parseInt(
+                newValue
+              );
+            }"
           />
         </v-col>
       </v-row>
-      <TimeTextBoxes
+      <time-text-box-auto-format
         v-model="marchSettingStore.landingSettings.landingTime"
-        class="mt-4"
+        :include-hours="true"
         label="Landing Time"
+        hint="UTC in HHMMSS format"
+        persistent-hint
         label-append-icon="mdi-refresh"
-        @change="savePageData"
+        class="mt-4"
+        width="100%"
+        @update:model-value="savePageData"
         @label-append-action="refreshLandingTime"
       />
     </div>
@@ -133,7 +142,6 @@ import type { Time } from "@/models";
 import { getTimeFromSeconds } from "@/services/time-helpers";
 import {
   useMarchSettingStore,
-  rallyMinuteOptions,
   type MarchSettingsType,
 } from "@/stores/march-settings-store";
 import { useMemberStore } from "@/stores/member-store";
