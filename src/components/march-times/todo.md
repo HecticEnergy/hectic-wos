@@ -7,51 +7,30 @@
   - March Time - how long it takes the rally caller to get to the target
   - ???? - March Time + Rally Time
 
+## 2025/03/13 deploy
 
-## Immediate
-1. [X] Edit Members > Member Name - auto select text on click
-2. Fix the chips - member select 
-   1. [?] works on demo page but not main page
-   2. [x] change checkbox for edit pencil
-3. [X] Edit Member > Adding members isn't refreshing the list
-4. [x] Turret time added to landing time calculation
-5. [X] Create Yourself - Test page menu header?
-6. [x] menu auto expanded
-7. [X] Tour Dies
-8. [x] Groups broken?
-
-## Get back to main
-
-1. [x] fix menu
-   1. [x] rail looks funny with sub items (icons off)
-      1. [x] ~~add dividers and~~ fix padding
-   2. [x] March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
-2. Create yo self
-   1. [x] Single Target Broken
-   2. Test everything
-3.[x] Import Member
-   1. [x] Import not updating member edit (noticed it on single target)
-4. Draggable members
-   1. [x] Add Draggable Component
-      1. [x] replace all the draggable imports and use auto importer for everything else
-   2. [x] Mouse Up to remove "dragging" opacity isn't working
-   3. [x] Test everything
-5. **_Fix Tour!!!!_**
-6. update HTU's
-   1. add more for
-      1. Create yourself / import member link
-      2. Member Edit
-      3. Main Page
-7. Home Page
-   1. [x] update Thank You's
-   2. [x] make icon link you to the page (and icon-click event for buy me beer)
-   3. [x] add new blocks for recently added pages
-   4. [x] pull out item box into it's own HomePageDescription box
+1. Menu Updates
+   1. Sections, drawer/rail fixes
+2. Create Yourself / Create Single Member
+   1. Now have rally callers create their own details
+      1. The member can send the coordinator
+         1. The copy and paste to import
+         2. A link that will merge with existing members the coordinator has
+3. Draggable members
+   1. Draggable chips on the main screen as well as under member edit
+4. Home Page
+   1. Sliding card
+   2. Description updates
+5. Landing Time > Turret Coordination
+6. Coming Soon
+   1. March Time
+      1. Settings page, removing some less used items from the main march page
+      2. Add more frequently used controls (march settings) to the main page
+      3. Copy button instead of always visible output display
 
 ## Quick wins
 
 1. !!! **_FIX TOUR_** !!!
-2. [x] Make TargetSelect clickable chips (like a radio button)
 3. Make Beer icon amber?
 4. March Output Box
    1. stop showing it by default
@@ -74,6 +53,11 @@
     2. output the settings / members a json (already mostly in local storage)
     3. upload the settings into the state
     4. Share link with query string?
+12. update HTU's
+    1. add more for
+       1. Create yourself / import member link
+       2. Member Edit
+       3. Main Page
 
 ## Enhancements
 
