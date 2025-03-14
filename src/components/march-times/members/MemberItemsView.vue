@@ -83,6 +83,7 @@ const changeOrder = (members: Member[]) => {
 const toggleMemberSelected = (element: Member) => {
   element.isSelected = !element.isSelected;
   emit("update:model-value", allSelectMembers.value);
+  changeOrder(allSelectMembers.value);
 };
 
 const edit = (member: Member) => {

@@ -58,8 +58,9 @@ const changeOrder = (members: Member[]) => {
 
 const toggleMemberSelected = (member: Member) => {
   member.isSelected = !member.isSelected;
-  memberStore.save(member);
-  emit("update");
+  changeOrder(memberStore.members);
+  // memberStore.save(member);
+  // emit("update");
 };
 
 const edit = (member: Member) => {
