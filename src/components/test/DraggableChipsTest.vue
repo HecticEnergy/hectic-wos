@@ -148,21 +148,4 @@ watch(
     memberStore.saveAll();
   }
 );
-// computed<Member[]>({
-//   get: () => memberStore.members,
-//   set: (value: Member[]) => changeOrder(value),
-// });
-
-// const changeOrder = (members: Member[]) => {
-//   const updateMembers: Member[] = [];
-//   let order = 0;
-//   members.forEach((m) => {
-//     const newOrder = (order += 10);
-//     m.order = newOrder;
-//     updateMembers.push(m);
-//   });
-//   memberStore.members = updateMembers;
-//   memberStore.saveAll();
-//   //   emit("update");
-// };
 </script>

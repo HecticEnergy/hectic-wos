@@ -43,6 +43,7 @@
 import { formatTimeMS } from "@/services/time-helpers/time-formatters";
 import type { Member } from "@/models";
 import { getMemberMarchTime } from "@/services/target-logic";
+import { sortBySelected, updateOrder } from "@/services/member-logic";
 
 const model = defineModel<Member[]>({
   required: true,
@@ -66,9 +67,7 @@ const draggingMemberId = ref<number | null>(null);
 
 const allSelectMembers = computed({
   get: () => model.value,
-  set: (value: Member[]) => {
-    changeOrder(value.map((m) => m));
-  },
+  set: (value: Member[]) => changeOrder(value),
 });
 
 const start = (e: { item: { _underlying_vm_: { id: number } } }) => {
@@ -76,13 +75,8 @@ const start = (e: { item: { _underlying_vm_: { id: number } } }) => {
 };
 
 const changeOrder = (members: Member[]) => {
-  const updateMembers: Member[] = [];
-  let order = 0;
-  members.forEach((m) => {
-    const newOrder = (order += 10);
-    m.order = newOrder;
-    updateMembers.push(m);
-  });
+  const updateMembers: Member[] = updateOrder(sortBySelected(members));
+  model.value = updateMembers;
   emit("update");
 };
 
