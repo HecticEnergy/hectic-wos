@@ -19,17 +19,7 @@ const localStorageKey = "march-settings-lsk";
 const getLocalStorageInstance = () => {
   return new LocalStorage<MarchSettings>(localStorageKey, defaultMarchSettings);
 };
-export const rallyMinuteOptions = [
-  "0",
-  "1",
-  "2",
-  "5",
-  "10",
-  "15",
-  "20",
-  "30",
-  "60",
-];
+
 export type MarchSettingsType = "launch" | "landing";
 
 export type MarchSettings = {
@@ -47,7 +37,7 @@ const defaultMarchSettings: MarchSettings = {
   },
   landingSettings: {
     ignoreSeconds: true,
-    rallyTimeMinutesIndex: 3,
+    rallyMinutes: 5,
     separateSeconds: { seconds: 2 } as Time,
     landingTime: { hours: 0, minutes: 0, seconds: 0 } as Time,
     turretStrikeSeconds: undefined,
@@ -61,16 +51,7 @@ export const useMarchSettingStore = defineStore("MarchSetting", {
     } as MarchSettings),
 
   getters: {
-    rallyTimeTicks: () => {
-      const obj = {};
-      rallyMinuteOptions.forEach((val, idx) => {
-        //@ts-expect-error - obj[idx] is a number
-        obj[idx] = val;
-      });
-      return obj;
-    },
-    rallyTimeMinutes: (state) =>
-      parseInt(rallyMinuteOptions[state.landingSettings.rallyTimeMinutesIndex]),
+    rallyTimeMinutes: (state) => state.landingSettings.rallyMinutes,
   },
 
   actions: {

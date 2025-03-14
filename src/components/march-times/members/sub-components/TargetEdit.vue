@@ -22,7 +22,7 @@
       </v-label>
     </v-col>
     <v-col cols="auto" align="center" class="d-flex flex-row">
-      <march-time-text-box
+      <time-text-box-auto-format
         v-model="targets[idx]"
         @update:model-value="
           (v) =>
