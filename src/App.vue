@@ -24,5 +24,6 @@ html, body {
   height: 100%;
   min-height: 100%;
   margin: 0;
+  touch-action: manipulation;
 }
 </style>
