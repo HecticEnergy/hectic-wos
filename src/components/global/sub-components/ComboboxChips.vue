@@ -4,9 +4,9 @@
     v-model="model"
     v-model:search="search"
     :hide-no-data="false"
-    :items="props.allItems"
+    :items="comboboxChipsPros.allItems"
     hint=""
-    :label="props.label"
+    :label="comboboxChipsPros.label"
     hide-selected
     multiple
     hide-details="auto"
@@ -21,6 +21,12 @@
         closable
         label
         @click:close="removeSelection(index)"
+      />
+    </template>
+    <template #item="{ item, props }">
+      <v-list-item
+        v-bind="props"
+        :title="item.value.name ?? item.value.title ?? item.value"
       />
     </template>
     <template #no-data>
@@ -54,8 +60,7 @@ import { type ChipItem } from "./chip-item-model";
 const model = defineModel<T[]>({ required: true });
 const emit = defineEmits(["update:modelValue"]);
 
-
-const props = defineProps<{
+const comboboxChipsPros = defineProps<{
   label: string;
 
   allItems: T[];
@@ -73,26 +78,29 @@ const getValue = (item: T) => {
     return item;
   }
   return item.name ?? item.title ?? item;
-}
+};
 
 const updateModel = (value: T[]) => {
   // console.log("updateModel", value, model.value, props.allItems);
   const itemsDoNotExist = value.filter(
-    (v) => !props.allItems.map((i) => getValue(i)).includes(getValue(v))
+    (v) =>
+      !comboboxChipsPros.allItems.map((i) => getValue(i)).includes(getValue(v))
   );
   if (itemsDoNotExist.length > 0) {
     // console.log("itemsDoNotExist", itemsDoNotExist, value);
   }
-  if (!!props.disallowNewItems && itemsDoNotExist.length > 0) {
+  if (!!comboboxChipsPros.disallowNewItems && itemsDoNotExist.length > 0) {
     emit("update:modelValue", model.value);
     return;
   }
   const newItems = value.filter(
     (v) => !model.value.map((i) => getValue(i)).includes(getValue(v))
   );
-  const updatedItems = newItems.map((i) =>
-    props.allItems.find((item) => getValue(item) === getValue(i))
-  ).filter((i) => !!i) as T[];
+  const updatedItems = newItems
+    .map((i) =>
+      comboboxChipsPros.allItems.find((item) => getValue(item) === getValue(i))
+    )
+    .filter((i) => !!i) as T[];
 
   if (updatedItems.length > 0) {
     // console.log("updatedItems", updatedItems);

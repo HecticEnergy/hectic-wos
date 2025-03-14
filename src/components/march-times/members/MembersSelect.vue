@@ -45,7 +45,7 @@
           color="primary"
           size="small"
           text="Members"
-          @click="() => (isEditing = true)"
+          @click="() => (isMemberDialogOpen = true)"
         />
       </v-col>
     </v-row>
@@ -58,40 +58,7 @@
     >
       <v-col grow>
         <div v-if="!isGroups" class="bg-primary-lighten-1 rounded">
-          <draggable v-model="allMembers" item-key="id" handle=".move-handle">
-            <template #item="{ element }"
-              ><v-chip
-                :color="element.isSelected ? 'primary' : ''"
-                :size="element.isSelected ? 'default' : 'default'"
-                class="px-1"
-                style="margin: 2px 0"
-              >
-                <div class="move-handle cursor-pointer">
-                  <v-icon icon="mdi-drag" size="large" />
-                  {{ element.name }}
-                </div>
-                <v-icon
-                  :icon="
-                    element.isSelected
-                      ? 'mdi-check'
-                      : 'mdi-checkbox-blank-outline'
-                  "
-                  :class="'ml-1 ' + (element.isSelected ? '' : 'opacity-50')"
-                  size="large"
-                  @click="toggleMemberSelected(element)"
-                />
-              </v-chip>
-            </template>
-          </draggable>
-          <!-- <v-chip
-                :color="element.isSelected ? 'primary' : ''"
-                class="pl-1"
-                style="margin: 2px 0"
-                @click="toggleMemberSelected(element)"
-              >
-                <v-icon icon="mdi-drag" size="large" class="move-handle" />
-                {{ element.name }}
-              </v-chip> -->
+          <MemberSelectDraggableChips @update="$emit('update')" @edit="editMember"/>
         </div>
 
         <ComboboxChips
@@ -108,7 +75,11 @@
       <v-col v-if="!!isGroups" cols="auto" shrink> </v-col>
     </v-row>
 
-    <DialogFullScreen v-model="isEditing" contained title="Manage Members">
+    <DialogFullScreen
+      v-model="isMemberDialogOpen"
+      contained
+      title="Manage Members"
+    >
       <Members :open-import="defaultOpenEdit" />
     </DialogFullScreen>
 
@@ -151,7 +122,6 @@
 </template>
 
 <script setup lang="ts">
-import draggable from "vuedraggable";
 import type { Member } from "@/models";
 import { useMemberStore } from "@/stores/member-store";
 const memberStore = useMemberStore();
@@ -171,10 +141,7 @@ const emit = defineEmits<{
 const showGroupDialog = ref(false);
 const createGroupEdit = ref("");
 
-const allMembers = computed({
-  get: () => memberStore.members,
-  set: (value: Member[]) => changeOrder(value),
-});
+const allMembers = computed(() => memberStore.members);
 
 const selectedMembers = computed({
   get: () => memberStore.getSelectedMembers(),
@@ -203,25 +170,6 @@ const selectedGroups = computed({
   },
 });
 
-const changeOrder = (members: Member[]) => {
-  const updateMembers: Member[] = [];
-  let order = 0;
-  members.forEach((m) => {
-    const newOrder = (order += 10);
-    m.order = newOrder;
-    updateMembers.push(m);
-  });
-  memberStore.members = updateMembers;
-  memberStore.saveAll();
-  emit("update");
-};
-
-const toggleMemberSelected = (member: Member) => {
-  member.isSelected = !member.isSelected;
-  memberStore.save(member);
-  emit("update");
-};
-
 const toggleGroupsChanged = () => {
   isGroups.value = !isGroups.value;
   emit("update");
@@ -242,5 +190,11 @@ const closeGroupDialog = () => {
   createGroupEdit.value = "";
 };
 
-const isEditing = ref(defaultOpenEdit);
+const isMemberDialogOpen = ref(false);
+
+const editMember = (member: Member) => {
+  memberStore.editMember = member;
+  isMemberDialogOpen.value = true;
+};
+
 </script>
