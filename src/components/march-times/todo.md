@@ -7,6 +7,19 @@
   - March Time - how long it takes the rally caller to get to the target
   - ???? - March Time + Rally Time
 
+
+## Immediate
+1. [X] Edit Members > Member Name - auto select text on click
+2. Fix the chips - member select 
+   1. [?] works on demo page but not main page
+   2. [x] change checkbox for edit pencil
+3. [X] Edit Member > Adding members isn't refreshing the list
+4. [x] Turret time added to landing time calculation
+5. [X] Create Yourself - Test page menu header?
+6. [x] menu auto expanded
+7. [X] Tour Dies
+8. [x] Groups broken?
+
 ## Get back to main
 
 1. [x] fix menu
@@ -14,15 +27,15 @@
       1. [x] ~~add dividers and~~ fix padding
    2. [x] March Times screen: open sidebar and collapse rail, switch to Home, still collapsed (as defaulted in this page), then nav back, rail expanded without user action
 2. Create yo self
-   1. Single Target Broken
+   1. [x] Single Target Broken
    2. Test everything
-3. Import Member
-   1. Import not updating member edit (noticed it on single target)
+3.[x] Import Member
+   1. [x] Import not updating member edit (noticed it on single target)
 4. Draggable members
    1. [x] Add Draggable Component
       1. [x] replace all the draggable imports and use auto importer for everything else
-   2. Mouse Up to remove "dragging" opacity isn't working
-   3. Test everything
+   2. [x] Mouse Up to remove "dragging" opacity isn't working
+   3. [x] Test everything
 5. **_Fix Tour!!!!_**
 6. update HTU's
    1. add more for

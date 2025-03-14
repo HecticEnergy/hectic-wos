@@ -10,7 +10,7 @@
         <div class="move-handle cursor-pointer">
           <v-icon icon="mdi-drag" size="large" />
         </div>
-        <div class="cursor-pointer" @click="toggleMemberSelected(element)">
+        <div class="cursor-pointer" style="user-select: none;" @click="toggleMemberSelected(element)">
           {{ element.name }}
         </div>
         <v-icon
