@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12">
+    <v-col cols="12" class="d-flex align-stretch">
       <v-icon icon="mdi-chess-rook" @click="resetTurretTimer" />
       <v-icon icon="mdi-clock" @click="resetTurretTimer" />
       <v-icon
@@ -9,7 +9,7 @@
         color="secondary"
         @click="resetTurretTimer"
       />
-      <utc-time :time="turretCountdown" label="" />
+      <utc-time :time="turretCountdown" label="" style="user-select: none" />
 
       <v-icon
         v-if="stopped"
@@ -28,7 +28,7 @@
     </v-col>
     <v-col>
       <v-row class="align-center">
-        <v-col cols="auto"> Last Turret Hit: </v-col>
+        <v-col cols="auto" style="user-select: none"> Last Turret Hit: </v-col>
         <v-col cols="12">
           <v-icon
             icon="mdi-minus"
@@ -74,7 +74,7 @@ watch(model, (value) => {
   setup(value);
 });
 
-//Thats done.. now hit on the second with turret Offset
+//TODO: Lots of stuff that needs to be moved to logic..
 const stopped = ref(true);
 const turretLastHit = ref({ hours: 0, minutes: 0, seconds: 0 });
 const turretCountdown = ref({ hours: 0, minutes: 0, seconds: 0 });
@@ -139,6 +139,7 @@ const resetTurretTimer = () => {
 const setClock = (time: Time) => {
   turretCountdown.value = time;
 };
+
 const getTime = () => {
   const seconds = getSecondsFromTime(turretCountdown.value) - 1;
   let nextHitSeconds = getSecondsFromTime(turretLastHit.value) + 60;
