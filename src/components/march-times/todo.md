@@ -29,8 +29,9 @@
       3. Copy button instead of always visible output display
 
 ## Quick wins
-
-1. !!! **_FIX TOUR_** !!!
+1. Create Yourself / Link
+   1. One of these doesn't work on iPad (Mystic)
+2. !!! **_FIX TOUR_** !!!
 3. Make Beer icon amber?
 4. March Output Box
    1. stop showing it by default
@@ -46,7 +47,7 @@
    1. Add a notes field to member edit, show on member select/combobox list items
 8. Title Bar - show bread crumbs?: Hectic WOS > March / Hectic WOS > Ministry
    1. (in `settings-panel` branch)
-9. Button tooltips (only useful on desktop ofc) - add title to all controls
+9.  Button tooltips (only useful on desktop ofc) - add title to all controls
 10. Add Images from the game to denote SFC targets
 11. upload / export state - 5
     1. **_Waiting for other state changes to be done: Groups_**

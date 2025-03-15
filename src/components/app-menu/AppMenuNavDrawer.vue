@@ -19,16 +19,16 @@
         @click="railWrapper = true"
       />
     </v-list>
+    <v-divider class="mx-2" />
+    <slot name="topContent">
+      <app-menu-nav-drawer-item :nav-items="topNavItems" :rail="rail" />
+    </slot>
+    <template #append>
       <v-divider class="mx-2" />
-      <slot name="topContent">
-          <app-menu-nav-drawer-item :nav-items="topNavItems" :rail="rail" />
-        </slot>
-      <template #append>
-        <v-divider class="mx-2" />
-        <slot name="bottomContent">
-          <app-menu-nav-drawer-item :nav-items="bottomNavItems" :rail="rail" />
-        </slot>
-      </template>
+      <slot name="bottomContent">
+        <app-menu-nav-drawer-item :nav-items="bottomNavItems" :rail="rail" />
+      </slot>
+    </template>
   </v-navigation-drawer>
 </template>
 
