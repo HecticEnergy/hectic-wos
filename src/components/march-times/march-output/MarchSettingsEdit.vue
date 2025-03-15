@@ -5,16 +5,13 @@
         <UtcClock label="Current UTC Time" />
       </div>
 
+      <v-slide-x-reverse-transition v-bind="marchSettingsType">
+        <landing-time-edit v-if="marchSettingsType === 'landing'" />
+      </v-slide-x-reverse-transition>
       <v-row dense>
         <v-col cols="12" align="right">
-          <UtcTime
-            v-if="marchSettingsType === 'landing'"
-            :time="maxMarchTime"
-            label="Max March Time"
-          />
-
           <UtcClock
-            v-else-if="marchSettingsType === 'launch'"
+            v-if="marchSettingsType === 'launch'"
             :offset-minutes="
               marchSettingStore.launchSettings.launchTimeOffset.minutes
             "
@@ -30,6 +27,7 @@
     <v-row dense class="my-2">
       <v-col cols="12">
         <MarchTypeToggle
+          v-if="marchSettingsType === 'launch'"
           v-model="marchSettingsType"
           :show-settings-cog="false"
           :show-details="false"
@@ -37,37 +35,12 @@
       </v-col>
       <v-col cols="12">
         <v-checkbox
-          v-if="marchSettingsType === 'landing'"
-          v-model="marchSettingStore.landingSettings.ignoreSeconds"
-          label="Round up to the next minute"
-          hide-details
-          @change="savePageData"
-        />
-        <v-checkbox
-          v-else-if="marchSettingsType === 'launch'"
+          if="marchSettingsType === 'launch'"
           v-model="marchSettingStore.launchSettings.ignoreSeconds"
           label="Round up to the next minute"
           hide-details
           @change="savePageData"
         />
-      </v-col>
-      <v-col v-if="marchSettingsType === 'landing'" cols="12" class="mt-4">
-        <v-row>
-          <v-col cols="6" sm="auto">
-            <time-text-box-auto-format
-              v-model="marchSettingStore.landingSettings.separateSeconds"
-              label="March Separation Seconds"
-              width="200px"
-              @update:model-value="savePageData"
-            />
-          </v-col>
-          <v-col cols="6" sm="auto">
-            <turret-offset-display
-              v-model="marchSettingStore.landingSettings.turretStrikeSeconds"
-              @update:model-value="updateTurretStrikeSeconds"
-            />
-          </v-col>
-        </v-row>
       </v-col>
       <v-col v-if="marchSettingsType === 'launch'" cols="12">
         <TimeTextBoxes
@@ -80,40 +53,6 @@
       <v-col cols="12" />
       <v-col cols="12" />
     </v-row>
-
-    <div v-if="marchSettingsType === 'landing'">
-      <v-row dense class="my-4">
-        <v-col cols="12">
-          <!-- options: 1,2,5,10,15,20,30, 60 -->
-          <v-text-field
-            v-model="marchSettingStore.landingSettings.rallyMinutes"
-            type="number"
-            inputmode="numeric"
-            pattern="[0-9]*"
-            label="Rally Minutes"
-            width="100%"
-            @update:model-value="(newValue:string) => {
-              savePageData();
-              marchSettingStore.landingSettings.rallyMinutes = parseInt(
-                newValue
-              );
-            }"
-          />
-        </v-col>
-      </v-row>
-      <time-text-box-auto-format
-        v-model="marchSettingStore.landingSettings.landingTime"
-        :include-hours="true"
-        label="Landing Time"
-        hint="UTC in HHMMSS format"
-        persistent-hint
-        label-append-icon="mdi-refresh"
-        class="mt-4"
-        width="100%"
-        @update:model-value="savePageData"
-        @label-append-action="refreshLandingTime"
-      />
-    </div>
     <div v-if="marchSettingsType === 'launch'">
       <TimeTextBoxes
         v-model="marchSettingStore.launchSettings.launchTimeOffset"
@@ -169,20 +108,6 @@ const getMaxMarchTime = () => {
   return getTimeFromSeconds(marchSettingStore.getMaxMarchSeconds(targets));
 };
 const maxMarchTime = ref<Time>(getMaxMarchTime());
-
-const updateTurretStrikeSeconds = (seconds: number | undefined) => {
-  // console.log("updateTurretStrikeSeconds", seconds);
-  marchSettingStore.landingSettings.turretStrikeSeconds = seconds;
-  marchSettingStore.saveData();
-};
-
-const refreshLandingTime = () => {
-  const targets = memberStore.getSelectedTargets(
-    memberStore.selectedTargetName
-  );
-  marchSettingStore.refreshLandingTime(targets);
-  marchSettingStore.saveData();
-};
 
 const done = () => {
   savePageData();
