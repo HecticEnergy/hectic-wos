@@ -29,32 +29,35 @@
       3. Copy button instead of always visible output display
 
 ## Quick wins
-1. Create Yourself / Link
+1. Home Page
+   1. Change Welcome content for Preview site 
+      1. https://preview.hectic-wos.pages.dev
+2. Create Yourself / Link
    1. One of these doesn't work on iPad (Mystic)
-2. !!! **_FIX TOUR_** !!!
-3. Make Beer icon amber?
-4. March Output Box
+3. !!! **_FIX TOUR_** !!!
+4. Make Beer icon amber?
+5. March Output Box
    1. stop showing it by default
       1. put a copy button on the bottom of the main display instead
       2. show a dialog for a few seconds with the content
    2. fix member select not changing the contents
-5. Import
+6. Import
    1. Import should merge/update, not overwrite completely
       1. show a diff
    2. ~~Assume 130 is 1:30 (game shows minutes/seconds, assume that's what user is doing)~~
-6. Target Select - make it buttons (instead of dropdown)
-7. Member Notes
+7. Target Select - make it buttons (instead of dropdown)
+8. Member Notes
    1. Add a notes field to member edit, show on member select/combobox list items
-8. Title Bar - show bread crumbs?: Hectic WOS > March / Hectic WOS > Ministry
+9.  Title Bar - show bread crumbs?: Hectic WOS > March / Hectic WOS > Ministry
    1. (in `settings-panel` branch)
-9.  Button tooltips (only useful on desktop ofc) - add title to all controls
-10. Add Images from the game to denote SFC targets
-11. upload / export state - 5
+10. Button tooltips (only useful on desktop ofc) - add title to all controls
+11. Add Images from the game to denote SFC targets
+12. upload / export state - 5
     1. **_Waiting for other state changes to be done: Groups_**
     2. output the settings / members a json (already mostly in local storage)
     3. upload the settings into the state
     4. Share link with query string?
-12. update HTU's
+13. update HTU's
     1. add more for
        1. Create yourself / import member link
        2. Member Edit

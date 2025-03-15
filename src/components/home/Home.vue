@@ -9,6 +9,15 @@
         >
           <template #append>
             <p>
+              <a href="https://preview.hectic-wos.pages.dev">
+                <v-icon icon="mdi-link" color="secondary" class="mr-1" />
+              </a>
+              Visit the
+              <a href="https://preview.hectic-wos.pages.dev">Preview site</a>
+              to see what we're working on!
+            </p>
+            <br />
+            <p>
               <v-icon
                 icon="mdi-glass-mug-variant"
                 color="secondary"
