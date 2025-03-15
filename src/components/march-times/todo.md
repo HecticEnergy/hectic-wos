@@ -32,6 +32,7 @@
 1. Home Page
    1. Change Welcome content for Preview site 
       1. https://preview.hectic-wos.pages.dev
+   2. Invite to contact me on discord (WOS nerds)
 2. Create Yourself / Link
    1. One of these doesn't work on iPad (Mystic)
 3. !!! **_FIX TOUR_** !!!
