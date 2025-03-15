@@ -34,6 +34,7 @@ declare module 'vue' {
     HtuMembersEdit: typeof import('./components/march-times/page-desc-templates/HtuMembersEdit.vue')['default']
     ImportTarget: typeof import('./components/march-times/import/sub-components/ImportTarget.vue')['default']
     LandingTimeCard: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/LandingTimeCard.vue')['default']
+    LandingTimeEdit: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/LandingTimeEdit.vue')['default']
     LaunchTimeCard: typeof import('./components/march-times/march-output/sub-components/launch-time-select-component/LaunchTimeCard.vue')['default']
     MarchOutputDisplay: typeof import('./components/march-times/march-output/sub-components/MarchOutputDisplay.vue')['default']
     MarchSettingsEdit: typeof import('./components/march-times/march-output/MarchSettingsEdit.vue')['default']
