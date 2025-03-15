@@ -34,6 +34,9 @@ npm run dev #start vite instance, serving the app locally
 ## Pushing Code
 - once you're ready to see your feature hosted, to should be available on 
   - https://[branch-name].hectic-wos.pages.dev/MarchTimesNewPage
+- Main Site: [hectic-wos.com](https://hectic-wos.com/)
+- Preview Site: [preview](https://preview.hectic-wos.pages.dev/)
+
 
 ## Features
 
