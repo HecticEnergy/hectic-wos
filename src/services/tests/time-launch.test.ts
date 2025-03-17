@@ -110,9 +110,9 @@ describe("getLandingTime", () => {
         time: {
           hours: 0,
           minutes: 1,
-          seconds: 0,
+          seconds: 20,
         },
-        totalSeconds: 60,
+        totalSeconds: 80,
       },
     ];
     //do the action

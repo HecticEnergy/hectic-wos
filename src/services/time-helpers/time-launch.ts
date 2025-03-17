@@ -40,9 +40,9 @@ export const getLaunchTime = (
   const memberTimes = sortedTargetsExtraProps.map((target) => {
     const launchTime = calculateTimeToLaunch(
       utcTotalSecAdj,
+      maxMemberTime,
       offsetInSeconds,
       target.totalSeconds,
-      maxMemberTime,
       target.addedSecondsOffset
     );
 
@@ -58,16 +58,16 @@ export const getLaunchTime = (
 
 const calculateTimeToLaunch = (
   utcTotalSeconds: number,
+  maxMarchInSeconds: number,
   offsetInTotalSeconds: number,
   marchTotalSeconds: number,
-  maxMarchInSeconds: number,
   addedSeconds?: number
 ): Time => {
   // console.log('CalcTimeAndThings', offsetInTotalSeconds, marchInSeconds, maxMarchInSeconds, addedSeconds);
   //targetArrivalTime does not include rally time
   const groupTargetedArrivalTime =
     utcTotalSeconds + offsetInTotalSeconds + maxMarchInSeconds;
-  const memberMarchTime = marchTotalSeconds + (addedSeconds ?? 0);
+  const memberMarchTime = marchTotalSeconds - (addedSeconds ?? 0);
   const launchTimeSeconds = groupTargetedArrivalTime - memberMarchTime;
 
   const time = getTimeFromSeconds(launchTimeSeconds);
