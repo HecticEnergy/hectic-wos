@@ -32,7 +32,7 @@ const landingSettings_default: LandingSettings = {
   ignoreSeconds: false,
   landingTime: { hours: 0, minutes: 0, seconds: 0 },
   separateSeconds: { hours: 0, minutes: 0, seconds: 0 },
-  rallyTimeMinutesIndex: 0,
+  rallyMinutes: 0,
   turretStrikeSeconds: 0,
 };
 

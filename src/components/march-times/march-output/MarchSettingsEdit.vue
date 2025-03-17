@@ -5,7 +5,7 @@
         <UtcClock label="Current UTC Time" />
       </div>
 
-      <v-slide-x-reverse-transition v-bind="marchSettingsType">
+      <v-slide-x-reverse-transition v-model="marchSettingsType">
         <landing-time-edit v-if="marchSettingsType === 'landing'" />
       </v-slide-x-reverse-transition>
       <v-row dense>
@@ -35,8 +35,8 @@
       </v-col>
       <v-col cols="12">
         <v-checkbox
-          if="marchSettingsType === 'launch'"
           v-model="marchSettingStore.launchSettings.ignoreSeconds"
+          if="marchSettingsType === 'launch'"
           label="Round up to the next minute"
           hide-details
           @change="savePageData"
