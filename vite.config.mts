@@ -2,7 +2,7 @@
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 // import Pages from "vite-plugin-pages";
-import Layouts from "vite-plugin-vue-layouts";
+import Layouts from "vite-plugin-vue-layouts-next";
 import Vue from "@vitejs/plugin-vue";
 import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import ViteFonts from "unplugin-fonts/vite";
