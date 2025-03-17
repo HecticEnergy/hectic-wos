@@ -4,11 +4,11 @@
       <UtcTime :time="maxMarchTime" label="Max March Time" />
     </v-col>
     <v-col cols="12">
-        <MarchTypeToggle
-          v-model="marchSettingsType"
-          :show-settings-cog="false"
-          :show-details="false"
-        />
+      <MarchTypeToggle
+        v-model="marchSettingsType"
+        :show-settings-cog="false"
+        :show-details="false"
+      />
     </v-col>
     <v-col cols="12">
       <v-checkbox
@@ -73,7 +73,10 @@
 <script setup lang="ts">
 import type { Time } from "@/models";
 import { getTimeFromSeconds } from "@/services/time-helpers";
-import { useMarchSettingStore } from "@/stores/march-settings-store";
+import {
+  useMarchSettingStore,
+  type MarchSettingsType,
+} from "@/stores/march-settings-store";
 import { useMemberStore } from "@/stores/member-store";
 
 const marchSettingStore = useMarchSettingStore();
@@ -83,6 +86,10 @@ onMounted(() => {
   maxMarchTime.value = getMaxMarchTime();
   // console.log("maxMarchTime", maxSeconds, time, maxMarchTime.value);
 });
+
+const marchSettingsType = ref<MarchSettingsType>(
+  marchSettingStore.marchSettingsType
+);
 
 const getMaxMarchTime = () => {
   const targets = memberStore.getSelectedTargets(
