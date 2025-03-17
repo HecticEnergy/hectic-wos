@@ -9,6 +9,7 @@ _This project was setup to be a combination of tools for Whiteout Survival_
   - [Install](#install)
   - [Development](#development)
   - [Pushing Code](#pushing-code)
+    - [Branches](#branches)
   - [Features](#features)
     - [March Time Calculator](#march-time-calculator)
     - [Ministry Appointments](#ministry-appointments)
@@ -37,6 +38,11 @@ npm run dev #start vite instance, serving the app locally
 - Main Site: [hectic-wos.com](https://hectic-wos.com/)
 - Preview Site: [preview](https://preview.hectic-wos.pages.dev/)
 
+### Branches
+1. main - production
+   1. quick-fixes - hotfixes for production
+2. preview - next release
+   1. [other branches] - features/fixes for preview
 
 ## Features
 
