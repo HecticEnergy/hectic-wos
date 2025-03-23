@@ -64,6 +64,13 @@
        2. Member Edit
        3. Main Page
 
+## Tech Debt
+1. Refactor March Time Logic
+   1. Too much indirection, callstack too deep
+   2. steps
+      1. setup logic models
+      2. do math based on model
+
 ## Enhancements
 
 1. Settings page

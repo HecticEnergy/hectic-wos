@@ -39,7 +39,12 @@
 </template>
 
 <script setup lang="ts">
-import { formatTime, getSecondsFromTime } from "@/services/time-helpers";
+import {
+  deductFromUtcTimeLanding,
+  formatTime,
+  getSecondsFromTime,
+  getUtcTime,
+} from "@/services/time-helpers";
 
 import {
   useMarchSettingStore,
@@ -74,24 +79,25 @@ const landingTime = computed(() => {
 const marchWillBeLateKey = ref(0);
 
 const getMarchWillBeLate = () => {
-  const utcLandingSeconds = getSecondsFromTime(
-    marchSettingStore.landingSettings.landingTime
+  const utcSeconds = getSecondsFromTime(getUtcTime(new Date()));
+
+  const selectedMemberTimes = memberStore.getMemberSelectedTime(
+    memberStore.selectedTargetName!
   );
-  const marchStartSeconds = marchSettingStore
-    .getLandingRallyStartTime(memberStore.getSelectedTargets())
-    .reduce((a, b) => Math.max(a, getSecondsFromTime(b.time)), 0);
-  return utcLandingSeconds < marchStartSeconds;
+
+  const launchTimes = deductFromUtcTimeLanding(
+    selectedMemberTimes,
+    marchSettingStore.landingSettings,
+    marchSettingStore.rallyTimeMinutes
+  );
+
+  const marchStartSeconds = Math.min(
+    ...launchTimes.map((time) => getSecondsFromTime(time.time))
+  );
+
+  return utcSeconds > marchStartSeconds;
 };
 const marchWillBeLate = ref(getMarchWillBeLate());
-
-// const getMarchMin = () => {
-//   const maxLandingSeconds = marchSettingStore
-//     .getLandingRallyStartTime(memberStore.getSelectedTargets())
-//     .reduce((a, b) => Math.max(a, getSecondsFromTime(b.time)), 0);
-//   // console.log("marchMin", maxLandingSeconds);
-//   return formatTimeFromSeconds(maxLandingSeconds);
-// };
-// const marchMin = ref(getMarchMin());
 
 const refreshLandingTime = () => {
   const targets = memberStore.getSelectedTargets(

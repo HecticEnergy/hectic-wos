@@ -67,7 +67,7 @@ export const getLaunchTimeFromLandingSettings = (
   // console.trace("targets", JSON.parse(JSON.stringify(targets)));
   // const utcArrivalTime = getTimeFromSeconds(utcArrivalTotalSeconds);
 
-  const offsetTotalSeconds = getSecondsFromTime({
+  const rallyTime = getSecondsFromTime({
     hours: 0,
     minutes: rallyTimeMinutes,
     seconds: 0,
@@ -80,7 +80,7 @@ export const getLaunchTimeFromLandingSettings = (
   const memberLaunchTimes = targets.map((target): TargetOutputItem => {
     const launchTime = calculateLaunchFromArrivalTime(
       utcArrivalTotalSeconds,
-      offsetTotalSeconds,
+      rallyTime,
       target.totalSeconds,
       target.addedSecondsOffset,
       maxAddedSeconds
@@ -100,7 +100,7 @@ export const getLaunchTimeFromLandingSettings = (
 
 const calculateLaunchFromArrivalTime = (
   utcArrivalTotalSeconds: number,
-  offsetTotalSeconds: number,
+  rallyTime: number,
   marchTotalSeconds: number,
   addedSeconds: number,
   maxMemberAddedSeconds: number
@@ -115,12 +115,11 @@ const calculateLaunchFromArrivalTime = (
   CT = T - MT + S
   */
 
-  const memberMarchTime = marchTotalSeconds -maxMemberAddedSeconds + (addedSeconds ?? 0);
+  const memberMarchTime =
+    marchTotalSeconds - maxMemberAddedSeconds + (addedSeconds ?? 0);
 
   const launchTimeSeconds =
-  utcArrivalTotalSeconds -
-  offsetTotalSeconds -
-    memberMarchTime;
+    utcArrivalTotalSeconds - rallyTime - memberMarchTime;
   const time = getTimeFromSeconds(launchTimeSeconds);
   return time;
 };
