@@ -32,6 +32,7 @@ export const getLaunchTime = (
   // Find max march time
   const maxMemberTime = Math.max(
     ...sortedTargetsExtraProps.map(
+      //added offset pushes their start time back
       (target) => target.totalSeconds - target.addedSecondsOffset
     )
   );
@@ -65,6 +66,18 @@ const calculateTimeToLaunch = (
 ): Time => {
   // console.log('CalcTimeAndThings', offsetInTotalSeconds, marchInSeconds, maxMarchInSeconds, addedSeconds);
   //targetArrivalTime does not include rally time
+
+  // T = UTC Time
+  // AT = Target Arrival Time
+  // MMT = Max March Time - max march time of all members
+  // O = offset - pushing back call time to allow members to respond
+  // CT = Call Time - time for caller to call
+  // S = offset by seconds - staggering landing times
+  // MT = March Time - march time of the member
+
+  // AT = T + MMT + O
+  // CT = AT - MT + S
+
   const groupTargetedArrivalTime =
     utcTotalSeconds + offsetInTotalSeconds + maxMarchInSeconds;
   const memberMarchTime = marchTotalSeconds - (addedSeconds ?? 0);

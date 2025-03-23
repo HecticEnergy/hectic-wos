@@ -19,7 +19,7 @@ const getMemberTarget = (
   const memberTarget: TargetProps = {
     addedSecondsOffset: secondsOffset ?? 0,
     target: target,
-    totalSeconds: target.minutes * 60 + target.seconds + (secondsOffset ?? 0),
+    totalSeconds: target.minutes * 60 + target.seconds,
   };
   return memberTarget;
 };
@@ -110,9 +110,9 @@ describe("getLandingTime", () => {
         time: {
           hours: 0,
           minutes: 1,
-          seconds: 20,
+          seconds: 40,
         },
-        totalSeconds: 80,
+        totalSeconds: 100,
       },
     ];
     //do the action
