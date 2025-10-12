@@ -2,14 +2,14 @@
   <v-row class="ma-0 pa-0">
     <v-col class="d-none d-md-block"> </v-col>
     <v-col v-if="targetType === 'Sunfire Castle'">
-      <CreateMember
+      <MemberCreateSelf
         v-model="sfcMember"
         @update:model-value="saveData"
         @update:target-type="changeTargetType"
       />
     </v-col>
     <v-col v-else-if="targetType === 'Single Target'">
-      <CreateMember
+      <MemberCreateSelf
         v-model="stMember"
         @update:model-value="saveData"
         @update:target-type="changeTargetType"
